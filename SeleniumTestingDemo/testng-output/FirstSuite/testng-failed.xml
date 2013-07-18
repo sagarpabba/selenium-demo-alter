@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite verbose="2" name="Failed suite [FirstSuite]">
+  <parameter name="excelpath" value="resources/TestData.xls"/>
+  <parameter name="hostname" value="localhost"/>
+  <listeners>
+    <listener class-name="com.hp.baserunner.RetryListener"/>
+  </listeners>
+  <test name="FirstLoginDemoTest(failed)">
+    <classes>
+      <class name="com.hp.runner.DemoRun">
+        <methods>
+          <include name="beforeSuite"/>
+          <include name="afterSuite"/>
+          <include name="afterMethod"/>
+          <include name="demoTest"/>
+        </methods>
+      </class> <!-- com.hp.runner.DemoRun -->
+    </classes>
+  </test> <!-- FirstLoginDemoTest(failed) -->
+</suite> <!-- Failed suite [FirstSuite] -->
