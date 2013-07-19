@@ -8,7 +8,7 @@
   <property name="build.dir" location="bin"></property>
   <property name="log.dir" location="log"></property>
 	
-	
+	<!--http://wiki.openqa.org/display/SRC/Selenium-RC+and+Continuous+Integration -->
 	 <!-- Targets to start and stop the Selenium RC server. Taken from the Selenium documentation -->
 		  <!-- http://wiki.openqa.org/display/SRC/Selenium-RC+and+Continuous+Integration -->  
 	 <target name="start-selenium-server">
@@ -29,8 +29,10 @@
 	  <target name="stop-selenium-server">
 		  <echo message="Stopping Selenium RC server" />
 		     <get taskname="selenium-shutdown" 
-			    src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"
+			    src="http://16.158.69.53:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"
 		        dest="result.txt" ignoreerrors="true" />
+	  	
+	  	     <!-- this command will return the ok,ok to shutdown the selenium server -->
 		     <echo taskname="selenium-shutdown" message="DGF Errors during shutdown are expected" />
 	  </target>
 	<!--this is the init target work-->
@@ -39,6 +41,7 @@
   	<path id="classpath_jars">	     
   	      <fileset dir="${libs.dir}" includes="*.jar"/> 
   	 </path>
+  	<sleep />
   	 <pathconvert pathsep=":" property="project.classpath" refid="classpath_jars"/>
   	 
   	 <echo>Class path is ${classpath_jars}</echo>
@@ -47,7 +50,7 @@
 		     	<pathelement location="${libs.dir}\testng-6.8.jar"/>
 		     </classpath> 
 	  </taskdef>
-  	  <antcall target="start-selenium-server" />
+  	<!--  <antcall target="start-selenium-server" />-->
   </target>
   <target name="clean">
      <echo>Now is cleaning the project build file and log direcotry.....</echo>
@@ -58,6 +61,7 @@
   	 <mkdir dir="${build.dir}"/>  
      <mkdir dir="${log.dir}"/>
   	 <mkdir dir="${testng.output.dir}"/>
+  	 <echo> Copy the log4j.xml into the build path......</echo>
   	 <copy file="${src.dir}\log4j.xml" todir="${bin.dir}"></copy>
   </target>
 	

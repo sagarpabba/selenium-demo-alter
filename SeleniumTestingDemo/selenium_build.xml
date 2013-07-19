@@ -3,7 +3,7 @@
  
     <property name="classes.dir" value="bin" />
     <property name="src.dir" value="src" />
-    <property name="report.dir" value="testng-output" />
+    <property name="report.dir" value="test-output" />
     <property name="lib.dir" value="libs" />
     <property name="logs.dir" location="log" />
  
