@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="libs/apache-log4j-extras-1.1.jar"/>
 	<classpathentry kind="lib" path="libs/jxl.jar"/>
 	<classpathentry kind="lib" path="libs/mail.jar"/>
+	<classpathentry kind="lib" path="libs/testng-6.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
