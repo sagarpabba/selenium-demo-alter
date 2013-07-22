@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ANT_with_TestNGXslt" default="run" basedir=".">
+ 
+    <property name="classes.dir" value="bin" />
+    <property name="src.dir" value="src" />
+    <property name="report.dir" value="test-output" />
+    <property name="lib.dir" value="libs" />
+    <property name="logs.dir" location="log" />
+ 
+    <path id="build.class.path">
+        <pathelement location="${classes.dir}" />
+        <pathelement location="${lib.dir}/testng-6.8.jar" />
+        <pathelement location="${lib.dir}/selenium-server-standalone-2.33.0.jar" />
+        <pathelement location="${lib.dir}/selenium-java-2.33.0.jar" />
+        <pathelement location="${lib.dir}/log4j-1.2.17.jar" />
+        <pathelement location="${lib.dir}/apache-log4j-extras-1.1.jar" />   
+        <pathelement location="${lib.dir}/jxl.jar"/>
+        <pathelement location="${lib.dir}/mail.jar"/>
+    </path>
+    <macrodef name="MyTimestamp">
+         <sequential >
+            <tstamp>
+              <format property="current.time" pattern="MM/dd/yyyy hh:mm:ss aa"/>
+            </tstamp>
+           <echo message="Current running time is: ${current.time}"/>
+        </sequential> 
+    </macrodef>
+    
+    <!-- default run task -->
+    <target name="run">
+         <antcall target="clean" />
+        <antcall target="startSeleniumServer" />
+     
+        <antcall target="compile" />
+        <antcall target="runTests" />
+        
+        <antcall target="stopSeleniumServer" />
+    </target>
+     
+    <!-- Delete old data and create new directories -->
+    <target name="clean">
+        <echo>Initlizing the testNG and selenium environment now ...</echo>
+        <MyTimestamp></MyTimestamp>
+        <delete dir="${classes.dir}" />
+        <mkdir dir="${classes.dir}" />
+        <delete dir="${report.dir}" />
+        <mkdir dir="${report.dir}" />
+        <delete dir="${logs.dir}" />
+        <mkdir dir="${logs.dir}" />       
+        <echo> Copy the log4j.xml into the build path /bin directory......</echo>
+  	    <copy file="${src.dir}\log4j.xml" todir="${classes.dir}"></copy>
+  	    <MyTimestamp></MyTimestamp>
+    </target>
+   
+    <!-- Start the selenium server -->
+    <target name="startSeleniumServer">
+        <echo>Starting Selenium Server...</echo>
+         <MyTimestamp></MyTimestamp>
+        <java jar="${lib.dir}\selenium-server-standalone-2.33.0.jar" fork="true" spawn="true">
+            <arg line="-singlewindow -log ${logs.dir}\selenium_server_startup.log" />
+        </java>
+        <sleep seconds="10" />
+        <echo message="We had started the selenium server in the local running host now ......"></echo>
+        <MyTimestamp></MyTimestamp>
+    </target>
+    
+    <!-- Compiles the java files -->
+    <target name="compile">
+        <echo>Compiling  all java source files...</echo>     
+         <MyTimestamp></MyTimestamp>  
+        <javac debug="true" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="build.class.path" includeantruntime="false" includes="**/**" encoding="UTF-8" />
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}" excludes="**/*.java" />
+        </copy>
+        <echo message="Complete compiled all the java source code files....."></echo>
+        <MyTimestamp></MyTimestamp>
+    </target>
+ 
+    <!-- Runs the file and generate report -->
+    <target name="runTests" description="Running tests">
+        <echo>Running Tests...</echo>
+         <MyTimestamp></MyTimestamp>
+        <taskdef name="testng" classname="org.testng.TestNGAntTask" classpathref="build.class.path" />
+        <testng outputdir="${report.dir}"
+  		        haltOnFailure="false" 
+  		        verbose="2" 
+  		        classpathref="build.class.path" 
+  		        workingdir="${basedir}">	    
+  	           <xmlfileset dir="." includes="testng_local.xml" />	  
+  	    </testng>
+  	    
+  	    <echo message=" begin to halt the ant execution for 10 seconds before taking shutdown the selenium server ......" />
+  	    <!-- wait a few time to let the selenium to stop well -->
+  	    <sleep seconds="10" />
+  	    <MyTimestamp></MyTimestamp>
+    </target>
+ 
+    <!-- Stop the selenium Server -->
+    <target name="stopSeleniumServer">
+        <echo> Trying to stop selenium server ... </echo>
+        <MyTimestamp></MyTimestamp>
+        <get taskname="selenium-shutdown" src="http://16.158.69.53:4444/selenium-server/driver/?cmd=shutDownSeleniumServer" dest="${logs.dir}\selenium_server_shutdown.log" ignoreerrors="true" />
+        <echo taskname="selenium-shutdown" message="Shutdown selenium server complete,return ok.." />
+        <MyTimestamp></MyTimestamp>
+    </target>
+ 
+</project>
