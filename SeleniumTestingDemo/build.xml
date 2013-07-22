@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." name="seleniumtesting" default="runTestNG"> 
+  <property name="run.tips" value="we begin to run the testNG testing now ......"/>
+  <property name="testng.output.dir" value="testng-output"/>
+  <property name="libs.dir" location="libs"></property>
+  <property name="bin.dir" location="bin"></property>
+  <property name="src.dir" location="src"></property>
+  <property name="build.dir" location="bin"></property>
+  <property name="log.dir" location="log"></property>
+	
+	<!--http://wiki.openqa.org/display/SRC/Selenium-RC+and+Continuous+Integration -->
+	 <!-- Targets to start and stop the Selenium RC server. Taken from the Selenium documentation -->
+		  <!-- http://wiki.openqa.org/display/SRC/Selenium-RC+and+Continuous+Integration -->  
+	 <target name="start-selenium-server">
+		 <echo message="Starting Selenium RC server (runs as a separate process)" />
+		    <!-- To make it easier to see if the Selenium RC server is running, we copy the -->
+		    <!-- normal java.exe to create a different executable called -->
+		    <!-- javaSeleniumRCServer.exe. That way, if you list the processes Windows is running -->
+		    <!-- you can see if the Selenium RC server is running, rather than just seeing a -->
+		    <!-- process called "java". -->
+	 	 <echo> selenium server path is : ${libs.dir}\selenium-server-standalone-2.33.0.jar</echo>
+		  <java jar="${libs.dir}\selenium-server-standalone-2.33.0.jar" fork="true" 
+			 spawn="true">
+		    <!-- Enable logging for the Selenium server -->
+		     <arg line="-log selenium.log -browserSideLog"/>
+		  </java>
+	  </target>
+		 
+	  <target name="stop-selenium-server">
+		  <echo message="Stopping Selenium RC server" />
+		     <get taskname="selenium-shutdown" 
+			    src="http://16.158.69.53:4444/selenium-server/driver/?cmd=shutDownSeleniumServer"
+		        dest="result.txt" ignoreerrors="true" />
+	  	
+	  	     <!-- this command will return the ok,ok to shutdown the selenium server -->
+		     <echo taskname="selenium-shutdown" message="DGF Errors during shutdown are expected" />
+	  </target>
+	<!--this is the init target work-->
+
+  <target name="init">
+  	<path id="classpath_jars">	     
+  	      <fileset dir="${libs.dir}" includes="*.jar"/> 
+  	 </path>
+  	<sleep />
+  	 <pathconvert pathsep=":" property="project.classpath" refid="classpath_jars"/>
+  	 
+  	 <echo>Class path is ${classpath_jars}</echo>
+	 <taskdef name="testng" classname="org.testng.TestNGAntTask">
+		    <classpath>
+		     	<pathelement location="${libs.dir}\testng-6.8.jar"/>
+		     </classpath> 
+	  </taskdef>
+  	<!--  <antcall target="start-selenium-server" />-->
+  </target>
+  <target name="clean">
+     <echo>Now is cleaning the project build file and log direcotry.....</echo>
+     <delete dir="${build.dir}"></delete>
+     <delete dir="${log.dir}"></delete>
+  	 <delete dir="${testng.output.dir}"></delete>
+  	 <echo>Now recreate the build path :./bin :./log</echo>
+  	 <mkdir dir="${build.dir}"/>  
+     <mkdir dir="${log.dir}"/>
+  	 <mkdir dir="${testng.output.dir}"/>
+  	 <echo> Copy the log4j.xml into the build path......</echo>
+  	 <copy file="${src.dir}\log4j.xml" todir="${bin.dir}"></copy>
+  </target>
+	
+  <target name="compile" depends="clean,init">
+  	 <javac destdir="${build.dir}" srcdir="${src.dir}" encoding="UTF-8">
+  	    <classpath refid="classpath_jars"></classpath>
+  	 </javac>
+  </target>
+	
+	 
+  <target name="runTestNG" depends="compile">
+    <echo>${run.tips}</echo>
+  	
+  <!--	<antcall target="start-selenium-server"></antcall> -->
+  	<testng outputdir="${testng.output.dir}"
+  		haltOnFailure="false" 
+  		verbose="2">	   
+  	   <classpath refid="classpath_jars"></classpath> 
+  	   <classpath>
+  	      <pathelement path="${build.dir}"/>
+  	   </classpath>
+  	    
+  	   <xmlfileset dir="." includes="testng_local.xml">
+  	   </xmlfileset>
+  	</testng>
+  <!--	<antcall target="stop-selenium-server"></antcall> -->
+  </target>
+</project>
