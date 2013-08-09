@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="E2EDemoRunner" parallel="tests">
+  <test name="Device_in_SADB">
+    <classes>
+      <class name="com.hp.tests.E2EProcessTest"/>
+      <class name="com.hp.utility.NiceEmailer" />
+    </classes>
+  </test> <!-- Device_in_SADB -->
+  <test name="generate_email_report">
+   <classes>   
+   </classes>
+  </test>
+</suite> <!-- E2EDemoRunner -->

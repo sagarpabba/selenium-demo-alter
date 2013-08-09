@@ -25,7 +25,7 @@
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
          <!-- <param name="Target" value="System.out"/> -->
          <layout class="org.apache.log4j.PatternLayout">
-                 <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [Thread: %t][ Class:%c  Method: %l ]%n%p:%m%n"/>
+                 <param name="ConversionPattern" value="%p:%d{yyyy-MM-dd HH:mm:ss a}:%m%n"/>
          </layout>
         <!--  <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="DEBUG"/>
@@ -40,10 +40,10 @@
    <appender name="log4jDebug"  class="org.apache.log4j.rolling.RollingFileAppender">  
         <param name="Append" value="true"/>
         <rollingPolicy  class="org.apache.log4j.rolling.TimeBasedRollingPolicy">  
-               <param name="FileNamePattern" value="./log/log_%d{yyyy-MM-dd}.log" />  
+               <param name="FileNamePattern" value="./log/testcase_running_debug_%d{yyyy-MM-dd}.log" />  
         </rollingPolicy>  
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [Thread: %t][ Class:%c Method: %l ]%n%p:%m%n"/>
+            <param name="ConversionPattern" value="%p:%d{yyyy-MM-dd HH:mm:ss a}:%m%n"/>
         </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="DEBUG"/>
@@ -62,8 +62,8 @@
                <param name="FileNamePattern" value="./log/log_%d{yyyy-MM-dd}.log" />  
         </rollingPolicy> 
         <layout class="org.apache.log4j.PatternLayout">
-             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [Thread: %t][ Class:%c  Method: %l ]%n%p:%m%n"/>
-        </layout>
+             <param name="ConversionPattern" value="%p:%d{yyyy-MM-dd HH:mm:ss a}:%m%n [Thread: %t][ Method Name: %l, in Class Name:%c]%n"/>
+      </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="INFO"/>
             <param name="LevelMax" value="INFO"/>
@@ -81,7 +81,7 @@
                <param name="FileNamePattern" value="./log/log_%d{yyyy-MM-dd}.log" />  
         </rollingPolicy> 
         <layout class="org.apache.log4j.PatternLayout">
-             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [Thread: %t][ Class:%c Method: %l ]%n%p:%m%n"/>
+             <param name="ConversionPattern" value="%p:%d{yyyy-MM-dd HH:mm:ss a}:%m%n [Thread: %t][ Method Name: %l, in Class Name:%c]%n"/>
         </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="WARN"/>
@@ -100,7 +100,7 @@
       <!--   <param name="MaxFileSize" value="5KB"/> -->
       <!--   <param name="MaxBackupIndex" value="2"/> -->
         <layout class="org.apache.log4j.PatternLayout">
-             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss a} [Thread: %t][ Class:%c Method: %l ]%n%p:%m%n"/>
+             <param name="ConversionPattern" value="%p:%d{yyyy-MM-dd HH:mm:ss a}:%m%n [Thread: %t][ Method Name: %l, in Class Name:%c]%n"/>
         </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="LevelMin" value="ERROR"/>
