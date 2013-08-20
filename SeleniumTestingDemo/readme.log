@@ -1,0 +1,9 @@
+************
+You need to be in a synchronized block in order for Object.wait() to work.
+Also, I recommend looking at the concurrency packages instead of the old school threading packages. They are safer and way easier to work with.
+*************
+NoSuchElementException 
+java.util.NoSuchElementException
+import org.openqa.selenium.NoSuchElementException;
+
+****************************

@@ -1,2 +1,27 @@
-START_TIME:2013-08-07 17-33-44
-STATUS_FWSW_CUSTOMER:passed
+COMMENT_HOST_NAME>>>16.158.71.197
+START_TIME>>>2013-08-20 13:11:34
+COMMENT_LOG_USER>>>chang-yuan.hu@hp.com
+COMMENT_PAF_URL>>>https://proactive-assessments-itg.corp.hp.com/web/
+COMMENT_BROWSER>>>firefox 22.0
+COMMENT_COUNTRY>>>China
+COMMENT_SITE>>>Shanghai
+COMMENT_CITY>>>Shanghai
+COMMENT_ADDRESS>>>1234 Someplace, KEIHANSHIN SHINMACHI COMPUTER BDG 3F, Shanghai, Shanghai, China
+COMMENT_ORG_SITE_ID>>>N/A
+STATUS_SCAN_CUSTOMER>>>Passed
+COMMENT_SCAN_CUSTOMER>>>Customer Name:Amanda Inc,Site Address:1234 Someplace, KEIHANSHIN SHINMACHI COMPUTER BDG 3F, Shanghai, Shanghai, China
+STATUS_SCAN_DEVICE>>>Passed
+COMMENT_SCAN_DEVICE>>>Devcie name is:amandaDev99
+STATUS_SCAN_EMAIL_RECIPIENTS>>>Passed
+COMMENT_SCAN_EMAIL_RECIPIENTS>>>Email requestor address:chang-yuan.hu@hp.com
+STATUS_SCAN_REPORT_LANGUAGE>>>Passed
+COMMENT_SCAN_LANGUAGE>>>Supported report langauges are:[English (United States)]
+STATUS_SCAN_REQUEST_SCHEDULING>>>Passed
+COMMENT_SCAN_REQUEST_SCHEDULING>>>Run the assessment now ,not scheduled
+COMMENT_SCHEDULING>>>N/A
+STATUS_SCAN_REVIEW>>>Passed
+COMMENT_SCAN_REVIEW>>>the assessment run at:2013-08-20 13:12:27
+STATUS_SCAN_EMAIL_RESULT>>>Passed
+COMMENT_SCAN_EMAIL_RESULT>>>RUN ID:35481,Requst Type:Proactive Scan,Customer Name:Amanda Inc
+STATUS_RUN_ID>>>Passed
+COMMENT_RUN_ID>>>RUN ID:35481
