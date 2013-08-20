@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="E2EDemoRunner" parallel="tests">
-  <test name="Device_in_SADB">
-    <classes>
-      <class name="com.hp.tests.E2EProcessTest"/>
-      <class name="com.hp.utility.NiceEmailer" />
-    </classes>
-  </test> <!-- Device_in_SADB -->
-  <test name="generate_email_report">
-   <classes>   
+<suite name="E2EDemoRunner" preserve-order="true"  skipfailedinvocationcounts="true" configfailurepolicy="continue" thread-count="2" parallel="false">
+  <listeners>
+	  <listener class-name="com.hp.utility.RetryListener" />
+  </listeners>
+  <!-- log in the home page  -->
+  <test name="login in the home page" preserve-order="true" skipfailedinvocationcounts="true" >
+   <classes>
+     <class name="com.hp.tests.LoginHomePageTest"></class>   
    </classes>
   </test>
+  <!-- new a FW&SW Assessment -->
+  <test name="New FWSW Assessment and search run result" preserve-order="true" skipfailedinvocationcounts="true">
+   <classes>
+    <class name="com.hp.tests.NewProactiveScanTest"></class> 
+   </classes>
+  </test>
+  
+  <test name="html email reporter" preserve-order="true" skipfailedinvocationcounts="true">
+    <classes>
+      <class name="com.hp.utility.NiceEmailer"></class>
+    </classes>
+  </test>  
+   
 </suite> <!-- E2EDemoRunner -->

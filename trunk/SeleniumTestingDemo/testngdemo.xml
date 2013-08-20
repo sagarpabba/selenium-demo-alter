@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" verbose="1" preserve-order="true" skipfailedinvocationcounts="false" configfailurepolicy="continue">
+  <test name="Test1" skipfailedinvocationcounts="true">
+    <classes>
+      <class name="com.hp.tests.TestNGRun1"/>
+     
+    </classes>   
+  </test> <!-- Test -->
+   <test name="Test2">
+    <classes>
+      <class name="com.hp.tests.TestNGRun2"/>
+     
+    </classes>   
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
