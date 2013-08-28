@@ -7,20 +7,24 @@
   <!-- log in the home page  -->
   <test name="login in the home page" preserve-order="true" skipfailedinvocationcounts="true" >
    <classes>
-     <class name="com.hp.tests.LoginHomePageTest"></class>   
+     <class name="com.hp.tests.LoginHomeTest"></class>   
    </classes>
   </test>
+ 
   <!-- new a FW&SW Assessment -->
+   
   <test name="New FWSW Assessment and search run result" preserve-order="true" skipfailedinvocationcounts="true">
    <classes>
     <class name="com.hp.tests.NewProactiveScanTest"></class> 
    </classes>
   </test>
-  
+  <!-- 
   <test name="html email reporter" preserve-order="true" skipfailedinvocationcounts="true">
     <classes>
       <class name="com.hp.utility.NiceEmailer"></class>
     </classes>
   </test>  
-   
+   -->
+
+    
 </suite> <!-- E2EDemoRunner -->

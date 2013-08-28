@@ -26,8 +26,8 @@ public class NewFWSWTest extends NiceBaseDriver {
 	private String runid;
 	private String runstart;
 
-	private String homeurl = "https://proactive-assessments-itg.corp.hp.com/web/";
-	private String runurl = "https://proactive-assessments-itg.corp.hp.com/web/run/";
+	//private String homeurl = "https://proactive-assessments-fut1.corp.hp.com/web";
+	private String runurl = "https://proactive-assessments-fut1.corp.hp.com/web/run/";
 	
 	private Home_Page homepage ;
 	private Launch_Assessment_Page lap;
@@ -43,7 +43,7 @@ public class NewFWSWTest extends NiceBaseDriver {
 	@Test(description = "check elements in the home page", testName = "Verify the elements in home page")
 	public void test_verifyHomePage() {
 
-		SeleniumCore.OpenURL(driver, homeurl);
+		//SeleniumCore.OpenURL(driver, homeurl);
 		// search device
 		homepage = PageFactory.initElements(driver, Home_Page.class);
 		homepage.verifyPageElements();

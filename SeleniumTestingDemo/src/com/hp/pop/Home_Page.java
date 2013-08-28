@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.Reporter;
 
 import com.hp.utility.Resulter;
@@ -19,8 +18,7 @@ public class Home_Page {
 
 	private WebDriver driver;
 	private static Logger logger = Logger.getLogger(Home_Page.class);
-	// @FindBy(how=How.XPATH,using="//*[@id='hpit-topMenu']/li[2]/a") WebElement
-	// assessmentmenu;
+	
 	@FindBy(how = How.XPATH, using = "//*[@id='hpit-topMenu']/li[2]/ul/li[1]/a")
 	WebElement newassessment;
 	@FindBy(how = How.XPATH, using = "//*[@id='hpit-topMenu']/li[2]/ul/li[2]/a")
@@ -70,6 +68,7 @@ public class Home_Page {
 			buildnum = SeleniumCore.getElementText(buildnumber);
 		}
 		logger.info("The build number showed in the home page is:" + buildnum);
+		Resulter.log("COMMENT_PAF_VERSION", buildnum);
 		return buildnum;
 	}
 
@@ -80,10 +79,9 @@ public class Home_Page {
 		try {
 			String buildnumber = getBuildNumber();
 			String pafnotes = SeleniumCore.getElementText(pafnote); // content
-			String notification = SeleniumCore.getElementText(notifitymessage); // the
+		//	String notification = SeleniumCore.getElementText(notifitymessage); // the
 																				// notification
-																				// message;
- 
+																				// message
 			//driver.getCurrentUrl()
 			String testurl=SeleniumCore.getCurrentURL(driver);
 			logger.info("Current loaded page url is:"+testurl);
@@ -106,30 +104,22 @@ public class Home_Page {
 			String expectedbuildNumber = mapdata.get("Build_Number");
 			// boolean isuser=expecteduser.equals(loguser);
 			boolean isnotes = expectednote.equals(pafnotes);
-			boolean isnotification = expectednotis.equals(notification);
-			Assert.assertTrue(isnew);
-			Assert.assertTrue(islistrun);
-			Assert.assertTrue(islistsub);
-			Assert.assertTrue(isfeedback);
-
-			// Assert.assertEquals(loguser, expecteduser);
-			Assert.assertEquals(buildnumber, expectedbuildNumber);
-			Assert.assertEquals(pafnotes, expectednote);
-			Assert.assertEquals(notification, expectednotis);
+		//	boolean isnotification = expectednotis.equals(notification);
+		
 			if (isnew && islistrun && islistsub & isfeedback && isnotes
-					& isnotification) {
+					) {
 				pageCorrect = true;
 				logger.info("Checking the content text in page is:" + pafnotes
 						+ ",but actually from test data is:" + expectednote);
 				logger.info("Checking the notification text in page is:"
-						+ notification + ",but actually from test data is:"
+						 + ",but actually from test data is:"
 						+ expectednotis);
 				logger.info("Checking the build number in home page is:"
 						+ buildnumber + ",but actually from test data is:"
 						+ expectedbuildNumber);
 			}
 		} catch (NoSuchElementException e) {
-			logger.info("the web element cannot be found in the home page:"
+			logger.warn("the web element cannot be found in the home page:"
 					+ e.getMessage());
 			Reporter.log("Web elment cannot be found in the home page:"
 					+ e.getMessage());

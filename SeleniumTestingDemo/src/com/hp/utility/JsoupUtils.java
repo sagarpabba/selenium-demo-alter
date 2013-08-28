@@ -19,8 +19,8 @@ import org.jsoup.select.Elements;
 public class JsoupUtils {
 
 	private static Logger logger = Logger.getLogger(JsoupUtils.class);
-	static String path = new File(".").getAbsolutePath();
-	static String projectpath = path.substring(0, path.length() - 1);
+
+	static String projectpath = SeleniumCore.getProjectWorkspace();
 
 	static File inputfile = new File(projectpath + "resources" + separator
 			+ "result_template.htm");
@@ -34,10 +34,6 @@ public class JsoupUtils {
 
 	/**
 	 * updateContents:(Here describle the usage of this function). 
-	 * TODO(here describle this function where used– optional).
-	 * TODO(here describle this function flow – optional).
-	 * TODO(here describle this function how to use– optional).
-	 * TODO(here describle this fuction Precautions– optional).
 	 *
 	 * @author huchan
 	 * @return
@@ -116,7 +112,7 @@ public class JsoupUtils {
 		String starttime = FileUtils.getValue("START_TIME");
 		String changedtime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
 				starttime).toString();
-		String taketime = TimerUtils.betweenTime(starttime);
+		String taketime = SeleniumCore.betweenTime(starttime);
 		String runtime = "Start time:" + changedtime + "\n End time:"
 				+ CURRENT_RUN_TIME + "\ntotal time:" + taketime;
 

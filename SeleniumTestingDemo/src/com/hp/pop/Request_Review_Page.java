@@ -10,11 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
-
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
-import com.hp.utility.TimerUtils;
 
 public class Request_Review_Page {
 
@@ -34,22 +31,13 @@ public class Request_Review_Page {
 	}
 
 	public void verifyPageElements() {
-		String headtitle = SeleniumCore.getElementText(header);
-		boolean displayheader = SeleniumCore.isDisplayed(header);
 		
 		String pagename=this.getClass().getName();
 		logger.info("\n***************************************"+pagename+"****************************************************");
-
-		logger.info("New request assessment review page.the head is:"
-				+ headtitle);
-		if (displayheader) {
-			logger.info("New request assessment review page .we found the header is displayed in the page:"
-					+ displayheader);
-		} else {
-			Assert.fail();
-			logger.error("New request assessment review page .Sorry the webelment cannot be found in the page:"
-					+ displayheader);
-		}
+		String headtitle = SeleniumCore.getElementText(header);
+		logger.info("New request assessment review page,the head title is:"+ headtitle);
+		SeleniumCore.assertDisplayed("Assert the title is displayed in the page", header);
+		
 	}
 
 	public Request_Summary_Page RunRequest()
@@ -71,7 +59,7 @@ public class Request_Review_Page {
 			driver.findElement(By.xpath(".//*[@id='saveBtn']")).click();
 		} else {
 			// run now the schedule
-			Resulter.log("COMMENT_SCAN_REVIEW", "the assessment run at:"+TimerUtils.getCurrentTime(Calendar.getInstance().getTime()));
+			Resulter.log("COMMENT_SCAN_REVIEW", "the assessment run at:"+SeleniumCore.getCurrentTime(Calendar.getInstance().getTime()));
 			logger.info("New request created now ,this is the review page ,and click the run button now ");
 			SeleniumCore.clickElement(runbtn);
 		}

@@ -1,5 +1,7 @@
 package com.hp.utility;
 
+import java.util.logging.Logger;
+
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
@@ -13,7 +15,9 @@ import org.testng.ITestResult;
 	 */
 
 public class RetryFail implements IRetryAnalyzer {
-	private final int m_maxRetries = 1;
+	
+	private static Logger logger=Logger.getAnonymousLogger();
+	private final int m_maxRetries = 2;
 	private final int m_sleepBetweenRetries = 1000;
 	private int currentTry;
 	private String previousTest = null;
@@ -38,8 +42,7 @@ public class RetryFail implements IRetryAnalyzer {
 			try {
 				maxRetries = Integer.parseInt(maxRetriesStr);
 			} catch (final NumberFormatException e) {
-				System.out
-						.println("NumberFormatException while parsing maxRetries from suite file."
+				logger.info("NumberFormatException while parsing maxRetries from suite file."
 								+ e);
 			}
 		}
@@ -53,8 +56,7 @@ public class RetryFail implements IRetryAnalyzer {
 			try {
 				sleepBetweenRetries = Integer.parseInt(sleepBetweenRetriesStr);
 			} catch (final NumberFormatException e) {
-				System.out
-						.println("NumberFormatException while parsing sleepBetweenRetries from suite file."
+			    logger.info("NumberFormatException while parsing sleepBetweenRetries from suite file."
 								+ e);
 			}
 		}

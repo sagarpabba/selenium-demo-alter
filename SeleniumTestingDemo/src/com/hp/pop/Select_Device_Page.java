@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,14 +20,14 @@ public class Select_Device_Page {
 	private static Logger logger = Logger.getLogger(Select_Device_Page.class);
 	private WebDriver driver;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='divSELECT_DEVICES']/h2")
+	@FindBy(how = How.XPATH, using = "//*[@id='divSELECT_DEVICES']/h2")
 	private WebElement devicehead;
-	@FindBy(how = How.XPATH, using = ".//*[@id='gview_devicesTable']/div[3]")
+	@FindBy(how = How.XPATH, using = "//*[@id='gview_devicesTable']/div[3]")
 	private WebElement devicetable;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='back']")
+	@FindBy(how = How.XPATH, using = "//*[@id='back']")
 	private WebElement backbtn;
-	@FindBy(how = How.XPATH, using = ".//*[@id='next']")
+	@FindBy(how = How.XPATH, using = "//*[@id='next']")
 	private WebElement nextbtn;
 
 	public Select_Device_Page(WebDriver driver) {
@@ -34,28 +35,14 @@ public class Select_Device_Page {
 	}
 
 	public void verifyPageElements() {
-		boolean displayeddevice = SeleniumCore.isDisplayed(devicehead);
-		boolean enabledbackbtn = SeleniumCore.isEnabled(backbtn);
-		boolean enablednextbtn = SeleniumCore.isEnabled(nextbtn);
 		
 		String pagename=this.getClass().getName();
 		logger.info("\n***************************************"+pagename+"****************************************************");
-
-		if (displayeddevice && enabledbackbtn && enablednextbtn) {
-			logger.info("Select device page-the page webelement is displayed in the page");
-			logger.info("Select device page-device head title is:"
-					+ SeleniumCore.getElementText(devicehead));
-		} else {
-			logger.info("Select device page-Sorry the webelements cannot show in the page ,test is failed ,manualy check this value again please");
-			logger.info("Select device page-The Expected result is:true,but actually the title display in the page is:"
-					+ displayeddevice);
-			logger.info("Select device page-the expectd back button is enabled,but actually the back button enabled is:"
-					+ enabledbackbtn);
-			logger.info("Select device page-The next button expected is enabled ,but actually the next button enabled is:"
-					+ enablednextbtn);
-			Assert.fail("the device head not displayed in the page or the back button is disabled or the next button is disabled in the page ");
+		//boolean isdes=devicehead.isDisplayed();
+        SeleniumCore.assertDisplayed("Assert the title displayed in the page", devicehead);
+        SeleniumCore.assertEnabled("Assert the back button is enabled in the page", backbtn);
+        SeleniumCore.assertEnabled("Assert the next button is enabled in the page", nextbtn);
 		
-		}
 	}
 
 	public Select_Options_Page selectDevice() throws Exception {
@@ -71,14 +58,20 @@ public class Select_Device_Page {
 		List<WebElement> allrows = SeleniumCore.findElementListByTagName(
 				devicetable, "tr");
 		for (WebElement row : allrows) {
-			WebElement checkboxvalue = SeleniumCore.findElementByXpath(row,
-					"td[1]");
-			String devicedata = SeleniumCore.findElementByXpath(row, "td[3]")
-					.getText().trim();
+			// in FUT it changed to td[4]
+		//	String trid=row.getAttribute("id");
+			String devicedata="";
+			try{
+				devicedata= SeleniumCore.findElementByXpath(row, "td[4]").getText().trim();
+			}
+			catch(NoSuchElementException nsp){
+				logger.info("Current row had not fourth column ,so we ignore it");
+			}
 			logger.info("Select device page-the found device in the page  is:"
 					+ devicedata);
 			if (devicedata.equals(devicename)) {
 				logger.info("Select device page-Now we found the specified device name in the table");
+				WebElement checkboxvalue = SeleniumCore.findElementByXpath(row,".//td[1]/input");
 				SeleniumCore.clickElement(checkboxvalue);
 				finddevice=true;
 				break;

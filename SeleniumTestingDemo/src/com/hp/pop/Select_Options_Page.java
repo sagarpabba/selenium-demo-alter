@@ -14,9 +14,6 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
-
-import com.hp.utility.RandomUtils;
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
 
@@ -45,23 +42,11 @@ public class Select_Options_Page {
 	}
 
 	public void verifyPageElements() {
-		String emailer = SeleniumCore.getElementText(mailname);
-		
 		String pagename=this.getClass().getName();
 		logger.info("\n***************************************"+pagename+"****************************************************");
-
-		logger.info("Select options page-the email requstor address is :"
-				+ emailer);
-		boolean displaymail = SeleniumCore.isDisplayed(mailname);
-		boolean enabledbackbtn = SeleniumCore.isEnabled(backbtn);
-		boolean enablednextbtn = SeleniumCore.isEnabled(nextbtn);
-		if (displaymail && enabledbackbtn && enablednextbtn) {
-			logger.info("Select options page-we found all the elements in the page");
-		} else {
-			Assert.fail();
-			logger.info("Select options page-the object should display in the page ,but the status is:"
-					+ displaymail);
-		}
+        SeleniumCore.assertDisplayed("Assert the email request showed in the page", mailname);
+        SeleniumCore.assertEnabled("Assert the back button is enabled in the page", backbtn);
+        SeleniumCore.assertEnabled("Assert the next button is enabled in the page", nextbtn);	
 
 	}
 
@@ -112,7 +97,7 @@ public class Select_Options_Page {
 		if (isSchedule.equals("yes")) {
 			Resulter.log("STATUS_SCAN_REQUEST_SCHEDULING", "Passed");
 			Resulter.log("COMMENT_SCAN_REQUEST_SCHEDULING", "Run the assessment "+frequency+" after "+aftertime+" minutes the schedule will be run");
-			int scheduleindex = RandomUtils.getRandomNumber();
+			int scheduleindex = SeleniumCore.getRandomNumber();
 			String inputname = schedulname + scheduleindex;
 			savesubscription.click();
 

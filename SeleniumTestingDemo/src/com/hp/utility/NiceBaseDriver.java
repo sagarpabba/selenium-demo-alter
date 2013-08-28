@@ -24,7 +24,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -36,7 +35,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-import com.hp.dataprovider.ExcelDataProivderLoginSheet;
 import com.hp.utility.HostUtils;
 import com.thoughtworks.selenium.SeleneseTestBase;
 
@@ -45,23 +43,17 @@ public class NiceBaseDriver extends SeleneseTestBase {
 	protected static WebDriver driver;
 	protected static String proxyserver, browser, hubUrl;
 
-	protected static final Logger logger = Logger
-			.getLogger(NiceBaseDriver.class);
+	protected static final Logger logger = Logger.getLogger(NiceBaseDriver.class);
 
 	protected StringBuffer verificationErrors = new StringBuffer();
 
 	@BeforeSuite
 	public void setupDriver() {
-		String excelpath = System.getProperty("user.dir") + File.separator
-				+ "resources" + File.separator + "TestData.xls";
-		logger.debug("Now we find the data driver file path ,the excel path is "
-				+ excelpath);
 		String hostname = HostUtils.getFQDN();
-		logger.debug("Now the running host's FQDN is :" + hostname);
 		Resulter.log("COMMENT_HOST_NAME", hostname);
+		logger.debug("Now the running host's FQDN is :" + hostname);
 		
-		Map<String, String> mapdata = ExcelDataProivderLoginSheet
-				.getSpecifySheet(excelpath, hostname);
+		Map<String, String> mapdata =SeleniumCore.importDataTable("login_page");
 		browser = mapdata.get("Browser_Type").trim().toLowerCase();
 		proxyserver = mapdata.get("proxy_url").trim();
 		logger.debug("Now we using  browser type is :" + browser);
@@ -73,14 +65,22 @@ public class NiceBaseDriver extends SeleneseTestBase {
 		capability.setCapability("cssSelectorsEnabled", true);
 		capability.setCapability("takesScreenshot", true);
 		capability.setCapability("javascriptEnabled", true);
-		capability.setCapability("ACCEPT_SSL_CERTS", true);
+		//capability.setCapability("ACCEPT_SSL_CERTS", true);
+		capability.setCapability("ignoreZoomSetting",true);
+		capability.setCapability("ignoreProtectedModeSettings", true);
+		capability.setCapability("enablePersistentHover", false); // prevent
+		capability.setCapability("EnableNativeEvents", false);		
 		capability.setBrowserName(browser);
 		// proxy settings
 		if (!proxyserver.equals("")) {
 			logger.debug("the current proxy is not null ,we will set the proxy server for this host,proxy server is :"
 					+ proxyserver);
+			org.openqa.selenium.Proxy httpproxy = new org.openqa.selenium.Proxy();  
+			httpproxy.setHttpProxy(proxyserver)  
+			     .setFtpProxy(proxyserver)  
+			     .setSslProxy(proxyserver);  
 			capability.setCapability(CapabilityType.PROXY,
-					new Proxy().setHttpProxy(proxyserver));
+					httpproxy);
 			capability.setCapability(CapabilityType.PROXY,
 					new Proxy().setNoProxy("localhost"));
 			logger.debug("the proxy had been set correctly now ");
@@ -88,7 +88,7 @@ public class NiceBaseDriver extends SeleneseTestBase {
 
 		// use different browser
 		if (hubUrl == null || hubUrl.trim().isEmpty()) {
-			logger.debug("the blow testing is for the local server testing");
+			logger.debug("the blow testing is for the local server testing........");
 			// if no hubUrl specified, run the tests on localhost
 			if (browser == null || browser.trim().isEmpty()) {
 				// if no browser specified, use IE
@@ -98,30 +98,41 @@ public class NiceBaseDriver extends SeleneseTestBase {
 						.setCapability(
 								InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
 								true);
-				capability.setCapability("ignoreProtectedModeSettings", true);
-				capability.setCapability("enablePersistentHover", false); // prevent
-																			// frozen
+																					// frozen
 				driver = new InternetExplorerDriver(capability);
 				logger.debug("Now Start the IE driver now ");
 			} else {
 				if (browser.trim().equalsIgnoreCase("firefox")) {
-					FirefoxProfile p = new FirefoxProfile();
-					p.setPreference("webdriver.log.file",
-							"log/firefox_startup.log");
+					logger.debug("the current browser is firefox .....");
+					//support firefox 23 with clickable the object
+					capability.setCapability(FirefoxDriver.PROFILE, FirefoxProfileFile.setFirefoxProfile());
+					
 					driver = new FirefoxDriver(capability);
-					logger.debug("Now Start the firefox driver now ");
+					logger.debug("Now had started the firefox driver now ");
 				} else if (browser.trim().equalsIgnoreCase("chrome")) {
+					logger.debug("the current running browser is chrome");
+					//set the chrome system path
+					String chromedriver=SeleniumCore.getProjectWorkspace()+"resources"+File.separator+"chromedriver.exe";
+					System.setProperty("webdriver.chrome.driver",chromedriver);
+		             
+					capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 					driver = new ChromeDriver(capability);
-					logger.debug("Now start the chrome driver now ");
+					logger.debug("Now had started the chrome driver now ");
 				} else {
+					logger.debug("The current running browser is IE");
+					String iedriver=SeleniumCore.getProjectWorkspace()+"resources"+File.separator+"IEDriverServer.exe";
+					System.setProperty("webdriver.ie.driver",iedriver);
+					
+					capability.setCapability(InternetExplorerDriver.NATIVE_EVENTS,false);
+					capability.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
 					driver = new InternetExplorerDriver(capability);
-					logger.debug("Now start the IE driver now ");
+					logger.debug("Now had started the IE driver now ");
 				}
 			}
 		}
 
 		else {
-			logger.debug("Now we will run the remote host for the testing ");
+			logger.debug("Now we will run the remote host for the testing ......");
 			// DesiredCapabilities capability=null;
 			if (browser.toLowerCase().trim().equals("ie")) {
 				// frozen windows
@@ -142,7 +153,6 @@ public class NiceBaseDriver extends SeleneseTestBase {
 				capability = DesiredCapabilities.chrome();
 				logger.debug("the browser we used is none");
 			}
-
 			// driver = new RemoteWebDriver(new URL(hubUrl), capability);
 			driver = new RemoteWebDriver(capability);
 			Capabilities actualCapabilities = ((RemoteWebDriver) driver)
@@ -156,11 +166,11 @@ public class NiceBaseDriver extends SeleneseTestBase {
 		driver.manage().window().maximize();
 		try{
 			//page load time
-			driver.manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
+			driver.manage().timeouts().pageLoadTimeout(50, TimeUnit.SECONDS);
 			//the web element to find time we need to wait 
-		    driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+		    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		    // the js executor timeout
-		    driver.manage().timeouts().setScriptTimeout(120, TimeUnit.SECONDS);
+		    driver.manage().timeouts().setScriptTimeout(40, TimeUnit.SECONDS);
 		   
 		}catch(TimeoutException e){
 			logger.info("The page or the webelment had been waited for 120 second,it cannot showed ,so the test failed");
@@ -175,23 +185,32 @@ public class NiceBaseDriver extends SeleneseTestBase {
 		// logger.debug("Involved the After Method from Parent class,the current throwable object is :"+t);
 		// if the testNG met error or exception
 		// if me the webdriver error
-		if (t instanceof WebDriverException) {
-			logger.error("Sorry ,now we met the WebDriver Exception ,maybe you had not opened the browser caused this ");
-			// String errorType="WebDriverException";
-			// captureErrorScreenshot(result,errorType);
-
+		boolean findfirefoxerror=false;
+		boolean findierror=false;
+		if(t instanceof Exception){
+			findfirefoxerror=RecoveryScenario.firefoxAddException(driver);
+			findierror=RecoveryScenario.ieContinueToWebsite(driver);		
 		}
-		// if met the assert error
-		if (t instanceof AssertionError) {
-			logger.error("Sorry ,now we met the Assertion Error ,the Assert statement met error expecting result with the actual result ");
-			String errorType = "AssertionError";
-			captureErrorScreenshot(result, errorType);
-		}
-		// if met the element cannot find in the page
-		if (t instanceof NoSuchElementException) {
-			logger.error("Sorry ,now we met the NoSuchElement Exception ,that means we cannot find the element in the page ,make sure you can identify the object correctly ");
-			String errorType = "NoSuchElementException";
-			captureErrorScreenshot(result, errorType);
+		if(!findfirefoxerror||!findierror){
+			//then got the exception we need 
+			logger.info("we had found a real error occurred in the testing ... so we will catch a screenshot for this error.....");
+			if (t instanceof WebDriverException) {
+				logger.error("Sorry ,now we met the WebDriver Exception ,maybe you had not opened the browser caused this ");
+				// String errorType="WebDriverException";
+				// captureErrorScreenshot(result,errorType);
+			}
+			// if met the assert error
+			if (t instanceof AssertionError) {
+				logger.error("Sorry ,now we met the Assertion Error ,the Assert statement met error expecting result with the actual result ");
+				String errorType = "AssertionError";
+				captureErrorScreenshot(result, errorType);
+			}
+			// if met the element cannot find in the page
+			if (t instanceof NoSuchElementException) {
+				logger.error("Sorry ,now we met the NoSuchElement Exception ,that means we cannot find the element in the page ,make sure you can identify the object correctly ");
+				String errorType = "NoSuchElementException";
+				captureErrorScreenshot(result, errorType);
+			}
 		}
 
 	}
@@ -230,7 +249,7 @@ public class NiceBaseDriver extends SeleneseTestBase {
 		FileUtils.copyFile(scrFile, new File(screenshotpath + "reporter"
 				+ separator + filename));
 		// } catch (IOException e) {
-		// TODO Auto-generated catch block
+
 		// e.printStackTrace();
 		// logger.error("Sorry,we cannot save the error screenshot file for this file,Catch the IOException :"+screenshotpath);
 		// }

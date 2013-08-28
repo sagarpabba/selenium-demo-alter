@@ -16,7 +16,6 @@ import org.testng.Assert;
 
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
-import com.hp.utility.TimerUtils;
 
 public class ListSearch_Assessment_Run_Page {
 
@@ -58,31 +57,23 @@ public class ListSearch_Assessment_Run_Page {
 
 	public void verifyPageElements() {
 		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
-
-		logger.info("Search run Result page .this page head is:"
-				+ header.getText());
-		boolean typelist = assessmenttypelist.isDisplayed();
-		boolean searchenabled = searchbtn.isEnabled();
-		boolean resetenabled = resetbtn.isEnabled();
-		if (typelist && searchenabled && resetenabled) {
-			logger.info("Search run result page .found all the elements in the page ");
-		} else {
-			logger.error("Search run result page.we cannot find some elements in the page,the test is failed");
-			Assert.fail();
-
-		}
+		logger.info("\n***************************************"+pagename+"****************************************************");       
+		logger.info("Search run Result page .this page head is:"+ header.getText());
+		SeleniumCore.assertDisplayed("Assert the assessment type list is displayed in the page", assessmenttypelist);
+		SeleniumCore.assertEnabled("Assert the search button is enabled in the page", searchbtn);
+		SeleniumCore.assertEnabled("Assert the reset button is enabled in the page", resetbtn);
+	
 	}
 
 	public RunDetail_Page searchRun(String assessmenttype, String runid,String runstarttime)
 			throws Exception {
 
 		boolean findresult = false;	
-
 		int searchcount = 0;
-		while (!findresult) {
-			
-			
+		
+		String starttime=SeleniumCore.getCurrentTime(Calendar.getInstance().getTime());
+		
+		while (!findresult) {		
 			logger.info("Now go to the run result page to search the run result,the run ID is:"
 					+ runid);
 			if (assessmenttype.toLowerCase().equals("fwsw")) {
@@ -100,7 +91,7 @@ public class ListSearch_Assessment_Run_Page {
 			}
 
 			// SeleniumCore.clickElement(driver, iscompletedcheckbox);
-			SeleniumCore.selectCheckbox(iscompletedcheckbox);
+			SeleniumCore.checkboxed(iscompletedcheckbox);
 
 			String runstartenddate = new SimpleDateFormat("MM/dd/yyyy")
 					.format(Calendar.getInstance().getTime());
@@ -139,12 +130,15 @@ public class ListSearch_Assessment_Run_Page {
 						logger.info("the found assessment run id  is:"
 								+ pagerunid);
 						if (pagerunid.equals(runid)) {
+														
+							String endtime=SeleniumCore.getCurrentTime(Calendar.getInstance().getTime());
+							String totaltime=SeleniumCore.timeLastMinutes(starttime, endtime);
 							logger.info("Now we found the matched Run ID ,and we will check the box and then download the report.");
 							Resulter.log("STATUS_RUN_ID", "Passed");
-							Resulter.log("COMMENT_RUN_ID", "RUN ID:"+runid);
+							Resulter.log("COMMENT_RUN_ID", "RUN ID:"+runid+",Search Time Takes :"+totaltime+" minutes");
 							WebElement checkbox = row.findElement(By
 									.xpath("td[1]"));
-							SeleniumCore.selectCheckbox(checkbox);
+							SeleniumCore.checkboxed(checkbox);
 							WebElement downloadfile = row.findElement(By
 									.xpath("td[8]/input"));
 							SeleniumCore.clickElement(downloadfile);
@@ -160,12 +154,14 @@ public class ListSearch_Assessment_Run_Page {
 				logger.info("the search run result list is empty ");
 			}
 			if (searchcount > 10) {
-				String endtime=TimerUtils.getCurrentTime(Calendar.getInstance().getTime());
+				String endtime=SeleniumCore.getCurrentTime(Calendar.getInstance().getTime());
+				String totaltime=SeleniumCore.timeLastMinutes(starttime, endtime);
+				
 				logger.error("Time out,Sorry we cannot find this result and had tried to search it with :"
 						+ searchcount
 						+ " times,and time had took about 10 minutes");
 				Resulter.log("STATUS_RUN_ID", "Failed");
-				Resulter.log("COMMENT_RUN_ID", "RUN ID:"+runid+",Canot be found,Run ID Run From:"+runstarttime+",End Search time:"+endtime);
+				Resulter.log("COMMENT_RUN_ID", "RUN ID:"+runid+" Canot be found,Run ID Run From:"+runstarttime+",End Search time:"+endtime+",Search Time Takes :"+totaltime+" minutes");
 				Assert.fail("We cannot find the RUN ID after 10 minutes,so this test gives failed result "
 						+ ",the Run ID is:"+runid+",Had run it from: "+runstarttime+",end search time is:"+endtime);
 				break;
@@ -173,7 +169,8 @@ public class ListSearch_Assessment_Run_Page {
 			SeleniumCore.sleepSeconds(60);
 
 		}
-
+		
+	
 		// next do
 		return PageFactory.initElements(driver, RunDetail_Page.class);
 
