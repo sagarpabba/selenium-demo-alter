@@ -1,22 +1,23 @@
 package com.hp.pop;
 
 import java.util.Calendar;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
-import com.hp.utility.TimerUtils;
 
 public class Request_Summary_Page {
 
 	private static Logger logger = Logger.getLogger(Request_Summary_Page.class);
-	@SuppressWarnings("unused")
 	private WebDriver driver;
 
 	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[1]/div/div[2]/ul/li[1]")
@@ -34,36 +35,29 @@ public class Request_Summary_Page {
 
 	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[2]/div/div")
 	private WebElement notes;
+	
 
 	public Request_Summary_Page(WebDriver driver) {
 		this.driver = driver;
 	}
 
-	public void verifyPageElements() {
-		boolean isrunid = SeleniumCore.isDisplayed(runid);
-		boolean isrequesttype = SeleniumCore.isDisplayed(requesttype);
-		boolean iscustomer = SeleniumCore.isDisplayed(customername);
-		boolean isaddress = SeleniumCore.isDisplayed(address);
-		boolean islanguage = SeleniumCore.isDisplayed(languages);
-
+	public void verifyPageElements() 
+	{
 		String pagename=this.getClass().getName();
 		logger.info("\n***************************************"+pagename+"****************************************************");
-
-		if (isrunid && isrequesttype && iscustomer && isaddress && islanguage) {
-			logger.info("Request summary view page .we found all the webelments displayed in the page"
-					+ isrunid
-					+ ""
-					+ ",request type:"
-					+ isrequesttype
-					+ ",customer name:"
-					+ iscustomer
-					+ ",address :"
-					+ isaddress
-					+ ",language:" + islanguage);
-		} else {
-			Assert.fail();
-			logger.error("Request summary view page ..Sorry the webelment cannot be found in the request summary page ");
+		try{
+        SeleniumCore.assertDisplayed("Assert the element displayed in the Request summary page", runid);
+        SeleniumCore.assertDisplayed("Assert the element displayed in the Request summary page", requesttype);
+        SeleniumCore.assertDisplayed("Assert the element displayed in the Request summary page", customername);
+        SeleniumCore.assertDisplayed("Assert the element displayed in the Request summary page", address);
+        SeleniumCore.assertDisplayed("Assert the element displayed in the Request summary page", languages);
 		}
+		catch(NoSuchElementException e){
+			Resulter.log("STATUS_SCAN_EMAIL_RESULT", "Failed");
+			Resulter.log("COMMENT_SCAN_EMAIL_RESULT", "the request summary page cannot display correctly now");
+			Assert.fail("All the webelement canot display in the summary page ");
+		}
+      
 	}
 
 	public String getRunID() throws InterruptedException {
@@ -76,7 +70,7 @@ public class Request_Summary_Page {
 	}
 
 	public String getRunStartTime(){
-		return TimerUtils.getCurrentTime(Calendar.getInstance().getTime());
+		return SeleniumCore.getCurrentTime(Calendar.getInstance().getTime());
 	}
 	public String getRequestType() {
 		return requesttype.getText().trim();
@@ -96,6 +90,15 @@ public class Request_Summary_Page {
 
 	public String getDeviceNumber() {
 		return devicenumbers.getText().trim().split("[")[0];
+	}
+	
+	public ListSearch_Assessment_Run_Page goSearchRunPage(){
+		//go to the search run result page
+		Map<String,String> mapdata=SeleniumCore.importDataTable("login_page");
+		String baseurl=mapdata.get("Base_URL");
+		String runurl=baseurl+"/run";
+		driver.get(runurl);
+		return PageFactory.initElements(driver, ListSearch_Assessment_Run_Page.class);
 	}
 
 }

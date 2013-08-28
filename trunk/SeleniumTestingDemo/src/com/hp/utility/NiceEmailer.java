@@ -31,8 +31,7 @@ public class NiceEmailer {
 
 	private static final Logger logger = Logger.getLogger(NiceEmailer.class);
 
-	String path = new File(".").getAbsolutePath();
-	String probasepath = path.substring(0, path.length() - 1);
+	String probasepath = SeleniumCore.getProjectWorkspace();
 
 	private final String CURRENT_TIME = new SimpleDateFormat("yyyy-MM-dd")
 			.format(Calendar.getInstance().getTime());
@@ -48,7 +47,7 @@ public class NiceEmailer {
 	 * send the email via SMTP Sever ,this is the main test param: the email
 	 * setting data from the excel file
 	 */
-	@Test(dataProviderClass = com.hp.dataprovider.ExcelDataProivderEmailSheet.class, dataProvider = "devEmail")
+	@Test(dataProviderClass = com.hp.utility.ExcelDataProivderEmailSheet.class, dataProvider = "devEmail")
 	public void sendEmail(Map<String, String> emailmap) throws IOException,
 			ParseException {
 
@@ -89,7 +88,6 @@ public class NiceEmailer {
 				session = Session.getDefaultInstance(prop, new Authenticator() {
 					@Override
 					protected PasswordAuthentication getPasswordAuthentication() {
-						// TODO Auto-generated method stub
 						return new PasswordAuthentication(username, password);
 					}
 				});

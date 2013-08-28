@@ -10,17 +10,16 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 public class FileUtils {
 
 	private static Logger logger = Logger.getLogger(FileUtils.class);
-	private static String path = new File(".").getAbsolutePath();
-	private static String probasepath = path.substring(0, path.length() - 1);
-	// constant
-	private static final String RUN_RESULT_PATH = probasepath + "reporter"
-			+ File.separator + "reporter.log";
+
+	private static final String RUN_RESULT_PATH = SeleniumCore.getProjectWorkspace() + "reporter"+ File.separator + "reporter.log";
 	private static File logfile;
 
 	public static boolean newFile(String filename) {
@@ -205,5 +204,15 @@ public class FileUtils {
 		}
 		//
 		return htmlcontent.toString();
+	}
+	public static List<String> getSubFiles(String listfolder){
+		List<String> filelists=new ArrayList<String>();
+		File folder=new File(listfolder);
+		File[] files=folder.listFiles();
+		for(File subfile:files){
+			String filenamepath=subfile.getAbsolutePath();
+			filelists.add(filenamepath);
+		}	
+		return filelists;
 	}
 }

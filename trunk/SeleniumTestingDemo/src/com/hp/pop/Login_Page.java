@@ -54,6 +54,7 @@ public class Login_Page {
 	}
 
 	// log in the system using the valid credential
+	
 	public Home_Page logAsValidUser(String username, String inputpassword) {
 		String pagename=this.getClass().getName();
 		logger.info("\n***************************************"+pagename+"****************************************************");

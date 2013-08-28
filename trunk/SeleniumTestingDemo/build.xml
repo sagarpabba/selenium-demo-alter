@@ -11,13 +11,16 @@
     <path id="build.class.path">
         <pathelement location="${classes.dir}" />
         <pathelement location="${lib.dir}/testng-6.8.jar" />
-        <pathelement location="${lib.dir}/selenium-server-standalone-2.33.0.jar" />
+        <pathelement location="${lib.dir}/selenium-server-standalone-2.35.0.jar" />
         <pathelement location="${lib.dir}/selenium-java-2.33.0.jar" />
         <pathelement location="${lib.dir}/log4j-1.2.17.jar" />
         <pathelement location="${lib.dir}/apache-log4j-extras-1.1.jar" />   
         <pathelement location="${lib.dir}/jxl.jar"/>
         <pathelement location="${lib.dir}/mail.jar"/>
     	<pathelement location="${lib.dir}/jsoup-1.7.2.jar"/>
+    	<pathelement location="${lib.dir}/jacob-1.18-M1-x64.dll"/>
+    	<pathelement location="${lib.dir}/jacob-1.18-M1-x86.dll"/>
+    	<pathelement location="${lib.dir}/jacob.jar"/>
     </path>
     <macrodef name="MyTimestamp">
          <sequential >
@@ -31,12 +34,12 @@
     <!-- default run task -->
     <target name="run" description="run the selenium driver testing">
         <antcall target="clean" />
-        <antcall target="startSeleniumServer_local" />
+       <!-- <antcall target="startSeleniumServer_local" /> -->
      
         <antcall target="compile" />
         <antcall target="runTests" />
         
-        <antcall target="stopSeleniumServer" />
+      <!--  <antcall target="stopSeleniumServer" />  -->
     </target>
      
     <!-- Delete old data and create new directories -->

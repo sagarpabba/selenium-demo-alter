@@ -12,8 +12,8 @@ public class Resulter {
 	// log a result status for the test case execution
 	private static Logger logger = Logger.getLogger(Resulter.class);
 	private static File logdir = null;
-	private static String reporterpath = System.getProperty("user.dir")
-			+ File.separator + "reporter";
+	private static String reporterpath =SeleniumCore.getProjectWorkspace()+"reporter";
+
 
 	// log a status
 	public static void log(String title, String result) {
@@ -21,7 +21,6 @@ public class Resulter {
 			logdir = new File(reporterpath);
 			if (!logdir.exists()) {
 				logdir.mkdir();
-
 			}
 
 			FileWriter writer = new FileWriter(logdir + File.separator

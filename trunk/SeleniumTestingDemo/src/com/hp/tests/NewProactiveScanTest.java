@@ -10,6 +10,7 @@ import com.hp.pop.Launch_Assessment_Page;
 import com.hp.pop.ListSearch_Assessment_Run_Page;
 import com.hp.pop.Request_Review_Page;
 import com.hp.pop.Request_Summary_Page;
+import com.hp.pop.RunDetail_Page;
 import com.hp.pop.Select_Customer_Page;
 import com.hp.pop.Select_Device_Page;
 import com.hp.pop.Select_Options_Page;
@@ -22,9 +23,6 @@ public class NewProactiveScanTest extends NiceBaseDriver {
 	private String runid;
 	private String runstart;
 
-	private String homeurl = "https://proactive-assessments-itg.corp.hp.com/web/";
-	private String runurl = "https://proactive-assessments-itg.corp.hp.com/web/run/";
-	
 	private Home_Page homepage ;
 	private Launch_Assessment_Page lap;
 	private Select_Customer_Page scp;
@@ -32,6 +30,8 @@ public class NewProactiveScanTest extends NiceBaseDriver {
 	private Select_Options_Page sop;
 	private Request_Review_Page rrp;
 	private Request_Summary_Page rsp;
+	private ListSearch_Assessment_Run_Page larp;
+    private RunDetail_Page rdp;
 	
 	private String emailaddress;
 	private List<String> languages;
@@ -39,7 +39,6 @@ public class NewProactiveScanTest extends NiceBaseDriver {
 	@Test(description = "check elements in the home page", testName = "Verify the elements in home page")
 	public void test_verifyHomePage() {
 
-		SeleniumCore.OpenURL(driver, homeurl);
 		// search device
 		homepage = PageFactory.initElements(driver, Home_Page.class);
 		homepage.verifyPageElements();
@@ -83,24 +82,30 @@ public class NewProactiveScanTest extends NiceBaseDriver {
 		rrp.verifyPageElements();
 		rsp=rrp.RunRequest();
 
+		rsp.verifyPageElements();
 		runid = rsp.getRunID();
 		runstart=rsp.getRunStartTime();
 		// search the run result
-		SeleniumCore.OpenURL(driver, runurl);
+		larp=rsp.goSearchRunPage();
 		SeleniumCore.sleepSeconds(3);
+		
 	}
 
 	@Test(description = "list run result", dependsOnMethods = "test_Review")
 	public void test_ListRun() throws Exception {
 
-		ListSearch_Assessment_Run_Page larp = PageFactory.initElements(driver,
-				ListSearch_Assessment_Run_Page.class);
 		larp.verifyPageElements();
-		larp.searchRun("pc", runid,runstart);
+		rdp=larp.searchRun("pc", runid,runstart);	
+		logger.info("exit testing now......");
+		
+	}
+	@Test(description = "list run detail reuslt", dependsOnMethods = "test_ListRun")
+	public void test_ListRunDetail() throws Exception {
 
 		
-		logger.info("exit testing now......");
-		logger.info("Get the browser info is:"+SeleniumCore.getBrowserType(driver));
+		rdp.verifyPageElements();
+		rdp.downloadReport();	
+		logger.info("had downloaed the report successfully ...exit testing now......");
+		
 	}
-
 }
