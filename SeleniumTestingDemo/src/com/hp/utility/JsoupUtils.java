@@ -27,8 +27,6 @@ public class JsoupUtils {
 	private static final String TODAY_REPORT_DIR = projectpath + "reporter";
 	private final static String CURRENT_TIME = new SimpleDateFormat(
 			"yyyy-MM-dd").format(Calendar.getInstance().getTime());
-	private final static String CURRENT_RUN_TIME = new SimpleDateFormat(
-			"EEE,MMM dd HH:mm:ss z").format(Calendar.getInstance().getTime());
 	private final static String TODAY_REPORT = TODAY_REPORT_DIR
 			+ File.separator + "TestReporter" + "_" + CURRENT_TIME + ".htm";
 
@@ -114,7 +112,7 @@ public class JsoupUtils {
 				starttime).toString();
 		String taketime = SeleniumCore.betweenTime(starttime);
 		String runtime = "Start time:" + changedtime + "\n End time:"
-				+ CURRENT_RUN_TIME + "\ntotal time:" + taketime;
+				+ CURRENT_TIME + "\ntotal time:" + taketime;
 
 		int totalcases = stepsize - 2 - 2;
 		//int passcases = FileUtils.textTimes("pass");
@@ -180,7 +178,7 @@ public class JsoupUtils {
 		String imagecode_screenshot = "@hp\" alt=\" this image cannot show,maybe blocked by your email setting \"><br>"
 				+ "</span>" + "</td><tr>";
 		int filesize = FileUtils.isFilesExisting(TODAY_REPORT_DIR, ".png");
-		File[] errorshotfile = FileUtils.listFiles(TODAY_REPORT_DIR, ".png");
+		File[] errorshotfile = FileUtils.listFilesEndsWith(TODAY_REPORT_DIR, ".png");
 		if (filesize > 0) {
 			logger.debug("this testing had generated the error screenshot, so we will put into this screenshot into email ");
 			for (int fileindex = 0; fileindex < filesize; fileindex++) {

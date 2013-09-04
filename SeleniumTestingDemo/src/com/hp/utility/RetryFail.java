@@ -17,7 +17,7 @@ import org.testng.ITestResult;
 public class RetryFail implements IRetryAnalyzer {
 	
 	private static Logger logger=Logger.getAnonymousLogger();
-	private final int m_maxRetries = 2;
+	private final int m_maxRetries = 1;
 	private final int m_sleepBetweenRetries = 1000;
 	private int currentTry;
 	private String previousTest = null;

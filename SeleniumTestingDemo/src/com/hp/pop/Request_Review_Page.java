@@ -18,9 +18,9 @@ public class Request_Review_Page {
 	private static Logger logger = Logger.getLogger(Request_Review_Page.class);
 	private WebDriver driver;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='divREVIEW_REQUEST']/h2")
+	@FindBy(how = How.XPATH, using = "//*[@id='divREVIEW_REQUEST']/h2")
 	private WebElement header;
-	@FindBy(how = How.XPATH, using = ".//*[@id='runBtn']")
+	@FindBy(how = How.XPATH, using = "//*[@id='runBtn']")
 	private WebElement runbtn;
 
 	// @FindBy(how=How.XPATH,using=".//*[@id='hpit-topMenu']/li[2]/ul/li[2]/a")

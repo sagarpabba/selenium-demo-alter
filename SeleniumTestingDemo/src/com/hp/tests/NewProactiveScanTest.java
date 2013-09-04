@@ -14,10 +14,10 @@ import com.hp.pop.RunDetail_Page;
 import com.hp.pop.Select_Customer_Page;
 import com.hp.pop.Select_Device_Page;
 import com.hp.pop.Select_Options_Page;
-import com.hp.utility.NiceBaseDriver;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.SeleniumCore;
 
-public class NewProactiveScanTest extends NiceBaseDriver {
+public class NewProactiveScanTest extends BaseDriver {
 
 
 	private String runid;

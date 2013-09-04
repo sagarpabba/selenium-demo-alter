@@ -49,6 +49,7 @@ public class Login_Page {
 
 	// click the submit button
 	public void clickSubmitBtn() {
+		SeleniumCore.highLight(driver, submitbtn);
 		SeleniumCore.clickElement(submitbtn);
 		logger.info("Click the Submit button to log in the home page");
 	}

@@ -8,17 +8,17 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
 import com.hp.pop.Login_Page;
-import com.hp.utility.NiceBaseDriver;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.Resulter;
 import com.hp.utility.RetryFail;
 import com.hp.utility.SeleniumCore;
 
-public class LoginHomeTest extends NiceBaseDriver {
+public class LoginHomeTest extends BaseDriver {
 
 	private String username;
 	private String password;
 	@Test(description = "Login in the PAF home page ,using the username and password", testName = "Login in PAF", alwaysRun = true, successPercentage = 10, groups = "logininterface")
-	public void test_loginInterface() {
+	public void test_loginInterface() throws Exception {
 
 		Map<String, String> mapdata = SeleniumCore
 				.importDataTable("login_page");
@@ -27,6 +27,10 @@ public class LoginHomeTest extends NiceBaseDriver {
 	    password = mapdata.get("LOG_Password");
 		// open the login page
 		SeleniumCore.OpenURL(driver, testedURL);
+		if(SeleniumCore.getBrowserType(driver).contains("internet explorer")){
+		  driver.navigate().to("javascript:document.getElementById('overridelink').click()");
+		}
+		SeleniumCore.sleepSeconds(8);
 		logger.info("We open the login page to input the username and password......");
 
 		

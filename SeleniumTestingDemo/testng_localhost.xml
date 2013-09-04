@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="E2EDemoRunner" preserve-order="true"  skipfailedinvocationcounts="true" configfailurepolicy="continue" thread-count="2" parallel="false">
+  <parameter name="hostname" value="localhost"></parameter>
+  <parameter name="browsername" value="firefox"></parameter>
+  <parameter name="proxyserver" value="web-proxy.atlanta.hp.com:8088"></parameter>
   <listeners>
 	  <listener class-name="com.hp.utility.RetryListener" />
   </listeners>
@@ -10,21 +13,19 @@
      <class name="com.hp.tests.LoginHomeTest"></class>   
    </classes>
   </test>
- 
-  <!-- new a FW&SW Assessment -->
+   <!-- new a com.hp.tests.NewProactiveScanTest -->
    
   <test name="New FWSW Assessment and search run result" preserve-order="true" skipfailedinvocationcounts="true">
    <classes>
-    <class name="com.hp.tests.NewProactiveScanTest"></class> 
+    <class name="com.hp.tests.TestRunnerDemo"></class> 
    </classes>
   </test>
-  <!-- 
+   <!--  
+ 
   <test name="html email reporter" preserve-order="true" skipfailedinvocationcounts="true">
     <classes>
-      <class name="com.hp.utility.NiceEmailer"></class>
+      <class name="com.hp.tests.EmailerTest"></class>
     </classes>
   </test>  
-   -->
-
-    
+    -->
 </suite> <!-- E2EDemoRunner -->

@@ -139,13 +139,12 @@ public class ExcelUtils {
 		return rowdata.iterator();
 	}
 
-	public static Map<String, String> getSpecifySheet(String excelpath,String sheetname,String hostname) {
+	public static Map<String, String> getSpecifySheet(String excelpath,String sheetname,String casetype) {
 
 		// List<Object[]> rowdata=new ArrayList<Object[]>();
 		List<String> header = null;
 
 		Map<String, String> rowmap = new HashMap<String, String>();
-		;
 		// String excelpath="";
 		boolean findrow = false;
 		int rownumber = 0;
@@ -162,19 +161,20 @@ public class ExcelUtils {
 			}
 			logger.debug("Current excel header is :" + header);
 			for (int rowindex = 1; rowindex < rows; rowindex++) {
-				// get the column 2 to get the host name,the column index begin with 0
-				String cellcontent = sheet.getCell(1, rowindex).getContents()
+				// get the column 1 to get the host name,the column index begin with 0
+				String cellcontent = sheet.getCell(0, rowindex).getContents()
 						.toLowerCase().trim();
-				String lasthostname = hostname.toLowerCase().trim();
+				logger.info("found the first column content in excel is:"+cellcontent);
 				// System.out.println("content is :"+cellcontent+",host name is :"+hostname2);
 				// System.out.println("compare values:"+(cellcontent==hostname2));
-				if (cellcontent.equals(lasthostname)) {
+				if (cellcontent.equalsIgnoreCase(casetype)) {
+					logger.debug("Found the correct cell data,the case type we found in excel is:"+cellcontent);
 					findrow = true;
 					rownumber = rowindex;
 					break;
 				} else {
 					findrow = false;
-					logger.debug("sorry we had not found this host in the spreadsheet");
+					logger.debug("sorry we had not found this case  in the spreadsheet");
 				}
 
 				logger.debug("current Row data is :" + rowmap);

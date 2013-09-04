@@ -13,11 +13,11 @@ import com.hp.pop.Request_Summary_Page;
 import com.hp.pop.Select_Customer_Page;
 import com.hp.pop.Select_Device_Page;
 import com.hp.pop.Select_Options_Page;
-import com.hp.utility.NiceBaseDriver;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
 
-public class NewSystemHealthCheckTest extends NiceBaseDriver {
+public class NewSystemHealthCheckTest extends BaseDriver {
 
 
 	private String username;

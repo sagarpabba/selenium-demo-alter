@@ -22,19 +22,19 @@ public class Select_Options_Page {
 	private static Logger logger = Logger.getLogger(Select_Options_Page.class);
 	private WebDriver driver;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='emailRequestor']")
+	@FindBy(how = How.XPATH, using = "//*[@id='emailRequestor']")
 	private WebElement mailname;
 	
-	@FindBy(how=How.XPATH,using=".//*[@id='language']")
+	@FindBy(how=How.XPATH,using="//*[@id='language']")
 	@CacheLookup
 	private WebElement languages;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='saveSubscription']")
+	@FindBy(how = How.XPATH, using = "//*[@id='saveSubscription']")
 	private WebElement savesubscription;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='back']")
+	@FindBy(how = How.XPATH, using = "//*[@id='back']")
 	private WebElement backbtn;
-	@FindBy(how = How.XPATH, using = ".//*[@id='next']")
+	@FindBy(how = How.XPATH, using = "//*[@id='next']")
 	private WebElement nextbtn;
 
 	public Select_Options_Page(WebDriver driver) {
@@ -135,7 +135,7 @@ public class Select_Options_Page {
 			Resulter.log("COMMENT_SCHEDULING", "N/A");
 		}
      
-		
+		SeleniumCore.highLight(driver, nextbtn);
 		SeleniumCore.clickElement(nextbtn);
 		SeleniumCore.sleepSeconds(4);
 		return PageFactory.initElements(driver, Request_Review_Page.class);

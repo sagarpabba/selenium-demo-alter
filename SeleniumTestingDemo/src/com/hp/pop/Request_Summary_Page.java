@@ -20,20 +20,20 @@ public class Request_Summary_Page {
 	private static Logger logger = Logger.getLogger(Request_Summary_Page.class);
 	private WebDriver driver;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[1]/div/div[2]/ul/li[1]")
+	@FindBy(how = How.XPATH, using = "//*[@id='main_column']/div[1]/div/div[2]/ul/li[1]")
 	private WebElement runid;
-	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[1]/div/div[2]/ul/li[2]")
+	@FindBy(how = How.XPATH, using = "//*[@id='main_column']/div[1]/div/div[2]/ul/li[2]")
 	private WebElement requesttype;
-	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[1]/div/div[2]/ul/li[3]")
+	@FindBy(how = How.XPATH, using = "//*[@id='main_column']/div[1]/div/div[2]/ul/li[3]")
 	private WebElement customername;
-	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[1]/div/div[2]/ul/li[4]")
+	@FindBy(how = How.XPATH, using = "//*[@id='main_column']/div[1]/div/div[2]/ul/li[4]")
 	private WebElement address;
-	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[1]/div/div[2]/ul/li[5]")
+	@FindBy(how = How.XPATH, using = "//*[@id='main_column']/div[1]/div/div[2]/ul/li[5]")
 	private WebElement languages;
-	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[1]/div/div[2]/ul/li[6]")
+	@FindBy(how = How.XPATH, using = "//*[@id='main_column']/div[1]/div/div[2]/ul/li[6]")
 	private WebElement devicenumbers;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[2]/div/div")
+	@FindBy(how = How.XPATH, using = "//*[@id='main_column']/div[2]/div/div")
 	private WebElement notes;
 	
 
