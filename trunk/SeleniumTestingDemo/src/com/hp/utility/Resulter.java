@@ -22,7 +22,7 @@ public class Resulter {
 			if (!logdir.exists()) {
 				logdir.mkdir();
 			}
-
+          //  FileReader reader=new filereader()
 			FileWriter writer = new FileWriter(logdir + File.separator
 					+ "reporter.log", true);
 			BufferedWriter bufferwriter = new BufferedWriter(writer);
@@ -39,5 +39,18 @@ public class Resulter {
 
 		}
 	}
-
+    
+	public static void logAppend(String title, String appendcomment){
+	
+			logdir = new File(reporterpath);
+			if (!logdir.exists()) {
+				logdir.mkdir();
+			}
+			
+	}
+    public static void logUpdate(String title, String updatelog){
+		//if found the log,we will append the result for this .if not found it we will write a line comment for this checkpoint.
+    	
+	}
+	
 }

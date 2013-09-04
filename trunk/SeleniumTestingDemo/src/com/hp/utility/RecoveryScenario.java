@@ -50,16 +50,20 @@ public class RecoveryScenario {
 	public static boolean ieContinueToWebsite(WebDriver driver){
 		logger.info("Using the javascript to bypass the continue to this websitelink error in the page");
 		boolean useRecovery=false;
-		try{
-		   driver.findElement(By.id("overridelink"));
-		   logger.info("we found the continue to run link in the page ,so we will click it and navigate to the normal page");
-		   driver.navigate().to("javascript:document.getElementById('overridelink').click()");
-		   useRecovery=true;
-	     }
-	    catch(NoSuchElementException se){
-		//SeleniumCore.executeJS(driver, script);
-	    	logger.info("we had not find the continue to run link in this page ,so we will not use this recovery in this page");
-	    }
+		String elementid=(String) SeleniumCore.executeJS(driver, "return window.document.getElementById('overridelink');");
+		logger.info("get the overridelink id is:"+elementid);
+		if(elementid!=null){
+			try{
+			   driver.findElement(By.id("overridelink"));
+			   logger.info("we found the continue to run link in the page ,so we will click it and navigate to the normal page");
+			   driver.navigate().to("javascript:document.getElementById('overridelink').click()");
+			   useRecovery=true;
+		     }
+		    catch(NoSuchElementException se){
+			//SeleniumCore.executeJS(driver, script);
+		    	logger.info("we had not find the continue to run link in this page ,so we will not use this recovery in this page");
+		    }
+		}
 		return useRecovery;
 	}
 }

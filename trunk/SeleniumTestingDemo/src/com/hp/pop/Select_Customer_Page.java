@@ -20,25 +20,25 @@ public class Select_Customer_Page {
 	private static Logger logger = Logger.getLogger(Select_Customer_Page.class);
 	private WebDriver driver;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='divSELECT_CUSTOMER']/h2")
+	@FindBy(how = How.XPATH, using = "//*[@id='divSELECT_CUSTOMER']/h2")
 	private WebElement customertitle;
-	@FindBy(how = How.XPATH, using = ".//*[@id='customerOrgSiteCountry']")
+	@FindBy(how = How.XPATH, using = "//*[@id='customerOrgSiteCountry']")
 	private WebElement country;
-	@FindBy(how = How.XPATH, using = ".//*[@id='customerOrgSiteState']")
+	@FindBy(how = How.XPATH, using = "//*[@id='customerOrgSiteState']")
 	private WebElement state;
-	@FindBy(how = How.XPATH, using = ".//*[@id='customerOrgSiteCity']")
+	@FindBy(how = How.XPATH, using = "//*[@id='customerOrgSiteCity']")
 	private WebElement city;
-	@FindBy(how = How.XPATH, using = ".//*[@id='searchString']")
+	@FindBy(how = How.XPATH, using = "//*[@id='searchString']")
 	private WebElement containtext;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='main_column']/div[2]")
+	@FindBy(how = How.XPATH, using = "//*[@id='main_column']/div[2]")
 	private WebElement mainresult;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='gview_optionalCustomersGrid']/div[3]")
+	@FindBy(how = How.XPATH, using = "//*[@id='gview_optionalCustomersGrid']/div[3]")
 	private WebElement customerlist;
 	
 	// this is the FUT element here 
-	@FindBy(how=How.XPATH,using=".//*[@id='requestTabDiv']/ul/li[1]/a")
+	@FindBy(how=How.XPATH,using="//*[@id='requestTabDiv']/ul/li[1]/a")
 	private WebElement filtertab;
 
 	@FindBy(how = How.XPATH, using = "//*[@id='back']")
@@ -103,8 +103,10 @@ public class Select_Customer_Page {
 		SeleniumCore.clearAndTypeString(containtext, containtextdata);
 		logger.info("Select customer page -input the contain text with text:"
 				+ containtextdata);
+		SeleniumCore.highLight(driver, containtext);
 		SeleniumCore.waitForObjectDisplay(driver.findElement(By
 				.xpath(imagepath)));
+		SeleniumCore.sleepSeconds(4);
 		List<WebElement> allrows = SeleniumCore.findElementListByTagName(
 				customerlist, "tr");
 		logger.info("we will search the Customer list to find the matched customer....");
@@ -121,8 +123,7 @@ public class Select_Customer_Page {
 			if (customervalue.equals(customerdata)
 					&& addressvalue.equals(addressdata)) {
 				logger.info("Select customer page -Now we found the specified customer name in the table,we will check this customer in the table,and click the next button");
-				WebElement checkboxvalue = SeleniumCore.findElementByXpath(row,
-						".//td[1]");
+				
 				//WebElement primarybox=SeleniumCore.findElementByXpath(row, ".//td[5]/input");
 				Resulter.log("COMMENT_ORG_SITE_ID", orgsite);
 			//	String tagid=checkboxvalue.getAttribute("id");
@@ -131,27 +132,72 @@ public class Select_Customer_Page {
 				//SeleniumCore.highLight(driver, checkboxvalue);
 				//logger.info(checkboxvalue.getTagName());
 			//	checkboxvalue.submit();
-				//checkboxvalue.getAttribute(arg0)
-				SeleniumCore.highLight(driver, checkboxvalue);
+				//checkboxvalue.getAttribute(arg0)				
 				//SeleniumCore.sendKeys(checkboxvalue, Keys.ENTER);
-				SeleniumCore.clickElement(checkboxvalue);
+				WebElement checkboxvalue;
+				if(SeleniumCore.getBrowserType(driver).contains("chrome")){
+					logger.info("as the current browser is chrome we use the js to select the customer in the page");
+					//SeleniumCore.executeJS(driver, "arguments[0].scrollIntoView(true);", checkboxvalue);
+					//SeleniumCore.executeJS(driver, "window.scrollTo(0,"+checkboxvalue.getLocation().y+")");
+					checkboxvalue = SeleniumCore.findElementByXpath(row,
+							".//td[1]/input");
+				  //  SeleniumCore.executeJS(driver, "var evt = document.createEvent('MouseEvents');"
+					//		+ "evt.initMouseEvent('click',true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0,null);"
+				    	//	+ "arguments[0].dispatchEvent(evt);", checkboxvalue);
+					String tagid=checkboxvalue.getAttribute("id");
+				//	logger.info("the checkbox id is:"+tagid);
+					//WebElement checkcss=row.findElement(By.cssSelector("#"+tagid));
+					//SeleniumCore.executeJS(driver, "window.scrollTo(0,"+checkboxvalue.getLocation().y+")");
+					//SeleniumCore.executeJS(driver, "arguments[0].scrollIntoView(true);", checkboxvalue);
+					SeleniumCore.highLight(driver, checkboxvalue);
+					///SeleniumCore.clickElement(checkboxvalue);
+					String script="document.getElementById('"+tagid+"').click();";
+					
+					SeleniumCore.executeJS(driver, script);
+					
+					//WebElement checkbox=SeleniumCore.findElementByCSS(row, "#"+tagid);
+					//SeleniumCore.highLight(driver, checkbox);
+					//SeleniumCore.clickElement(driver,checkboxvalue);
+					
+				}
+				else{
+					checkboxvalue = SeleniumCore.findElementByXpath(row,
+							".//td[1]");
+					SeleniumCore.highLight(driver, checkboxvalue);
+					SeleniumCore.clickElement(checkboxvalue);
+				}
+				//SeleniumCore.sleep(driver, 3);
+			
+				
 				//String script="document.getElementById('"+tagid+"').click();";
 				//SeleniumCore.executeJS(driver, script);
 				findcustomername=true;
 				break;
 			}
+			//wait for the page loading correctly
+			 SeleniumCore.waitForObjectDisplay(driver.findElement(By
+						.xpath(imagepath)));
+			 
 
 		}
+		
         if(findcustomername){
 		// click the next button
         	Resulter.log("STATUS_SCAN_CUSTOMER", "Passed");
         	Resulter.log("COMMENT_SCAN_CUSTOMER", "Customer Name:"+customerdata+",Site Address:"+addressdata+"");
 		    logger.info("Select customer page -we had found the matched customer then click the next button");
 		  //  String js="document.getElementById('next').click();";
+		//    String js="return arguments[0].fireEvent('onclick');";
 		    SeleniumCore.highLight(driver, nextbtn);
 		   // SeleniumCore.sendKeys(nextbtn, Keys.ENTER);
-		    SeleniumCore.clickElement(nextbtn);
-		    //SeleniumCore.executeJS(driver, js);
+		    SeleniumCore.executeJS(driver, "window.scrollTo(0,"+nextbtn.getLocation().y+")");
+		    SeleniumCore.executeJS(driver, "arguments[0].scrollIntoView(true);", nextbtn);
+		  //  SeleniumCore.clickElement(driver,nextbtn);
+		    SeleniumCore.executeJS(driver, "arguments[0].click();", nextbtn);
+		 //   SeleniumCore.executeJS(driver, js);
+		   // SeleniumCore.executeJS(driver, js, nextbtn);
+		    SeleniumCore.waitForObjectDisplay(driver.findElement(By
+					.xpath(imagepath)));
         }
         else
         {

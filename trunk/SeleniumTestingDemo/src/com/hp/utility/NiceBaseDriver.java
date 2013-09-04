@@ -4,8 +4,6 @@ import static java.io.File.separator;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
@@ -38,6 +36,10 @@ import org.testng.annotations.BeforeSuite;
 import com.hp.utility.HostUtils;
 import com.thoughtworks.selenium.SeleneseTestBase;
 
+/**
+ * @author huchan
+ *
+ */
 public class NiceBaseDriver extends SeleneseTestBase {
 
 	protected static WebDriver driver;
@@ -48,7 +50,7 @@ public class NiceBaseDriver extends SeleneseTestBase {
 	protected StringBuffer verificationErrors = new StringBuffer();
 
 	@BeforeSuite
-	public void setupDriver() {
+	public void setupDriver() throws IOException {
 		String hostname = HostUtils.getFQDN();
 		Resulter.log("COMMENT_HOST_NAME", hostname);
 		logger.debug("Now the running host's FQDN is :" + hostname);
@@ -177,10 +179,8 @@ public class NiceBaseDriver extends SeleneseTestBase {
 			Assert.fail("The page or the webelment had been waited for 120 second,it cannot showed ,so the test failed");
 		}
 	}
-
 	@AfterMethod
-	public void errorReport(ITestResult result, ITestContext context)
-			throws Exception {
+	public void errorReport(ITestResult result, ITestContext context)throws Exception {
 		Throwable t = result.getThrowable();
 		// logger.debug("Involved the After Method from Parent class,the current throwable object is :"+t);
 		// if the testNG met error or exception
@@ -217,7 +217,7 @@ public class NiceBaseDriver extends SeleneseTestBase {
 
 	@AfterSuite
 	public void tearDown() {
-	    //driver.quit();
+	    driver.quit();
 		logger.debug("Involved AfterSuite method from parent.Now we quite the Browser instance");
 	}
 
@@ -258,196 +258,5 @@ public class NiceBaseDriver extends SeleneseTestBase {
 		Reporter.setCurrentTestResult(result);
 	}
 
-	// override method
-
-	private static String throwableToString(Throwable t) {
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		t.printStackTrace(pw);
-		return sw.toString();
-	}
-
-	public static String join(String[] sa, char c) {
-		StringBuffer sb = new StringBuffer();
-		for (int j = 0; j < sa.length; j++) {
-			sb.append(sa[j]);
-			if (j < sa.length - 1) {
-				sb.append(c);
-			}
-		}
-		return sb.toString();
-	}
-
-	private static String stringArrayToString(String[] sa) {
-		StringBuffer sb = new StringBuffer("{");
-		for (int j = 0; j < sa.length; j++) {
-			sb.append(" ").append("\"").append(sa[j]).append("\"");
-		}
-		sb.append(" }");
-		return sb.toString();
-	}
-
-	/** Like assertEquals, but fails at the end of the test (during tearDown) */
-	public void verifyEquals(Object expected, Object actual) {
-		try {
-			assertEquals(expected, actual);
-		} catch (Error e) {
-			verificationErrors.append(throwableToString(e));
-		}
-	}
-
-	/** Like assertEquals, but fails at the end of the test (during tearDown) */
-	public void verifyEquals(boolean expected, boolean actual) {
-		try {
-			assertEquals(Boolean.valueOf(expected), Boolean.valueOf(actual));
-		} catch (Error e) {
-			verificationErrors.append(throwableToString(e));
-		}
-	}
-
-	/** Like JUnit's Assert.assertEquals, but knows how to compare string arrays */
-	public static void assertEquals(Object expected, Object actual) {
-		if (expected == null) {
-			assertTrue(
-					"Assert two values whether equals,First Expected value is: \""
-							+ expected + "\" but the actual value saw is: \""
-							+ actual + "\" instead", actual == null);
-		} else if (expected instanceof String && actual instanceof String) {
-			assertEquals((String) expected, (String) actual);
-		} else if (expected instanceof String && actual instanceof String[]) {
-			assertEquals((String) expected, (String[]) actual);
-		} else if (expected instanceof String && actual instanceof Number) {
-			assertEquals((String) expected, actual.toString());
-		} else if (expected instanceof Number && actual instanceof String) {
-			assertEquals(expected.toString(), (String) actual);
-		} else if (expected instanceof String[] && actual instanceof String[]) {
-			assertEquals((String[]) expected, (String[]) actual);
-		} else {
-			assertTrue(
-					"Assert two values whether equals,First Expected value is: \""
-							+ expected + "\" but the actual value saw is: \""
-							+ actual + "\" instead", expected.equals(actual));
-		}
-	}
-
-	static public void assertTrue(String message, boolean condition) {
-		if (!condition)
-			fail(message);
-	}
-
-	/**
-	 * Like JUnit's Assert.assertEquals, but handles "regexp:" strings like HTML
-	 * Selenese
-	 */
-	public static void assertEquals(String expected, String actual) {
-		assertTrue(
-				"Assert two values whether equals,First Expected value is: \""
-						+ expected + "\" but the actual value saw is: \""
-						+ actual + "\" instead",
-				seleniumEquals(expected, actual));
-	}
-
-	static public void assertTrue(boolean condition) {
-		assertTrue(null, condition);
-	}
-
-	static public void assertFalse(String message, boolean condition) {
-		assertTrue(message, !condition);
-	}
-
-	static public void assertFalse(boolean condition) {
-		assertTrue(null, !condition);
-	}
-
-	/** Asserts that two booleans are not the same */
-	public static void assertNotEquals(boolean expected, boolean actual) {
-		assertNotEquals(Boolean.valueOf(expected), Boolean.valueOf(actual));
-	}
-
-	/** Like assertNotEquals, but fails at the end of the test (during tearDown) */
-	public void verifyNotEquals(Object expected, Object actual) {
-		try {
-			assertNotEquals(expected, actual);
-		} catch (AssertionError e) {
-			verificationErrors.append(throwableToString(e));
-		}
-	}
-
-	/** Like assertNotEquals, but fails at the end of the test (during tearDown) */
-	public void verifyNotEquals(boolean expected, boolean actual) {
-		try {
-			assertNotEquals(Boolean.valueOf(expected), Boolean.valueOf(actual));
-		} catch (AssertionError e) {
-			verificationErrors.append(throwableToString(e));
-		}
-	}
-
-	/** Asserts that two objects are not the same (compares using .equals()) */
-	public static void assertNotEquals(Object expected, Object actual) {
-		if (expected == null) {
-			assertFalse("Sorry,did not expect null to be null", actual == null);
-		} else if (expected.equals(actual)) {
-			fail("two values are not equals,did not expect values: (" + actual
-					+ ") to be equal value to (" + expected + ")");
-		}
-	}
-
-	/**
-	 * Compares two objects, but handles "regexp:" strings like HTML Selenese
-	 * 
-	 * @see #seleniumEquals(String, String)
-	 * @return true if actual matches the expectedPattern, or false otherwise
-	 */
-	public static boolean seleniumEquals(Object expected, Object actual) {
-		if (expected == null) {
-			return actual == null;
-		}
-		if (expected instanceof String && actual instanceof String) {
-			return seleniumEquals((String) expected, (String) actual);
-		}
-		return expected.equals(actual);
-	}
-
-	/** Asserts that two string arrays have identical string contents */
-	public static void assertEquals(String[] expected, String[] actual) {
-		String comparisonDumpIfNotEqual = verifyEqualsAndReturnComparisonDumpIfNot(
-				expected, actual);
-		if (comparisonDumpIfNotEqual != null) {
-			throw new AssertionError(comparisonDumpIfNotEqual);
-		}
-	}
-
-	/**
-	 * Asserts that two string arrays have identical string contents (fails at
-	 * the end of the test, during tearDown)
-	 */
-	public void verifyEquals(String[] expected, String[] actual) {
-		String comparisonDumpIfNotEqual = verifyEqualsAndReturnComparisonDumpIfNot(
-				expected, actual);
-		if (comparisonDumpIfNotEqual != null) {
-			verificationErrors.append(comparisonDumpIfNotEqual);
-		}
-	}
-
-	private static String verifyEqualsAndReturnComparisonDumpIfNot(
-			String[] expected, String[] actual) {
-		boolean misMatch = false;
-		if (expected.length != actual.length) {
-			misMatch = true;
-		}
-		for (int j = 0; j < expected.length; j++) {
-			if (!seleniumEquals(expected[j], actual[j])) {
-				misMatch = true;
-				break;
-			}
-		}
-		if (misMatch) {
-			return "Verify two values whether equals ,the Expected result is: "
-					+ stringArrayToString(expected)
-					+ " but the actual result saw is: "
-					+ stringArrayToString(actual);
-		}
-		return null;
-	}
 
 }

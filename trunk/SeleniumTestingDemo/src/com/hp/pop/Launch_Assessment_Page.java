@@ -17,10 +17,10 @@ public class Launch_Assessment_Page {
 			.getLogger(Launch_Assessment_Page.class);
 	private WebDriver driver;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='analysisRequestTypeCode']")
+	@FindBy(how = How.XPATH, using = "//*[@id='analysisRequestTypeCode']")
 	private WebElement options;
 
-	@FindBy(how = How.XPATH, using = ".//*[@id='create']")
+	@FindBy(how = How.XPATH, using = "//*[@id='create']")
 	private WebElement createbtn;
 
 	public Launch_Assessment_Page(WebDriver driver) {

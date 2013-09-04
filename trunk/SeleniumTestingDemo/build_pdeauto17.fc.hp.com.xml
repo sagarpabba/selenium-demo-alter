@@ -114,7 +114,7 @@
   		        verbose="2" 
   		        classpathref="build.class.path" 
   		        workingdir="${basedir}">	    
-  	           <xmlfileset dir="." includes="testng.xml" />	  
+  	           <xmlfileset dir="." includes="testng_pdeauto17.fc.hp.com.xml" />	  
   	    </testng>
   	    
   	    <echo message=" begin to halt the ant execution for 10 seconds before taking shutdown the selenium server ......" />

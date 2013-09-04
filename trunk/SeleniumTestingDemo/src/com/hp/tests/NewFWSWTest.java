@@ -13,11 +13,11 @@ import com.hp.pop.Request_Review_Page;
 import com.hp.pop.Home_Page;
 import com.hp.pop.Launch_Assessment_Page;
 import com.hp.pop.ListSearch_Assessment_Run_Page;
-import com.hp.utility.NiceBaseDriver;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
 
-public class NewFWSWTest extends NiceBaseDriver {
+public class NewFWSWTest extends BaseDriver {
 
 	
 

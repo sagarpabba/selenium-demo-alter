@@ -9,6 +9,8 @@
 
 package com.hp.utility;
 
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
@@ -25,7 +27,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 public class FirefoxProfileFile {
 	
 	private static Logger logger=Logger.getLogger(FirefoxProfileFile.class);
-	public static FirefoxProfile setFirefoxProfile(){
+	public static FirefoxProfile setFirefoxProfile() throws IOException{
 		FirefoxProfile fp=new FirefoxProfile();
 		//fp.addExtension(extensionToInstall);
 		
@@ -41,6 +43,8 @@ public class FirefoxProfileFile {
 		fp.setPreference("browser.helperApps.alwaysAsk.force", false);
 		fp.setPreference("security.default_personal_cert", "Select Automatically");
 		//fp.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/zip");
+		//File sslerror=new File(SeleniumCore.getProjectWorkspace()+"resources"+File.separator+"remember_certificate_exception-1.0.0-fx.xpi");
+		//fp.addExtension(sslerror);
 		logger.info("Had set a firefox profile for current session....");
 		return fp;
 	}

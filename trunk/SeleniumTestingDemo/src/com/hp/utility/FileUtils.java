@@ -122,7 +122,7 @@ public class FileUtils {
 		}
 	}
 
-	public static File[] listFiles(String directory, final String filenamefilter) {
+	public static File[] listFilesEndsWith(String directory, final String filenamefilter) {
 		File dir = new File(directory);
 		FilenameFilter filter = new FilenameFilter() {
 			@Override
@@ -131,10 +131,29 @@ public class FileUtils {
 				return name.endsWith(filenamefilter);
 			}
 		};
-		File[] errorshotfile = dir.listFiles(filter);
-		int filesize = errorshotfile.length;
+		File[] filelists = dir.listFiles(filter);
+		int filesize = filelists.length;
 		if (filesize > 0) {
-			return errorshotfile;
+			return filelists;
+		} else {
+			return null;
+		}
+
+	}
+	
+	public static File[] listFilesStartWith(String directory, final String filenamefilter) {
+		File dir = new File(directory);
+		FilenameFilter filter = new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.startsWith(filenamefilter);
+			}
+		};
+		File[] filelists = dir.listFiles(filter);
+		int filesize = filelists.length;
+		if (filesize > 0) {
+			return filelists;
 		} else {
 			return null;
 		}

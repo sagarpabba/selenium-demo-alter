@@ -38,9 +38,9 @@ public class EmailerTest {
 	private final String CURRENT_TIME = new SimpleDateFormat("yyyy-MM-dd")
 			.format(Calendar.getInstance().getTime());
 	// constant
-	private final String RUN_RESULT_PATH = probasepath + "reporter"
-			+ File.separator + "reporter.log";
+
 	private final String TODAY_REPORT_DIR = probasepath + "reporter";
+	private final String LOG_DIR=probasepath+"log";
 
 	private final String TODAY_REPORT = TODAY_REPORT_DIR + File.separator
 			+ "TestReporter" + "_" + CURRENT_TIME + ".htm";
@@ -81,7 +81,7 @@ public class EmailerTest {
 			// prop.put("mail.smtp.auth", "true");
 			prop.put("mail.smtp.host", smtpserver);
 			prop.put("mail.smtp.port", "25");
-			prop.put("mail.debug", "true");
+			//prop.put("mail.debug", "true");
 			Session session = null;
 			if (authenuser) {
 				prop.put("mail.smtp.auth", "true");
@@ -127,7 +127,7 @@ public class EmailerTest {
 			// add the image file
 			int filesize = FileUtils.isFilesExisting(TODAY_REPORT_DIR, ".png");
 			File[] errorshotfile = FileUtils
-					.listFiles(TODAY_REPORT_DIR, ".png");
+					.listFilesEndsWith(TODAY_REPORT_DIR, ".png");
 			if (filesize > 0) {
 				logger.debug("the current testing met the error and generate an error screenshot we will attach it into the email");
 				for (int fileindex = 0; fileindex < filesize; fileindex++) {
@@ -153,12 +153,28 @@ public class EmailerTest {
 			logger.debug("complete parsing the image body content");
 
 			// Part two is attachment,set the email's body attachments
-			bodypart = new MimeBodyPart();
-			DataSource source = new FileDataSource(RUN_RESULT_PATH);
-			bodypart.setDataHandler(new DataHandler(source));
-			bodypart.setFileName("reporter.log");
-			multipart.addBodyPart(bodypart);
-			logger.debug("complete parsing the attachment body content");
+//			bodypart = new MimeBodyPart();
+//			DataSource source = new FileDataSource(RUN_RESULT_PATH);
+//			bodypart.setDataHandler(new DataHandler(source));
+//			bodypart.setFileName("reporter.log");
+//			multipart.addBodyPart(bodypart);
+//			logger.debug("complete parsing the attachment body content");
+//			
+			
+			File[] logfiles=FileUtils.listFilesStartWith(LOG_DIR, "PAF_STEPS_INFO");
+			int totalfiles=logfiles.length;
+			if(totalfiles>0){
+				for(int fileindex=0;fileindex<totalfiles;fileindex++){
+					String filepath=logfiles[fileindex].getAbsolutePath();
+					String filename=logfiles[fileindex].getName();
+					bodypart = new MimeBodyPart();
+					DataSource source = new FileDataSource(filepath);
+					bodypart.setDataHandler(new DataHandler(source));
+					bodypart.setFileName(filename);
+					multipart.addBodyPart(bodypart);					
+				}
+			}
+			logger.info("had attached all the log files into the email for analsysing...");
 
 			// // Send the complete message parts
 			mime.setContent(multipart, "text/html;charset=UTF-8");

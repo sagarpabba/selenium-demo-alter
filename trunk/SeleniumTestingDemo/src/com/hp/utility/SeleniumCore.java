@@ -56,7 +56,13 @@ public class SeleniumCore {
 	 */
 	public static void OpenURL(WebDriver driver, String url) {
 		logger.info("Open A New URL:" + url + " in the browser......");
+		try{
 		driver.get(url);
+		}
+		catch(NullPointerException e){
+			logger.error("Sorry the URL:"+url+" cannot be opened now..");
+			Assert.fail("Cannot open the URL:"+url+",...");
+		}
 	}
 
 	/**
@@ -71,6 +77,36 @@ public class SeleniumCore {
 	//	((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+e.getLocation().y+")");
 		e.click();
 	}
+	
+	/**
+	 * click an element in the page 
+	 * @param e --the WebElment we need to click
+	 * @author huchan
+	 */
+	public static void clickElement(WebDriver driver,WebElement e) {
+		logger.info("Click elements in page-clicked this element:"
+				+ e.getTagName() + ",the text is:" + e.getText());
+		//In chrome browser this function didn't work ,so give a solution to load the page correctly
+	//	((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+e.getLocation().y+")");
+		 new Actions(driver).moveToElement(e).clickAndHold().release().build().perform();
+		 //"return arguments[0].fireEvent('onclick');",
+		
+	}
+	/**
+	 * right click an element in the page 
+	 * @param e --the WebElment we need to click
+	 * @author huchan
+	 */
+	public static void rightClickElement(WebDriver driver,WebElement e) {
+		logger.info("Right Click elements in page-clicked this element:"
+				+ e.getTagName() + ",the text is:" + e.getText());
+		//In chrome browser this function didn't work ,so give a solution to load the page correctly
+	//	((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+e.getLocation().y+")");
+		 new Actions(driver).contextClick(e).perform();
+		 //"return arguments[0].fireEvent('onclick');",
+		
+	}
+	
 
 	/**
 	 * clear the text in the elment and then type the new string in this element
@@ -247,17 +283,17 @@ public class SeleniumCore {
 	 */
 	public static Map<String, String> importDataTable(String sheetname) {
 		String excelpath = getProjectWorkspace()+ "resources" + File.separator + "TestData.xls";
-		String hostname = HostUtils.getFQDN();
+		//String casetype = HostUtils.getFQDN();
 		@SuppressWarnings("unchecked")
 		Map<String, String> mapdata = new LinkedMap();
 		if (sheetname.toLowerCase() == "login_page") {
-			mapdata = ExcelUtils.getSpecifySheet(excelpath,"Login_Page",hostname);
+			mapdata = ExcelUtils.getSpecifySheet(excelpath,"Login_Page","postive");
 		} else if (sheetname.toLowerCase() == "home_page") {
-			mapdata =ExcelUtils.getSpecifySheet(excelpath,"Home_Page",hostname);
+			mapdata =ExcelUtils.getSpecifySheet(excelpath,"Home_Page","postive");
 		} else if (sheetname.toLowerCase() == "device_detail") {
-			mapdata = ExcelUtils.getSpecifySheet(excelpath,"Device_Detail",hostname);
+			mapdata = ExcelUtils.getSpecifySheet(excelpath,"Device_Detail","postive");
 		} else if (sheetname.toLowerCase() == "email_settings") {
-			mapdata=ExcelUtils.getSpecifySheet(excelpath,"Email_Settings",hostname);
+			mapdata=ExcelUtils.getSpecifySheet(excelpath,"Email_Settings","postive");
 		} else {
 			logger.error("Import datatable into project-Sorry we cannot find the sheet in the test data ,stop the testing now ");
 		}
@@ -424,6 +460,19 @@ public class SeleniumCore {
 		//highLight(driver, element);
 		return element;
 	}
+	/**
+	 * find the element by xpath in the page
+	 * @param e --the web element object
+	 * @param xpath -- the web element's xpath
+	 * @return  WebElement -- get the found web element
+	 */
+	public static WebElement findElementByCSS(WebElement e, String css) {
+		logger.info("Find subelement by css-we will find an sub element with the css selector:"
+				+ css);
+		WebElement element = e.findElement(By.cssSelector(css));
+		//highLight(driver, element);
+		return element;
+	}
 
 
 	/**
@@ -457,11 +506,11 @@ public class SeleniumCore {
 	 * @param script  --the java script we need to execute
 	 * @since JDK 1.6
 	 */
-	public static void executeJS(WebDriver driver, String script) {
+	public static Object executeJS(WebDriver driver, String script) {
 		logger.info("Run the javascript from page ,the java script is:"
 				+ script);
 		JavascriptExecutor je = (JavascriptExecutor) driver;
-		je.executeScript(script);
+		return je.executeScript(script);
 
 	}
 	public static void executeJS(WebDriver driver, String script,WebElement e) {

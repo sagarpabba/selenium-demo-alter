@@ -72,7 +72,26 @@ public class Select_Device_Page {
 			if (devicedata.equals(devicename)) {
 				logger.info("Select device page-Now we found the specified device name in the table");
 				WebElement checkboxvalue = SeleniumCore.findElementByXpath(row,".//td[1]/input");
+				if(SeleniumCore.getBrowserType(driver).contains("chrome")){
+					logger.info("as the current browser is chrome we use the js to select the customer in the page");
+					//SeleniumCore.executeJS(driver, "arguments[0].scrollIntoView(true);", checkboxvalue);
+					//SeleniumCore.executeJS(driver, "window.scrollTo(0,"+checkboxvalue.getLocation().y+")");	
+				  //  SeleniumCore.executeJS(driver, "var evt = document.createEvent('MouseEvents');"
+					//		+ "evt.initMouseEvent('click',true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0,null);"
+				    	//	+ "arguments[0].dispatchEvent(evt);", checkboxvalue);
+					String tagid=checkboxvalue.getAttribute("id");
+					logger.info("the checkbox id is:"+tagid);
+					//WebElement checkcss=row.findElement(By.cssSelector("#"+tagid));
+					SeleniumCore.executeJS(driver, "window.scrollTo(0,"+checkboxvalue.getLocation().y+")");
+					//SeleniumCore.executeJS(driver, "arguments[0].scrollIntoView(true);", checkboxvalue);
+					SeleniumCore.highLight(driver, checkboxvalue);
+					///SeleniumCore.clickElement(checkboxvalue);
+					String script="document.getElementById('"+tagid+"').click();";
+					SeleniumCore.executeJS(driver, script);
+					
+				}else{
 				SeleniumCore.clickElement(checkboxvalue);
+				}
 				finddevice=true;
 				break;
 			}

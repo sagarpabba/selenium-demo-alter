@@ -50,6 +50,11 @@ Capabilities [{platform=XP, acceptSslCerts=true, javascriptEnabled=true, browser
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
 	
+	
+	https://code.google.com/p/chromedriver/issues/detail?id=28&q=clickable&colspec=ID%20Status%20Pri%20Owner%20Summary
+	https://code.google.com/p/chromedriver/issues/detail?id=462&q=clickable&colspec=ID%20Status%20Pri%20Owner%20Summary
+	
+	
 ****************************************************
 	
 	org.openqa.selenium.InvalidElementStateException: invalid element state: Element must be user-editable in order to clear it.
@@ -72,3 +77,107 @@ https://code.google.com/p/selenium/wiki/DesiredCapabilities
 help for setting 
 
 ******************************************************
+org.openqa.selenium.WebDriverException: unknown error: Element is not clickable
+
+
+*******************************************************
+   [testng] org.openqa.selenium.WebDriverException: Unable to bind to locking po
+rt 7054 within 45000 ms
+   [testng] Build info: version: '2.35.0', revision: 'c916b9d', time: '2013-08-1
+2 15:42:01'
+   [testng] System info: os.name: 'Windows Server 2008', os.arch: 'x86', os.vers
+ion: '6.0', java.version: '1.7.0_25'
+   [testng] Driver info: driver.version: NiceBaseDriver
+   [testng]     at org.openqa.selenium.internal.SocketLock.lock(SocketLock.java:
+98)
+
+Seems like previous webDriver instance (or something else) didn't release the port. Here is workaround (bad practice) for this problem (Java):
+
+ public static FirefoxBrowser forceInit() {
+        try {
+            return new FirefoxBrowser();
+        } catch (WebDriverException exc) {
+            return forceInit();
+        }
+    }
+Make sure your tests close driver correctly by:
+
+   driver.quit(); 
+   
+ *************************************************************
+    [testng]     at org.openqa.selenium.firefox.internal.NewProfileExtensionConne
+ction.start(NewProfileExtensionConnection.java:72)
+   [testng]     at org.openqa.selenium.firefox.FirefoxDriver.startClient(Firefox
+Driver.java:251)
+   [testng]     at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDr
+iver.java:110)
+   [testng]     at org.openqa.selenium.firefox.FirefoxDriver.<init>(FirefoxDrive
+r.java:197)
+   [testng]     at org.openqa.selenium.firefox.FirefoxDriver.<init>(FirefoxDrive
+r.java:190)
+   [testng]     at org.openqa.selenium.firefox.FirefoxDriver.<init>(FirefoxDrive
+r.java:108)
+   [testng]     at com.hp.utility.NiceBaseDriver.setupDriver(NiceBaseDriver.java
+:112)
+   [testng]     at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+   [testng]     at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAcces
+sorImpl.java:57)
+   [testng]     at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMet
+hodAccessorImpl.java:43)
+   [testng]     at java.lang.reflect.Method.invoke(Method.java:606)
+   [testng]     at org.testng.internal.MethodInvocationHelper.invokeMethod(Metho
+dInvocationHelper.java:80)
+   [testng]     at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker
+.java:564)
+   [testng]     at org.testng.internal.Invoker.invokeConfigurations(Invoker.java
+:213)
+   [testng]     at org.testng.internal.Invoker.invokeConfigurations(Invoker.java
+:138)
+   [testng]     at org.testng.SuiteRunner.privateRun(SuiteRunner.java:277)
+   [testng]     at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+   [testng]     at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:
+52)
+   [testng]     at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+   [testng]     at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+   [testng]     at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+   [testng]     at org.testng.TestNG.run(TestNG.java:1031)
+   [testng]     at org.testng.TestNG.privateMain(TestNG.java:1338)
+   [testng]     at org.testng.TestNG.main(TestNG.java:1307)
+   
+   
+   delete the %temp% folder ,but it still didn't work.
+   use 172.0.0.1 localhost 
+   
+   **********************************************************************
+   org.openqa.selenium.WebDriverException: unknown error: version info not a dictionary
+  (Driver info: chromedriver=2.2,platform=Windows NT 6.0 SP2 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 1.35 seconds
+Build info: version: '2.35.0', revision: 'c916b9d', time: '2013-08-12 15:42:01'
+System info: os.name: 'Windows Server 2008', os.arch: 'amd64', os.version: '6.0', java.version: '1.6.0_24'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command duration or timeout: 2.49 seconds
+Build info: version: '2.35.0', revision: 'c916b9d', time: '2013-08-12 15:42:01'
+System info: os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.6.0_43'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+
+
+change the chrome driver version can prevent this error again.
+
+
+****************************************************************************************
+   org.openqa.selenium.InvalidElementStateException: invalid element state: An invalid or illegal string was specified.
+  (Session info: chrome=29.0.1547.62)
+  (Driver info: chromedriver=2.2,platform=Windows NT 6.1 SP1 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 42 milliseconds
+Build info: version: '2.35.0', revision: 'c916b9d', time: '2013-08-12 15:42:01'
+System info: os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.6.0_43'
+Session ID: e31bcf9ebc289b5a46e5acd4bc92ae1e
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{platform=XP, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, chrome={chromedriverVersion=2.2}, rotatable=false, locationContextEnabled=true, version=29.0.1547.62, cssSelectorsEnabled=true, databaseEnabled=true, handlesAlerts=true, browserConnectionEnabled=false, nativeEvents=true, webStorageEnabled=true, applicationCacheEnabled=false, takesScreenshot=true}]
+Command duration or timeout: 1.01 seconds
+Build info: version: '2.35.0', revision: 'c916b9d', time: '2013-08-12 15:42:01'
+System info: os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.6.0_43'
+Session ID: 3884afda-50af-49aa-bf0d-268a07a26be9
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{platform=XP, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, chrome={chromedriverVersion=2.2}, rotatable=false, locationContextEnabled=true, webdriver.remote.sessionid=3884afda-50af-49aa-bf0d-268a07a26be9, version=29.0.1547.62, cssSelectorsEnabled=true, databaseEnabled=true, handlesAlerts=true, browserConnectionEnabled=false, nativeEvents=true, webStorageEnabled=true, applicationCacheEnabled=false, takesScreenshot=true}]
+   
