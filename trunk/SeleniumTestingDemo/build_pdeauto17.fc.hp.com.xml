@@ -21,6 +21,9 @@
     	<pathelement location="${lib.dir}/jacob-1.18-M1-x64.dll"/>
     	<pathelement location="${lib.dir}/jacob-1.18-M1-x86.dll"/>
     	<pathelement location="${lib.dir}/jacob.jar"/>
+    	<pathelement location="${lib.dir}/jfreechart-1.0.14.jar"/>
+    	<pathelement location="${lib.dir}/jcommon-1.0.17.jar"/>
+    	<pathelement location="${lib.dir}/mysql-connector-java-5.1.26-bin.jar"/>
     </path>
     <macrodef name="MyTimestamp">
          <sequential >

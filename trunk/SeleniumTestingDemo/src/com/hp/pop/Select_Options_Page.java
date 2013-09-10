@@ -14,8 +14,10 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
+import com.hp.utility.TimeUtils;
 
 public class Select_Options_Page {
 
@@ -97,7 +99,7 @@ public class Select_Options_Page {
 		if (isSchedule.equals("yes")) {
 			Resulter.log("STATUS_SCAN_REQUEST_SCHEDULING", "Passed");
 			Resulter.log("COMMENT_SCAN_REQUEST_SCHEDULING", "Run the assessment "+frequency+" after "+aftertime+" minutes the schedule will be run");
-			int scheduleindex = SeleniumCore.getRandomNumber();
+			int scheduleindex = TimeUtils.getRandomNumber();
 			String inputname = schedulname + scheduleindex;
 			savesubscription.click();
 
@@ -126,7 +128,7 @@ public class Select_Options_Page {
 
 			SeleniumCore.setDateTimePicker(driver, "startTimestamp", inputtime);
 
-			SeleniumCore.clickElement(noendbox);
+			SeleniumCore.clickElement(driver, noendbox);
 		}
 		else{
 			Resulter.log("STATUS_SCAN_REQUEST_SCHEDULING", "Passed");
@@ -136,7 +138,7 @@ public class Select_Options_Page {
 		}
      
 		SeleniumCore.highLight(driver, nextbtn);
-		SeleniumCore.clickElement(nextbtn);
+		SeleniumCore.clickElement(driver, nextbtn);
 		SeleniumCore.sleepSeconds(4);
 		return PageFactory.initElements(driver, Request_Review_Page.class);
 	}

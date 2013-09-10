@@ -45,7 +45,7 @@ public class Launch_Assessment_Page {
 				+ "as to applicable software versions, patches, and firmware revisions.";
 		String runtext = SeleniumCore.getElementText(quotenode);
 		Assert.assertEquals(runtext, expectedtext);
-		SeleniumCore.clickElement(createbtn);
+		SeleniumCore.clickElement(driver, createbtn);
 		return PageFactory.initElements(driver, Select_Customer_Page.class);
 	}
 
@@ -61,7 +61,7 @@ public class Launch_Assessment_Page {
 				+ " and availability problems of Customers environment before they impact Customers business operations.";
 		String runtext = SeleniumCore.getElementText(quotenode);
 		Assert.assertEquals(runtext, expectedtext);
-		SeleniumCore.clickElement(createbtn);
+		SeleniumCore.clickElement(driver, createbtn);
 		return PageFactory.initElements(driver, Select_Customer_Page.class);
 	}
 
@@ -78,7 +78,7 @@ public class Launch_Assessment_Page {
 				+ "health of that environment (PAC/Server advanced collections only).";
 		String runtext = SeleniumCore.getElementText(quotenode);
 		Assert.assertEquals(runtext, expectedtext);
-		SeleniumCore.clickElement(createbtn);
+		SeleniumCore.clickElement(driver, createbtn);
 		return PageFactory.initElements(driver, Select_Customer_Page.class);
 	}
 

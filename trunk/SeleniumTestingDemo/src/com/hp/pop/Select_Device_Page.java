@@ -57,12 +57,28 @@ public class Select_Device_Page {
 
 		List<WebElement> allrows = SeleniumCore.findElementListByTagName(
 				devicetable, "tr");
+		//get the assoicated device detail information
+		String devicedata="";
+		String devicetype="";
+		String os="";
+		String osversion="";
+		String pn="";
+		String sn="";
+		String collection="";
+		String collectiondate="";
+		
 		for (WebElement row : allrows) {
 			// in FUT it changed to td[4]
-		//	String trid=row.getAttribute("id");
-			String devicedata="";
+		//	String trid=row.getAttribute("id");		
 			try{
 				devicedata= SeleniumCore.findElementByXpath(row, "td[4]").getText().trim();
+				devicetype=SeleniumCore.findElementByXpath(row, "td[5]").getText().trim();
+				os=SeleniumCore.findElementByXpath(row, "td[6]").getText().trim();
+				osversion=SeleniumCore.findElementByXpath(row, "td[7]").getText().trim();
+				pn=SeleniumCore.findElementByXpath(row, "td[9]").getText().trim();
+				sn=SeleniumCore.findElementByXpath(row, "td[10]").getText().trim();
+				collection=SeleniumCore.findElementByXpath(row, "td[11]").getText().trim();
+				collectiondate=SeleniumCore.findElementByXpath(row, "td[12]").getText().trim();
 			}
 			catch(NoSuchElementException nsp){
 				logger.info("Current row had not fourth column ,so we ignore it");
@@ -90,18 +106,33 @@ public class Select_Device_Page {
 					SeleniumCore.executeJS(driver, script);
 					
 				}else{
-				SeleniumCore.clickElement(checkboxvalue);
+				SeleniumCore.clickElement(driver, checkboxvalue);
 				}
 				finddevice=true;
+				if(devicetype.equalsIgnoreCase("UNKNOWN")
+						||os.equalsIgnoreCase("UNKNOWN")
+						||osversion.equalsIgnoreCase("Not Available")
+						){
+				    Resulter.log("STATUS_SCAN_DEVICE", "Passed");
+				    logger.error("the device list information showed is incorrect......Devcie Name:"+devicedata+",Device Type:"+devicetype+",Device OS:"+
+							os+",Device OS Version:"+osversion+",Product Number:"+pn+",Serial Number:"+sn+",Collections:"+collection
+							+",Collection Date:"+collectiondate);
+				}
+				else{
+					Resulter.log("STATUS_SCAN_DEVICE", "Passed");
+					
+				}
+		        Resulter.log("COMMENT_SCAN_DEVICE", "Device Name:"+devicedata+",Device Type:"+devicetype+",Device OS:"+
+				os+",Device OS Version:"+osversion+",Product Number:"+pn+",Serial Number:"+sn+",Collections:"+collection
+				+",Collection Date:"+collectiondate);
 				break;
 			}
 
 		}
         if(finddevice){
 		    logger.info("Select device page- we found the matched devices we will click the next button....");
-		    SeleniumCore.clickElement(nextbtn);
-		    Resulter.log("STATUS_SCAN_DEVICE", "Passed");
-        	Resulter.log("COMMENT_SCAN_DEVICE", "Devcie name is:"+devicename);
+		    SeleniumCore.clickElement(driver, nextbtn);
+		   
      
         }
         else

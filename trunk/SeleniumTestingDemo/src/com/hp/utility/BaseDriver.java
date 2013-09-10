@@ -49,7 +49,11 @@ public class BaseDriver{
 		String runhostname=context.getCurrentXmlTest().getParameter("hostname");
 		String browsername=context.getCurrentXmlTest().getParameter("browsername");
 		String proxyserver=context.getCurrentXmlTest().getParameter("proxyserver");
+		String osversion=HostUtils.getOperatingSystemName()+"-"+HostUtils.getOperatingSystemVersion()+","+HostUtils.getOSType();
 		Resulter.log("COMMENT_HOST_NAME", runhostname);
+		Resulter.log("COMMENT_OS_VERSION", osversion);
+		
+		Resulter.log("START_TIME",TimeUtils.getCurrentTime(Calendar.getInstance().getTime()));
 		logger.info("Now the automation testing will be run in this host FQDN is :" + runhostname);	
 		logger.info("Now we using  browser type is :" + browsername);
 		// logger.debug("Now we running the remote run host hub is :"+hubUrl);
