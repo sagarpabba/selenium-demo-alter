@@ -40,7 +40,8 @@ public class Select_Customer_Page {
 	// this is the FUT element here 
 	@FindBy(how=How.XPATH,using="//*[@id='requestTabDiv']/ul/li[1]/a")
 	private WebElement filtertab;
-
+    @FindBy(how=How.XPATH,using=".//*[@id='requestTabDiv']/ul/li[2]/a")
+    private WebElement filetab;
 	@FindBy(how = How.XPATH, using = "//*[@id='back']")
 	private WebElement backbtn;
 	@FindBy(how = How.XPATH, using = "//*[@id='next']")
@@ -75,7 +76,7 @@ public class Select_Customer_Page {
 		
 		
 		//change to the customer filter tab,this is for hte FUT environment
-		SeleniumCore.clickElement(filtertab);
+		SeleniumCore.clickElement(driver, filtertab);
 
 		SeleniumCore.selectElementViaText(country, countrydata);
 		SeleniumCore.waitForObjectDisplay(driver.findElement(By
@@ -140,31 +141,32 @@ public class Select_Customer_Page {
 					//SeleniumCore.executeJS(driver, "arguments[0].scrollIntoView(true);", checkboxvalue);
 					//SeleniumCore.executeJS(driver, "window.scrollTo(0,"+checkboxvalue.getLocation().y+")");
 					checkboxvalue = SeleniumCore.findElementByXpath(row,
-							".//td[1]/input");
+							".//td[1]");
 				  //  SeleniumCore.executeJS(driver, "var evt = document.createEvent('MouseEvents');"
 					//		+ "evt.initMouseEvent('click',true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0,null);"
 				    	//	+ "arguments[0].dispatchEvent(evt);", checkboxvalue);
-					String tagid=checkboxvalue.getAttribute("id");
+					//String tagid=checkboxvalue.getAttribute("id");
 				//	logger.info("the checkbox id is:"+tagid);
 					//WebElement checkcss=row.findElement(By.cssSelector("#"+tagid));
 					//SeleniumCore.executeJS(driver, "window.scrollTo(0,"+checkboxvalue.getLocation().y+")");
 					//SeleniumCore.executeJS(driver, "arguments[0].scrollIntoView(true);", checkboxvalue);
 					SeleniumCore.highLight(driver, checkboxvalue);
 					///SeleniumCore.clickElement(checkboxvalue);
-					String script="document.getElementById('"+tagid+"').click();";
+					//String script="document.getElementById('"+tagid+"').click();";
 					
-					SeleniumCore.executeJS(driver, script);
+				//	SeleniumCore.executeJS(driver, script);
 					
 					//WebElement checkbox=SeleniumCore.findElementByCSS(row, "#"+tagid);
-					//SeleniumCore.highLight(driver, checkbox);
+					SeleniumCore.highLight(driver, checkboxvalue);
 					//SeleniumCore.clickElement(driver,checkboxvalue);
+					SeleniumCore.executeJS(driver, "arguments[0].click();", checkboxvalue);
 					
 				}
 				else{
 					checkboxvalue = SeleniumCore.findElementByXpath(row,
 							".//td[1]");
 					SeleniumCore.highLight(driver, checkboxvalue);
-					SeleniumCore.clickElement(checkboxvalue);
+					SeleniumCore.clickElement(driver, checkboxvalue);
 				}
 				//SeleniumCore.sleep(driver, 3);
 			
@@ -211,6 +213,12 @@ public class Select_Customer_Page {
         SeleniumCore.sleepSeconds(4);
 		return PageFactory.initElements(driver, Select_Device_Page.class);
 		
+	}
+	
+	public Select_Device_Page selectAllCustomersByFile() {
+		
+		SeleniumCore.clickElement(driver, filetab);
+		return PageFactory.initElements(driver, Select_Device_Page.class);
 	}
 
 }

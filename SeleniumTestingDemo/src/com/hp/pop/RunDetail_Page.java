@@ -75,21 +75,26 @@ public class RunDetail_Page {
 		}
 		
 		logger.info("Get the report list is:"+reportmap);
-		SeleniumCore.clickElement(downloadbtn);
+		SeleniumCore.clickElement(driver, downloadbtn);
 		
 		//wait the object displayed;
-		SeleniumCore.waitForObjectDisplay(driver, ".//*[@id='downloadreason']");
-		WebElement downloadreason=driver.findElement(By.xpath(".//*[@id='downloadreason']"));
+		SeleniumCore.waitForObjectDisplay(driver, "//*[@id='downloadreason']");
+		WebElement downloadreason=driver.findElement(By.xpath("//*[@id='downloadreason']"));
 		SeleniumCore.SelectElementViaValue(downloadreason, "DT");
-		
-	    SeleniumCore.clickElement(driver.findElement(By.xpath("html/body/div[3]/div[3]/div/button[1]")));
+		SeleniumCore.sleepSeconds(3);
+	    SeleniumCore.clickElement(driver,driver.findElement(By.xpath("//body/div[4]/div[3]/*/button[1]")));
 	    String imagepath=".//*[@id='hpit-busy']/img";
 	    SeleniumCore.waitForObjectDisplay(driver.findElement(By
 				.xpath(imagepath)));
 	    
 	    Resulter.log("STATUS_REPORT_DETAIL", "Passed");
 	    Resulter.log("COMMENT_REPORT_DETAIL",reportmap.toString());
-	    //save the zip file
+	    //click the download button and save the file into the default directory
+	    String browser=SeleniumCore.getBrowserType(driver);
+	    if(browser.contains("firefox")){
+		     
+		    
+	    }
 	    
 	}
 }

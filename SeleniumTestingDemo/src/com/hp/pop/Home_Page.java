@@ -49,14 +49,14 @@ public class Home_Page {
 
 	public Launch_Assessment_Page clickNewAssessment() {
 
-		SeleniumCore.clickElement(newassessment);
+		SeleniumCore.clickElement(driver, newassessment);
 		return new Launch_Assessment_Page(driver);
 	}
 
 	// list the assessment had been run inthe PAF
 	public ListSearch_Assessment_Run_Page clickListRun() {
 
-		SeleniumCore.clickElement(searchrun);
+		SeleniumCore.clickElement(driver, searchrun);
 		return new ListSearch_Assessment_Run_Page(driver);
 	}
 
@@ -129,7 +129,7 @@ public class Home_Page {
 
 	public Launch_Assessment_Page newAssessment() throws Exception {
 
-		SeleniumCore.clickElement(newassessmentlink);
+		SeleniumCore.clickElement(driver, newassessmentlink);
 		SeleniumCore.sleepSeconds(3);
 		return PageFactory.initElements(driver, Launch_Assessment_Page.class);
 	}

@@ -3,9 +3,6 @@ package com.hp.utility;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.io.File;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +26,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
-
 import com.jacob.com.LibraryLoader;
 
 /**
@@ -43,9 +39,14 @@ import com.jacob.com.LibraryLoader;
  * @since JDK 1.6
  */
 
+/**
+ * @author huchan
+ *
+ */
 public class SeleniumCore {
 
 	private static Logger logger = Logger.getLogger(SeleniumCore.class);
+	//public WebDriver driver;
 
 	/**
 	 *  @author huchan
@@ -67,14 +68,17 @@ public class SeleniumCore {
 
 	/**
 	 * click an element in the page 
+	 * @param driver TODO
 	 * @param e --the WebElment we need to click
 	 * @author huchan
 	 */
-	public static void clickElement(WebElement e) {
+	public static void clickElement(WebDriver driver, WebElement e) {
 		logger.info("Click elements in page-clicked this element:"
 				+ e.getTagName() + ",the text is:" + e.getText());
 		//In chrome browser this function didn't work ,so give a solution to load the page correctly
 	//	((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+e.getLocation().y+")");
+		String code=getInnerHtmlCode(driver, e);
+		logger.info("Clicked element html code is:"+code);
 		e.click();
 	}
 	
@@ -83,13 +87,15 @@ public class SeleniumCore {
 	 * @param e --the WebElment we need to click
 	 * @author huchan
 	 */
-	public static void clickElement(WebDriver driver,WebElement e) {
+	public static void clickElementExt(WebDriver driver,WebElement e) {
 		logger.info("Click elements in page-clicked this element:"
 				+ e.getTagName() + ",the text is:" + e.getText());
 		//In chrome browser this function didn't work ,so give a solution to load the page correctly
 	//	((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+e.getLocation().y+")");
 		 new Actions(driver).moveToElement(e).clickAndHold().release().build().perform();
 		 //"return arguments[0].fireEvent('onclick');",
+		 String code=getInnerHtmlCode(driver, e);
+		 logger.info("Clicked element html code is:"+code);
 		
 	}
 	/**
@@ -104,6 +110,8 @@ public class SeleniumCore {
 	//	((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+e.getLocation().y+")");
 		 new Actions(driver).contextClick(e).perform();
 		 //"return arguments[0].fireEvent('onclick');",
+		 String code=getInnerHtmlCode(driver, e);
+		logger.info("Right Clicked element html code is:"+code);
 		
 	}
 	
@@ -118,6 +126,8 @@ public class SeleniumCore {
 		logger.info("Type string into the element is:" + e.getTagName()
 				+ ", the inputted text:" + text);
 		//e.sendKeys(Keys.DELETE);
+		//String code=getInnerHtmlCode(driver, e);
+	//	logger.info("Clicked element html code is:"+code);
 		e.clear();
 		e.sendKeys(text);
 		//e.sendKeys(Keys.TAB);
@@ -247,7 +257,7 @@ public class SeleniumCore {
 
 				@Override
 		        public Boolean apply(WebDriver driver) {
-		        	
+		        	logger.info("Enter the waitForObjectDisplay method to wait for the object displayed in the page ");
 		        	return (driver.findElement(By.xpath(xpathExpression)).isDisplayed());
 		        }
 		});
@@ -520,6 +530,14 @@ public class SeleniumCore {
 		je.executeScript(script,e);
 
 	}
+	public static Object executeJSReturn(WebDriver driver, String script,WebElement e) {
+		logger.info("Run the javascript from page ,the java script is:"
+				+ script);
+		JavascriptExecutor je = (JavascriptExecutor) driver;
+		Object object=je.executeScript(script,e);
+		return object;
+
+	}
 	/**
 	 * click the ok button in the pop up dialog (alert dialog)
 	 * @param driver  -- the web driver's instance
@@ -607,7 +625,8 @@ public class SeleniumCore {
 		logger.info("Current loading page state is:"+docstate);
 		WebDriverWait wait=new WebDriverWait(driver,120);
 		ExpectedCondition<Boolean> ec = new ExpectedCondition<Boolean>() {
-	          public Boolean apply(WebDriver d) {
+	          @Override
+			public Boolean apply(WebDriver d) {
 	            return (docstate.equals("complete"));
 	          }
 	        };
@@ -624,28 +643,7 @@ public class SeleniumCore {
 		return pageurl;
 	}
 	
-	/**
-	 * switchtoWindow:(Here describle the usage of this function). 
-	 * http://santoshsarmajv.blogspot.com/2012/04/how-to-switch-control-to-pop-up-window.html
-	 * http://stackoverflow.com/questions/11614188/switch-between-two-browser-windows-using-selenium-webdriver
-	 *
-	 * @author huchan
-	 * @param driver
-	 * @param windowTitle
-	 * @throws AWTException 
-	 * @since JDK 1.6
-	 */
-	public static void switchtoWindow(WebDriver driver,String windowTitle) throws AWTException{
-		Robot robot=new Robot();
-		Set<String> allwindows=driver.getWindowHandles();
-		for (String window : allwindows) {
-            driver.switchTo().window(window);
-            if (driver.getTitle().contains(windowTitle)) {
-               robot.delay(5000);
-              // robot.keyPress(keycode);
-            }
-        }
-	}
+	
 	
 	public static void assertEqualsExpected(String stepname,String expectedvalue,String actualvalue){
 		if(expectedvalue.trim().equalsIgnoreCase(actualvalue.trim())){
@@ -705,7 +703,7 @@ public class SeleniumCore {
 	public static String getProjectWorkspace(){
 		String path = new File(".").getAbsolutePath();
 		String probasepath = path.substring(0, path.length() - 1);
-		logger.info("Current project's workspace path is:"+probasepath);
+		logger.debug("Current project's workspace path is:"+probasepath);
 		return probasepath;
 	}
 	
@@ -765,65 +763,114 @@ public class SeleniumCore {
 		}
 	}
 	
-//**************************************************AutoItX API**************************************************************************
-	public static int getRandomNumber() {
-		int minimum = 1;
-		int maximum = 100000000;
-		int returnvalue = minimum + (int) (Math.random() * maximum);
-		return returnvalue;
-	}
-	
-//**************************************************************************************************
-	/*
-	 * get the total minutes between the two time
-	 */
-	public static String betweenTime(String starttime) {
-		String betweentime = null;
-		long startseconds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-				starttime, new ParsePosition(0)).getTime();
-		long endseconds = new Date().getTime();
-		logger.debug("the start time is :" + starttime + ",end time is:"
-				+ new Date().toString());
-		logger.debug("the start second is:" + startseconds
-				+ ",the end seconds is:" + endseconds);
-		long millonseconds = endseconds - startseconds;
-		long totalhours = millonseconds / (1000 * 60 * 60);
-		long totalminutes = millonseconds / (1000 * 60);
-		long intervalminutes = totalminutes % 60;
-		if (totalminutes > 60) {
-			betweentime = String.valueOf(totalhours) + " hours "
-					+ String.valueOf(intervalminutes) + " minutes";
-		} else {
-			logger.error("Sorry the end testing time is less than the testing start time");
-			betweentime = String.valueOf(totalminutes) + "minutes";
+	public static void firefox_saveFile(String title) throws Exception{
+		//[TITLE:Opening;CLASS:MozillaDialogClass]
+		//[CLASS:Button; INSTANCE:1]
+		sleepSeconds(5);
+		AutoItXUtils autoit=getAutoItX();
+		autoit.winWait(title, "", 120);
+		logger.info("had waited 120 secondsto activate the open dialog");
+		autoit.winActivate(title, "");
+		logger.info("now activated the open file dialog....");
+		//send alt +S key to save the file
+		autoit.send("{ALTDOWN}s{ALTUP}");
+		logger.info("Now send key to the current window....");
+		sleepSeconds(2);
+		//click the ok button
+		autoit.send("{ENTER}");
+		logger.info("send the enter key to current windows ,click the ok button...");
+		sleepSeconds(3);
+		String poptitle="Enter name";
+		boolean folderdlg=autoit.winExists(poptitle);
+		if(folderdlg){
+			autoit_clickButton(poptitle,"","[ID:1;CLASSNN:Button1;CLASS:Button;INSTANCE:1]");
+		}else
+		{
+			logger.info("Now we had not found the download folder dialog from current instance,we will send the ok button again");
+			autoit.winWait(title, "", 120);
+			autoit.winActivate(title, "");
+			autoit.send("{ALTDOWN}s{ALTUP}");
+			autoit.send("{ENTER}");
 		}
-
-		return betweentime;
-
-	}
-	
-	
-	public static String getCurrentTime(Date date){
-		String currenttime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-		logger.debug("Get current running time is :"+currenttime);
-		return currenttime;
-	}
-	
-	public static String timeLastMinutes(String starttime,String endtime) {
-		long startseconds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-				starttime, new ParsePosition(0)).getTime();
-		long endseconds =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(
-				endtime, new ParsePosition(0)).getTime();
+		SeleniumCore.sleepSeconds(5);
+		logger.info("great ,we had download the zip file into our default folder");
 		
-		logger.debug("the start time is:" + starttime
-				+ ",the end time is:" + endtime);
-		long millonseconds = endseconds - startseconds;
-		String totalminutes = String.valueOf(millonseconds / (1000 * 60));
-	    logger.debug("the total took time is:"+totalminutes);
-		return totalminutes;
-
 	}
+//**************************************************AutoItX API**************************************************************************
+
+	
+
 //***********************************************************************************************************
+	/**
+	 * switchtoWindow:(Here describle the usage of this function). 
+	 * http://santoshsarmajv.blogspot.com/2012/04/how-to-switch-control-to-pop-up-window.html
+	 * http://stackoverflow.com/questions/11614188/switch-between-two-browser-windows-using-selenium-webdriver
+	 *
+	 * @author huchan
+	 * @param driver
+	 * @param windowTitle
+	 * @throws AWTException 
+	 * @since JDK 1.6
+	 */
+	public static void switchtoWindow(WebDriver driver,String windowTitle) throws AWTException{
+		Robot robot=new Robot();
+		Set<String> allwindows=driver.getWindowHandles();
+		for (String window : allwindows) {
+            driver.switchTo().window(window);
+            if (driver.getTitle().contains(windowTitle)) {
+               robot.delay(5000);
+              // robot.keyPress(keycode);
+            }
+        }
+	}
 	
+	/**
+	 * refresh the current page
+	 * @param driver
+	 */
+	public static void refreshPage(WebDriver driver){
+		//driver.navigate().refresh();
+		logger.info("Now refresh the page to keep the session valid");
+		//or blow
+		Actions actions = new Actions(driver);
+		actions.sendKeys(Keys.F5).perform();
+	}
+	/**
+	 * get the page title
+	 * @param driver
+	 * @return String
+	 */
+	public static String getPageTitle(WebDriver driver){
+		String title=driver.getTitle();
+		logger.info("Get current page title is:"+title);
+		return title;
+	}
 	
+	/**
+	 * get the webelement's html code
+	 * @param driver
+	 * @param e
+	 * @return String
+	 */
+	public static String getInnerHtmlCode(WebDriver driver,WebElement e){
+		String contents = (String)executeJSReturn(driver,"return arguments[0].innerHTML;", e);
+		logger.info("Get the html code for this webelement:"+contents);
+		return contents;
+	}
+	
+	/**
+	 * wait for a few time to find the object displayed in the page
+	 * @param driver
+	 * @param e
+	 * @param timeout
+	 * @return true found the element visible displayed in the page ,false ,cannot find the webelement
+	 */
+	public static boolean  waitForGUIAppear(WebDriver driver,WebElement e,long timeout){
+		boolean findelement=false;
+		WebDriverWait wdw=new WebDriverWait(driver, timeout);
+		logger.info("wait for the object displayed in the page:"+getInnerHtmlCode(driver, e));
+		wdw.until(ExpectedConditions.visibilityOf(e));
+		return findelement;
+		
+	}
 }

@@ -11,5 +11,8 @@
 	<classpathentry kind="lib" path="lib/jacob.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.35.0.jar" sourcepath="lib/selenium-java-2.35.0-srcs.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-java-2.35.0-srcs.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.26-bin.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-1.0.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

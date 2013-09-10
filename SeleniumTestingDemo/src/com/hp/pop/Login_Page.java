@@ -50,7 +50,7 @@ public class Login_Page {
 	// click the submit button
 	public void clickSubmitBtn() {
 		SeleniumCore.highLight(driver, submitbtn);
-		SeleniumCore.clickElement(submitbtn);
+		SeleniumCore.clickElement(driver, submitbtn);
 		logger.info("Click the Submit button to log in the home page");
 	}
 
@@ -66,6 +66,7 @@ public class Login_Page {
 			typeEmail(username);
 			typePassword(inputpassword);
 			clickSubmitBtn();
+			
 		}
 		logger.info("Had logged in the home page successfully......");
 		return PageFactory.initElements(driver, Home_Page.class);

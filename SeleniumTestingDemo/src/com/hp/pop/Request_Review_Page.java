@@ -10,8 +10,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
+import com.hp.utility.TimeUtils;
 
 public class Request_Review_Page {
 
@@ -59,9 +61,9 @@ public class Request_Review_Page {
 			driver.findElement(By.xpath(".//*[@id='saveBtn']")).click();
 		} else {
 			// run now the schedule
-			Resulter.log("COMMENT_SCAN_REVIEW", "the assessment run at:"+SeleniumCore.getCurrentTime(Calendar.getInstance().getTime()));
+			Resulter.log("COMMENT_SCAN_REVIEW", "the assessment run at:"+TimeUtils.getCurrentTime(Calendar.getInstance().getTime()));
 			logger.info("New request created now ,this is the review page ,and click the run button now ");
-			SeleniumCore.clickElement(runbtn);
+			SeleniumCore.clickElement(driver, runbtn);
 		}
 		
 		SeleniumCore.sleepSeconds(3);

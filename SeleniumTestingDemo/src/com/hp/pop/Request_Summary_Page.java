@@ -14,6 +14,7 @@ import org.testng.Assert;
 
 import com.hp.utility.Resulter;
 import com.hp.utility.SeleniumCore;
+import com.hp.utility.TimeUtils;
 
 public class Request_Summary_Page {
 
@@ -70,7 +71,7 @@ public class Request_Summary_Page {
 	}
 
 	public String getRunStartTime(){
-		return SeleniumCore.getCurrentTime(Calendar.getInstance().getTime());
+		return TimeUtils.getCurrentTime(Calendar.getInstance().getTime());
 	}
 	public String getRequestType() {
 		return requesttype.getText().trim();

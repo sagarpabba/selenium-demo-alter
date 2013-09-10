@@ -180,4 +180,23 @@ System info: os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.versi
 Session ID: 3884afda-50af-49aa-bf0d-268a07a26be9
 Driver info: org.openqa.selenium.remote.RemoteWebDriver
 Capabilities [{platform=XP, acceptSslCerts=true, javascriptEnabled=true, browserName=chrome, chrome={chromedriverVersion=2.2}, rotatable=false, locationContextEnabled=true, webdriver.remote.sessionid=3884afda-50af-49aa-bf0d-268a07a26be9, version=29.0.1547.62, cssSelectorsEnabled=true, databaseEnabled=true, handlesAlerts=true, browserConnectionEnabled=false, nativeEvents=true, webStorageEnabled=true, applicationCacheEnabled=false, takesScreenshot=true}]
-   
+ ********************************************************************************************
+ org.openqa.selenium.StaleElementReferenceException: Element not found in the cache - perhaps the page has changed since it was looked up
+Command duration or timeout: 20.38 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/stale_element_reference.html
+Build info: version: '2.35.0', revision: 'c916b9d', time: '2013-08-12 15:42:01'
+System info: os.name: 'Windows Server 2008', os.arch: 'amd64', os.version: '6.0', java.version: '1.6.0_24'
+Session ID: 975b92e3-a6e1-4271-a40a-fc02a65e0e3c
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities [{platform=XP, acceptSslCerts=true, javascriptEnabled=true, browserName=firefox, rotatable=false, locationContextEnabled=true, version=23.0.1, cssSelectorsEnabled=true, databaseEnabled=true, handlesAlerts=true, browserConnectionEnabled=true, nativeEvents=false, webStorageEnabled=true, applicationCacheEnabled=true, takesScreenshot=true}]
+Command duration or timeout: 21.97 seconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/stale_element_reference.html
+Build info: version: '2.35.0', revision: 'c916b9d', time: '2013-08-12 15:42:01'
+System info: os.name: 'Windows 7', os.arch: 'x86', os.version: '6.1', java.version: '1.6.0_43'
+Session ID: 341e1f77-8ae5-498a-8ece-b8a0833465cb
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{platform=XP, acceptSslCerts=true, javascriptEnabled=true, browserName=firefox, rotatable=false, locationContextEnabled=true, webdriver.remote.sessionid=341e1f77-8ae5-498a-8ece-b8a0833465cb, version=23.0.1, cssSelectorsEnabled=true, databaseEnabled=true, handlesAlerts=true, browserConnectionEnabled=true, webStorageEnabled=true, nativeEvents=false, applicationCacheEnabled=true, takesScreenshot=true}]
+ 
+ 
+ this error happened after we refresh the page
+ 

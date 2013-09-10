@@ -1,7 +1,5 @@
 package com.hp.tests;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Map;
 
 import org.openqa.selenium.support.PageFactory;
@@ -9,7 +7,6 @@ import org.testng.annotations.Test;
 
 import com.hp.pop.Login_Page;
 import com.hp.utility.BaseDriver;
-import com.hp.utility.Resulter;
 import com.hp.utility.RetryFail;
 import com.hp.utility.SeleniumCore;
 
@@ -41,10 +38,6 @@ public class LoginHomeTest extends BaseDriver {
 		// init all the used pages
 				Login_Page loginpage = PageFactory.initElements(driver,
 						Login_Page.class);
-
-				Resulter.log("START_TIME", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-						.format(Calendar.getInstance().getTime()));
-
 				// log the home page as a valid username and password
 				loginpage.logAsValidUser(username, password);
 	}

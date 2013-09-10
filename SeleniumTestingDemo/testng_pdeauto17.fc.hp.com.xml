@@ -8,6 +8,7 @@
 	  <listener class-name="com.hp.utility.RetryListener" />
   </listeners>
   <!-- log in the home page  -->
+ 
   <test name="login in the home page" preserve-order="true" skipfailedinvocationcounts="true" >
    <classes>
      <class name="com.hp.tests.LoginHomeTest"></class>   
@@ -15,18 +16,27 @@
   </test>
  
   <!-- new a FW&SW Assessment -->
-   
+ 
   <test name="New FWSW Assessment and search run result" preserve-order="true" skipfailedinvocationcounts="true">
    <classes>
     <class name="com.hp.tests.NewProactiveScanTest"></class> 
    </classes>
   </test>
-  <!-- 
-  <test name="html email reporter" preserve-order="true" skipfailedinvocationcounts="true">
+
+  <!-- send today's execution report email -->
+   
+  <test name="PAF Today Execution Email Report" preserve-order="true" skipfailedinvocationcounts="true">
     <classes>
-      <class name="com.hp.utility.NiceEmailer"></class>
+      <class name="com.hp.tests.ExecutionEmailTest"></class>
     </classes>
   </test>  
-   -->
-   
-</suite> <!-- E2EDemoRunner -->
+
+  <!-- send the overview execution report email -->
+ 
+  <test name="PAF Automation Status Overview Email Report" preserve-order="true" skipfailedinvocationcounts="true">
+    <classes>
+      <class name="com.hp.tests.OverviewEmailTest"></class>
+    </classes>
+  </test>  
+
+</suite> <!-- E2E Testing execution process -->
