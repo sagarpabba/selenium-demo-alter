@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="E2EDemoRunner" preserve-order="true"  skipfailedinvocationcounts="true" configfailurepolicy="continue" thread-count="2" parallel="false">
+  <parameter name="hostname" value="pdeauto17.fc.hp.com"></parameter>
+  <parameter name="browsername" value="firefox"></parameter>
+  <parameter name="proxyserver" value="web-proxy.atlanta.hp.com:8088"></parameter>
+  <listeners>
+	  <listener class-name="com.hp.utility.RetryListener" />
+  </listeners>
+  <!-- log in the home page  -->
+ 
+  <test name="login in the home page" preserve-order="true" skipfailedinvocationcounts="true" >
+   <classes>
+     <class name="com.hp.tests.LoginHomeTest"></class>   
+   </classes>
+  </test>
+ 
+  <!-- new a FW&SW Assessment -->
+ 
+  <test name="New FWSW Assessment and search run result" preserve-order="true" skipfailedinvocationcounts="true">
+   <classes>
+    <class name="com.hp.tests.NewProactiveScanTest"></class> 
+   </classes>
+  </test>
+
+  <!-- send today's execution report email -->
+   
+  <test name="PAF Today Execution Email Report" preserve-order="true" skipfailedinvocationcounts="true">
+    <classes>
+      <class name="com.hp.tests.ExecutionEmailTest"></class>
+    </classes>
+  </test>  
+
+  <!-- send the overview execution report email -->
+ 
+  <test name="PAF Automation Status Overview Email Report" preserve-order="true" skipfailedinvocationcounts="true">
+    <classes>
+      <class name="com.hp.tests.OverviewEmailTest"></class>
+    </classes>
+  </test>  
+
+</suite> <!-- E2E Testing execution process -->
