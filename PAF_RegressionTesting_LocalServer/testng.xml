@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="E2EDemoRunner" preserve-order="true"  skipfailedinvocationcounts="true" configfailurepolicy="continue" thread-count="2" parallel="false">
+  <parameter name="hostname" value="localhost"></parameter>
+  <parameter name="browsertype" value="firefox"></parameter>
+  <listeners>
+	  <listener class-name="com.hp.utility.RetryListener" />
+  </listeners>
+  <!-- log in the home page  -->
+    
+  <test enabled="true" name="login in the home page" preserve-order="true" skipfailedinvocationcounts="true" >
+   <classes>
+     <class name="com.hp.tests.LoginHomeTest"></class>   
+   </classes>
+  </test>
+  
+   <test enabled="false" name="New FWSW Assessment and search run result" preserve-order="true" skipfailedinvocationcounts="true">
+   <classes>
+    <class name="com.hp.tests.NewProactiveScanViaSNPNTest"></class> 
+   </classes>
+  </test>
+    
+   <test enabled="false" name="New FWSW Assessment and search run result1" preserve-order="true" skipfailedinvocationcounts="true">
+   <classes>
+    <class name="com.hp.tests.TestRunnerDemo2"></class> 
+   </classes>
+  </test>
+ 
+   <!-- new a com.hp.tests.NewProactiveScanTest -->
+   
+  <test enabled="false" name="New FWSW Assessment and search run result" preserve-order="true" skipfailedinvocationcounts="true">
+   <classes>
+    <class name="com.hp.tests.NewProactiveScanTest"></class> 
+   </classes>
+  </test>
+ 
+   
+    
+  <test enabled="false" name="html email reporter" preserve-order="true" skipfailedinvocationcounts="true">
+    <classes>
+      <class name="com.hp.tests.ExecutionEmailTest"></class>
+    </classes>
+  </test>  
+   
+</suite> <!-- E2EDemoRunner -->
