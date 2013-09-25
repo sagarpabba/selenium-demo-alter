@@ -2,24 +2,15 @@ package com.hp.tests;
 
 import java.util.Calendar;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.hp.pop.Home_Page;
-import com.hp.pop.Launch_Assessment_Page;
 import com.hp.pop.ListSearch_Assessment_Run_Page;
 import com.hp.pop.RunDetail_Page;
-import com.hp.pop.Select_Customer_Page;
-import com.hp.pop.Select_Device_Page;
-import com.hp.utility.BaseDriver_Remote;
-import com.hp.utility.FilesUtils;
-import com.hp.utility.JsoupUtils;
-import com.hp.utility.SeleniumCore;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.TimeUtils;
 
-public class TestRunnerDemo extends BaseDriver_Remote{
+public class TestRunnerDemo extends BaseDriver{
 
 	@Test
 	public void test1() throws Exception  {
@@ -37,9 +28,9 @@ public class TestRunnerDemo extends BaseDriver_Remote{
 //		
 		driver.get("https://proactive-assessments-fut1.corp.hp.com/web/run");
 		ListSearch_Assessment_Run_Page ls=PageFactory.initElements(driver, ListSearch_Assessment_Run_Page.class);
-		ls.verifyPageElements();
+		ls.verifyPageElements("");
 		RunDetail_Page rp=ls.searchRun("pc", "3386", TimeUtils.getCurrentTime(Calendar.getInstance().getTime()));
-		rp.verifyPageElements();
+		rp.verifyPageElements("");
 		rp.downloadReport();
 		
 //		WebDriver driver=new InternetExplorerDriver();
@@ -61,7 +52,7 @@ public class TestRunnerDemo extends BaseDriver_Remote{
 //		sdp.verifyPageElements();
 //		sdp.selectDevice();
 		//scp.selectAllCustomersByFile();
-	 String zipFile="C:\\temp\\DCOM.zip";
+	// String zipFile="C:\\temp\\DCOM.zip";
 	//	String outputFolder="C:\\Python27\\workspace\\PAF_HC\\PAFReports";
 		//SeleniumCore.unZipIt(zipFile, outputFolder);
 		//SeleniumCore.generateData("PAF url", "www.kbsste.com");

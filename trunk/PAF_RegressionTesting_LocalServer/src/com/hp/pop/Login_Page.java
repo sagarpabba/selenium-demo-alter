@@ -1,5 +1,6 @@
 package com.hp.pop;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -27,6 +28,11 @@ public class Login_Page extends PageObject{
 		super(driver);
 	}
 
+	@Override
+	public boolean verifyPageElements(String pagename) throws Exception {
+		// TODO Auto-generated method stub
+		return super.verifyPageElements(pagename);
+	}
 	// type the email for the log credential
 	public void typeEmail(String email) {
 		SeleniumCore.clearAndTypeString(emailinput, email);
@@ -51,12 +57,10 @@ public class Login_Page extends PageObject{
 
 	// log in the system using the valid credential
 	
-	public Home_Page logAsValidUser(String username, String inputpassword) {
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
-
-		if (isLoginPage()) {
-			logger.info("User now is logging the PAF,input username and password......");
+	public Home_Page logAsValidUser(String username, String inputpassword) throws IOException {
+			if (isLoginPage()) {
+			logger.info("User now is logging the PAF,input username and password......");		
+			//***************************************************************
 			typeEmail(username);
 			typePassword(inputpassword);
 			clickSubmitBtn();

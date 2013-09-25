@@ -42,13 +42,12 @@ public class Select_Options_Page extends PageObject{
 		// TODO Auto-generated constructor stub
 	}
 
-	public void verifyPageElements() {
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
-        SeleniumCore.assertDisplayed("Assert the email request showed in the page", mailname);
+	public boolean verifyPageElements(String pagename) throws Exception {
+		
+		SeleniumCore.assertDisplayed("Assert the email request showed in the page", mailname);
         SeleniumCore.assertEnabled("Assert the back button is enabled in the page", backbtn);
         SeleniumCore.assertEnabled("Assert the next button is enabled in the page", nextbtn);	
-
+        return super.verifyPageElements(pagename);
 	}
 
 	

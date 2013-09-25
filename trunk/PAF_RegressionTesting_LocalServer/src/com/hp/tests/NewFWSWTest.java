@@ -13,10 +13,10 @@ import com.hp.pop.Request_Review_Page;
 import com.hp.pop.Home_Page;
 import com.hp.pop.Launch_Assessment_Page;
 import com.hp.pop.ListSearch_Assessment_Run_Page;
-import com.hp.utility.BaseDriver_Remote;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.SeleniumCore;
 
-public class NewFWSWTest extends BaseDriver_Remote {
+public class NewFWSWTest extends BaseDriver {
 
 	
 
@@ -40,25 +40,25 @@ public class NewFWSWTest extends BaseDriver_Remote {
 	private List<String> languages;
 
 	@Test(description = "check elements in the home page", testName = "Verify the elements in home page")
-	public void test_verifyHomePage() {
+	public void test_verifyHomePage() throws Exception {
 
 		//SeleniumCore.OpenURL(driver, homeurl);
 		// search device
 		homepage = PageFactory.initElements(driver, Home_Page.class);
-		homepage.verifyPageElements();
+		homepage.verifyPageElements("PAF Home Page");
 	}
 
 	@Test(description = "New FWSW assessment", testName = "click the new assessment link", dependsOnMethods = "test_verifyHomePage")
 	public void test_newAssessment() throws Exception {
 		lap=homepage.newAssessment();
-		lap.verifyPageElements();
+		lap.verifyPageElements("PAF Launch Assessment Page");
 		
 		scp=lap.newFWSW();
 	}
 
 	@Test(description = "Select Customer page", dependsOnMethods = "test_newAssessment")
 	public void test_SelectCustomer() throws Exception {
-		scp.verifyPageElements();
+		scp.verifyPageElements("Select Customer Page");
 		sdp=scp.newCustomer();
 		
 	}
@@ -66,13 +66,13 @@ public class NewFWSWTest extends BaseDriver_Remote {
 	@Test(description = "Select device page", dependsOnMethods = "test_SelectCustomer")
 	public void test_SelectDevice() throws Exception {
 		
-		sdp.verifyPageElements();
+		sdp.verifyPageElements("Select Device Page");
 		sop=sdp.selectDevice();
 	}
 
 	@Test(description = "New schedule page", dependsOnMethods = "test_SelectDevice")
 	public void test_Options() throws Exception {
-		sop.verifyPageElements();
+		sop.verifyPageElements("Option Page");
 		
 		emailaddress=sop.getEmailAdress();
 		languages=sop.getReportLanguageList();
@@ -83,7 +83,7 @@ public class NewFWSWTest extends BaseDriver_Remote {
 	@Test(description = "New Request review page", dependsOnMethods = "test_Options")
 	public void test_Review() throws Exception {
 		
-		rrp.verifyPageElements();
+		rrp.verifyPageElements("Review Assessment Page");
 		rsp=rrp.RunRequest();
 
 		runid = rsp.getRunID();
@@ -98,7 +98,7 @@ public class NewFWSWTest extends BaseDriver_Remote {
 
 		ListSearch_Assessment_Run_Page larp = PageFactory.initElements(driver,
 				ListSearch_Assessment_Run_Page.class);
-		larp.verifyPageElements();
+		larp.verifyPageElements("Search Run Page");
 		larp.searchRun("fwsw", runid,runstart);
 
 		

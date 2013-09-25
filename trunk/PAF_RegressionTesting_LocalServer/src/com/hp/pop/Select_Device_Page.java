@@ -3,14 +3,15 @@ package com.hp.pop;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.junit.Assert;
+
+
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import com.hp.utility.SeleniumCore;
 
@@ -37,14 +38,13 @@ public class Select_Device_Page extends PageObject {
 		super(driver);
 	}
 
-	public void verifyPageElements() {
+	public boolean verifyPageElements(String pagename) throws Exception {
 		
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
 		//boolean isdes=devicehead.isDisplayed();
         SeleniumCore.assertDisplayed("Assert the title displayed in the page", devicehead);
         SeleniumCore.assertEnabled("Assert the back button is enabled in the page", backbtn);
         SeleniumCore.assertEnabled("Assert the next button is enabled in the page", nextbtn);
+        return super.verifyPageElements(pagename);
 		
 	}
 /*

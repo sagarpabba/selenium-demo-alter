@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.log4j.Category;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -69,14 +67,16 @@ public class ListSearch_Assessment_Run_Page extends PageObject {
 		super(driver);
 	}
 
-	public void verifyPageElements() {
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");       
+	public boolean verifyPageElements(String pagename) throws Exception {
+		
 		logger.info("Search run Result page .this page head is:"+ header.getText());
 		SeleniumCore.assertDisplayed("Assert the assessment type list is displayed in the page", assessmenttypelist);
 		SeleniumCore.assertEnabled("Assert the search button is enabled in the page", searchbtn);
 		SeleniumCore.assertEnabled("Assert the reset button is enabled in the page", resetbtn);
-	
+		
+		long listsearchtime=SeleniumCore.getPageLoadTime(driver);
+		SeleniumCore.generatePageLoadTime("PAF Search Run Page", listsearchtime, driver);
+	    return super.verifyPageElements(pagename);
 	}
 
 	public RunDetail_Page searchRun(String assessmenttype, String runid,String runstarttime)

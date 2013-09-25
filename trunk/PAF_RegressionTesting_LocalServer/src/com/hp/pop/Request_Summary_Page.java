@@ -40,10 +40,8 @@ public class Request_Summary_Page extends PageObject{
 		super(driver);
 	}
 
-	public void verifyPageElements() throws IOException 
+	public boolean verifyPageElements(String pagename) throws Exception 
 	{
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
 		try{
         SeleniumCore.assertDisplayed("Assert the element displayed in the Request summary page", runid);
         SeleniumCore.assertDisplayed("Assert the element displayed in the Request summary page", requesttype);
@@ -57,6 +55,7 @@ public class Request_Summary_Page extends PageObject{
 			SeleniumCore.generateEmailStep("Request Summary detail", "Veryify the page load correctly", "Failed", "the page object cannot load correctly:"+e.getMessage(), driver);
 			Assert.fail("All the webelement canot display in the summary page ");
 		}
+		return super.verifyPageElements(pagename);
       
 	}
 

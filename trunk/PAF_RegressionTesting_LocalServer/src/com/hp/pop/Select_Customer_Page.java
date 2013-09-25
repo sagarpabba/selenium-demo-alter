@@ -62,12 +62,12 @@ public class Select_Customer_Page extends PageObject {
 		super(driver);
 	}
 
-	public void verifyPageElements() {
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
-        SeleniumCore.assertDisplayed("Assert the title displayed in the page", customertitle);
+	public boolean verifyPageElements(String pagename) throws Exception {
+		
+		SeleniumCore.assertDisplayed("Assert the title displayed in the page", customertitle);
         SeleniumCore.assertDisabled("Assert the back button is disabled in the page", backbtn);
         SeleniumCore.assertEnabled("Assert the next button is enabled in the page", nextbtn);
+        return super.verifyPageElements(pagename);
 	}
 
 	public Select_Device_Page newCustomer() throws Exception {

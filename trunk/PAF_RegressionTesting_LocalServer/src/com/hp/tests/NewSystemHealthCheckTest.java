@@ -13,10 +13,10 @@ import com.hp.pop.Request_Summary_Page;
 import com.hp.pop.Select_Customer_Page;
 import com.hp.pop.Select_Device_Page;
 import com.hp.pop.Select_Options_Page;
-import com.hp.utility.BaseDriver_Remote;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.SeleniumCore;
 
-public class NewSystemHealthCheckTest extends BaseDriver_Remote {
+public class NewSystemHealthCheckTest extends BaseDriver {
 
 
 	//private String username;
@@ -39,39 +39,39 @@ public class NewSystemHealthCheckTest extends BaseDriver_Remote {
 	private List<String> languages;
 
 	@Test(description = "check elements in the home page", testName = "Verify the elements in home page")
-	public void test_verifyHomePage() {
+	public void test_verifyHomePage() throws Exception {
 
 		SeleniumCore.OpenURL(driver, homeurl);
 		// search device
 		homepage = PageFactory.initElements(driver, Home_Page.class);
-		homepage.verifyPageElements();
+		homepage.verifyPageElements("");
 		//Resulter.log("COMMENT_LOG_USER", username);
 	}
 
 	@Test(description = "New System Health Check assessment", testName = "click the new assessment link", dependsOnMethods = "test_verifyHomePage")
 	public void test_newAssessment() throws Exception {
 		lap=homepage.newAssessment();
-		lap.verifyPageElements();
+		lap.verifyPageElements("");
 		
 		scp=lap.newshc();
 	}
 
 	@Test(description = "Select Customer page", dependsOnMethods = "test_newAssessment")
 	public void test_SelectCustomer() throws Exception {
-		scp.verifyPageElements();
+		scp.verifyPageElements("");
 		sdp=scp.newCustomer();
 	}
 
 	@Test(description = "Select device page", dependsOnMethods = "test_SelectCustomer")
 	public void test_SelectDevice() throws Exception {
 		
-		sdp.verifyPageElements();
+		sdp.verifyPageElements("");
 		sop=sdp.selectDevice();
 	}
 
 	@Test(description = "New schedule page", dependsOnMethods = "test_SelectDevice")
 	public void test_Options() throws Exception {
-		sop.verifyPageElements();
+		sop.verifyPageElements("");
 		emailaddress=sop.getEmailAdress();
 		languages=sop.getReportLanguageList();
 		logger.info("Email requestor is:"+emailaddress+",the supported languages are:"+languages);
@@ -81,7 +81,7 @@ public class NewSystemHealthCheckTest extends BaseDriver_Remote {
 	@Test(description = "New Request review page", dependsOnMethods = "test_Options")
 	public void test_Review() throws Exception {
 		
-		rrp.verifyPageElements();
+		rrp.verifyPageElements("");
 		rsp=rrp.RunRequest();
 
 		runid = rsp.getRunID();
@@ -96,7 +96,7 @@ public class NewSystemHealthCheckTest extends BaseDriver_Remote {
 
 		ListSearch_Assessment_Run_Page larp = PageFactory.initElements(driver,
 				ListSearch_Assessment_Run_Page.class);
-		larp.verifyPageElements();
+		larp.verifyPageElements("");
 		larp.searchRun("shc", runid,runstart);
 
 		
