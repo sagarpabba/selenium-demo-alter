@@ -44,12 +44,11 @@ public class RunDetail_Page extends PageObject {
 	}
 
 	
-	public void verifyPageElements(){
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
-        SeleniumCore.assertDisplayed("Assert the download button is displayed in the page", downloadbtn);
-        SeleniumCore.assertEnabled("Assert the back button is displayed in the page", backbtn);
+	public boolean verifyPageElements(String pagename) throws Exception{
 		
+		SeleniumCore.assertDisplayed("Assert the download button is displayed in the page", downloadbtn);
+        SeleniumCore.assertEnabled("Assert the back button is displayed in the page", backbtn);
+		return super.verifyPageElements(pagename);
 	}
 	
 	
@@ -121,9 +120,9 @@ public class RunDetail_Page extends PageObject {
 	    	FilesUtils.unZipIt(reportdir+File.separator+"proactive-scan-report.zip", reportdir);
 	    	logger.debug("Unzip the proactive scan report zip file..");
 	    	String reporthtmlfile=reportdir+File.separator+"proactive-scan-report.html";
-	    	
+	    	SeleniumCore.generateEmailStep("", "Get the extracted PAF Report File", "Passed", "unzipped Report File path:"+reporthtmlfile, driver);
 	    	String filecontent=FilesUtils.returnFileContents(reporthtmlfile);
-	    	logger.debug("the html report file content is:"+filecontent);
+	    	//logger.debug("the html report file content is:"+filecontent);
 	    	
 	    }
 	  

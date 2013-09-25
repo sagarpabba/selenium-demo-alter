@@ -9,9 +9,10 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -25,6 +26,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
 //import org.openqa.selenium.remote.Augmenter;
 //import org.openqa.selenium.remote.CapabilityType;
 //import org.openqa.selenium.remote.DesiredCapabilities;
@@ -45,19 +47,20 @@ import org.testng.annotations.Parameters;
  */
 public class BaseDriver{
 
-	protected static WebDriver driver;
+	protected  static WebDriver driver;
+
 	protected static final Logger logger = Logger.getLogger(BaseDriver.class);
 
 	
 	
 	@BeforeSuite(description="this test run before our testNG test suite,it only run once ")
-	@Parameters({"hostname","browsertype"})
-	public void setupDriver(String hostname,String browsertype,ITestContext context) throws IOException 
+	@Parameters({"browsertype"})
+	public void setupDriver(String browsertype,ITestContext context) throws Exception 
 	{
-//		String runhostname=context.getCurrentXmlTest().getParameter("hostname");
+		String runhostname=HostUtils.getFQDN();
 //		String browsername=context.getCurrentXmlTest().getParameter("browsername");
 //		String proxyserver=context.getCurrentXmlTest().getParameter("proxyserver");
-		String runhostname=hostname;
+		//String runhostname=hostname;
 		String browsername=browsertype;
 	//	String proxyserver=context.getCurrentXmlTest().getParameter("proxyserver");
 		String osversion=HostUtils.getOperatingSystemName()+"-"+HostUtils.getOperatingSystemVersion()+" ("+HostUtils.getOSType()+")";
@@ -66,28 +69,56 @@ public class BaseDriver{
 /*********************************************************************************************/
 		logger.debug("Now the automation testing will be run in this host FQDN is :" + runhostname);	
 		logger.debug("Now we using  browser type is :" + browsername);
-		// logger.debug("Now we running the remote run host hub is :"+hubUrl);
-	//	logger.debug("Now we using the  browser's  proxy server is :" + proxyserver);
-		logger.debug("Now we will run the selenium grid 2 as the remote host for the testing ......");
+		
+		logger.debug("Now we will run the selenium as the local host for the testing ......");
+		//this is used for the perfermance testing
+		//ProxyServer 
+		//server = new ProxyServer(4444);
+		//server.start();
+		//Proxy proxy=server.seleniumProxy();
 		
 		DesiredCapabilities capability=new DesiredCapabilities();
+		
+		// common settings
+		capability.setCapability("cssSelectorsEnabled", true);
+		capability.setCapability("takesScreenshot", true);
+		capability.setCapability("javascriptEnabled", true);
+		capability.setCapability("ignoreZoomSetting",true);
+		capability.setCapability("ignoreProtectedModeSettings", true);
+		capability.setCapability("enablePersistentHover", false); // prevent
+		capability.setCapability("EnableNativeEvents", false);	
+		capability.setCapability("acceptSslCerts", true); //accept the securty ssl url
+		capability.setCapability("unexpectedAlertBehaviour", "accept");
+		
+		org.openqa.selenium.Proxy httpproxy = new org.openqa.selenium.Proxy();  
+		//httpproxy.setHttpProxy(proxyserver); 
+		//httpproxy.setSslProxy(proxyserver);
+	
+		httpproxy.setNoProxy("localhost");
+	//	capability.setCapability(CapabilityType.PROXY,proxy);
+		
 		if (browsername.trim().equalsIgnoreCase("ie")) 
 		{
 			logger.debug("running testing server is using IE......");
 			String iedriver=SeleniumCore.getProjectWorkspace()+"resources"+File.separator+"IEDriverServer.exe";
+			String ielogfile=SeleniumCore.getProjectWorkspace()+"log"+File.separator+"selenium_ie_log.log";
 			logger.debug("the IE driver path is:"+iedriver);
 			//System.setProperty("webdriver.ie.driver",iedriver);
 			// frozen windows
 			capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			capability.setCapability(InternetExplorerDriver.NATIVE_EVENTS,false);
 			capability.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);	
+			capability.setCapability(InternetExplorerDriver.LOG_LEVEL, "TRACE");
+			capability.setCapability(InternetExplorerDriver.LOG_FILE, ielogfile);
 			driver=new InternetExplorerDriver(capability);																	
 		 }
 		 if (browsername.trim().equalsIgnoreCase("firefox")) 
 		 {
 			logger.debug("the browser we used is firefox......");
+		//	String firefoxlogfile=SeleniumCore.getProjectWorkspace()+"log"+File.separator+"selenium_firefox_log.log";
 			//support firefox 23 with clickable the object
 			capability.setCapability(FirefoxDriver.PROFILE, FirefoxProfileFile.setFirefoxProfile());
+			//capability.setCapability(FirefoxDriver.ACCEPT_UNTRUSTED_CERTIFICATES, true);
 			driver=new FirefoxDriver(capability);
 		
 		  } 
@@ -107,20 +138,6 @@ public class BaseDriver{
 			  driver=new ChromeDriver(capability);
 		  }
 			
-		// common settings
-		capability.setCapability("cssSelectorsEnabled", true);
-		capability.setCapability("takesScreenshot", true);
-		capability.setCapability("javascriptEnabled", true);
-		capability.setCapability("ignoreZoomSetting",true);
-		capability.setCapability("ignoreProtectedModeSettings", true);
-		capability.setCapability("enablePersistentHover", false); // prevent
-		capability.setCapability("EnableNativeEvents", false);		
-		
-		org.openqa.selenium.Proxy httpproxy = new org.openqa.selenium.Proxy();  
-		//httpproxy.setHttpProxy(proxyserver); 
-		//httpproxy.setSslProxy(proxyserver);
-		httpproxy.setNoProxy("localhost");
-		capability.setCapability(CapabilityType.PROXY,httpproxy);
 	    logger.debug("the proxy server had been set for the browser correctly now ......");		
 	    //start the proxy selenium grid 2 server
 		Capabilities actualCapabilities = ((RemoteWebDriver) driver).getCapabilities();
@@ -194,6 +211,7 @@ public class BaseDriver{
 	@AfterSuite(description="this is used for closing the browser instance ,but for our debug.it's better not to close it")
 	public void tearDown() {		
 	  //  driver.quit();
+		//server.stop();
 		logger.debug("Involved AfterSuite method from parent.Now we quite the Browser instance");
 	}
 

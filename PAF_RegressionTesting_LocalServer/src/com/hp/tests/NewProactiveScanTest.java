@@ -14,10 +14,10 @@ import com.hp.pop.RunDetail_Page;
 import com.hp.pop.Select_Customer_Page;
 import com.hp.pop.Select_Device_Page;
 import com.hp.pop.Select_Options_Page;
-import com.hp.utility.BaseDriver_Remote;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.SeleniumCore;
 
-public class NewProactiveScanTest extends BaseDriver_Remote {
+public class NewProactiveScanTest extends BaseDriver {
 
 
 	private String runid;
@@ -37,38 +37,38 @@ public class NewProactiveScanTest extends BaseDriver_Remote {
 	private List<String> languages;
 
 	@Test(description = "check elements in the home page", testName = "Verify the elements in home page")
-	public void test_verifyHomePage() {
+	public void test_verifyHomePage() throws Exception {
 
 		// search device
 		homepage = PageFactory.initElements(driver, Home_Page.class);
-		homepage.verifyPageElements();
+		homepage.verifyPageElements("PAF Home Page");
 		//Resulter.log("COMMENT_LOG_USER", username);
 	}
 
 	@Test(description = "New Proactive Scan assessment", testName = "click the new assessment link", dependsOnMethods = "test_verifyHomePage")
 	public void test_newAssessment() throws Exception {
 		lap=homepage.newAssessment();
-		lap.verifyPageElements();
+		lap.verifyPageElements("PAF Launch Assessment Page");
 		
 		scp=lap.newPS();
 	}
 
 	@Test(description = "Select Customer page", dependsOnMethods = "test_newAssessment")
 	public void test_SelectCustomer() throws Exception {
-		scp.verifyPageElements();
+		scp.verifyPageElements("Select Customer Page");
 		sdp=scp.newCustomer();
 	}
 
 	@Test(description = "Select device page", dependsOnMethods = "test_SelectCustomer")
 	public void test_SelectDevice() throws Exception {
 		
-		sdp.verifyPageElements();
+		sdp.verifyPageElements("Select Device Page");
 		sop=sdp.selectDevice();
 	}
 
 	@Test(description = "New schedule page", dependsOnMethods = "test_SelectDevice")
 	public void test_Options() throws Exception {
-		sop.verifyPageElements();
+		sop.verifyPageElements("Option Page");
 		
 		emailaddress=sop.getEmailAdress();
 		languages=sop.getReportLanguageList();
@@ -79,10 +79,10 @@ public class NewProactiveScanTest extends BaseDriver_Remote {
 	@Test(description = "New Request review page", dependsOnMethods = "test_Options")
 	public void test_Review() throws Exception {
 		
-		rrp.verifyPageElements();
+		rrp.verifyPageElements("Assessment Review Page");
 		rsp=rrp.RunRequest();
 
-		rsp.verifyPageElements();
+		rsp.verifyPageElements("Assessment Summary Page");
 		runid = rsp.getRunID();
 		runstart=rsp.getRunStartTime();
 		// search the run result
@@ -94,7 +94,7 @@ public class NewProactiveScanTest extends BaseDriver_Remote {
 	@Test(description = "list run result", dependsOnMethods = "test_Review")
 	public void test_ListRun() throws Exception {
 
-		larp.verifyPageElements();
+		larp.verifyPageElements("Search Run Page");
 		rdp=larp.searchRun("pc", runid,runstart);	
 		logger.info("exit testing now......");
 		
@@ -103,7 +103,7 @@ public class NewProactiveScanTest extends BaseDriver_Remote {
 	public void test_ListRunDetail() throws Exception {
 
 		
-		rdp.verifyPageElements();
+		rdp.verifyPageElements("Assessment Run Detail Page");
 		rdp.downloadReport();	
 		logger.info("had downloaed the report successfully ...exit testing now......");
 		

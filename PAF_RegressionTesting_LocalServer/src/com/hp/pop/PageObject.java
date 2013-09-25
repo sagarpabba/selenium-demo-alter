@@ -15,6 +15,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.hp.utility.SeleniumCore;
+
 /**
  * ClassName:PageBase 
  * Function: TODO ADD FUNCTION. 
@@ -25,7 +27,7 @@ import org.openqa.selenium.WebElement;
  * @since    JDK 1.6
  * @see 	  http://chon.techliminal.com/page_object/#/slide4
  */
-public class PageObject {
+public abstract class PageObject {
 
 	
 	public static String URL;
@@ -37,6 +39,17 @@ public class PageObject {
 		this.driver=driver;
 	}
 	
+	public boolean verifyPageElements(String pagename) throws Exception{
+		boolean pageLoading=false;
+		logger.info("\n***************************************"+pagename+"****************************************************");
+		//get the page loading time 
+		long pageloadingtime=SeleniumCore.getPageLoadTime(driver);
+		SeleniumCore.generatePageLoadTime(pagename, pageloadingtime, driver);
+		//verify page elements
+				
+		return pageLoading;
+		
+	}
 	public void open(){
 		driver.get(URL);
 	}

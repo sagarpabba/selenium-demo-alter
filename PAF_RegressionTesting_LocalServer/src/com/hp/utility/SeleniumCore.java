@@ -584,6 +584,13 @@ public class SeleniumCore {
 		return object;
 
 	}
+	public static Object executeJSReturn(WebDriver driver, String script) {
+		logger.info("Run the javascript from page ,the java script is:"
+				+ script);
+		JavascriptExecutor je = (JavascriptExecutor) driver;
+		Object object=je.executeScript(script);
+        return object;
+	}
 	/**
 	 * click the ok button in the pop up dialog (alert dialog)
 	 * @param driver  -- the web driver's instance
@@ -1099,6 +1106,72 @@ public class SeleniumCore {
 		 }
 		 
 	 }
+	
+	 /**
+	  * generate a email page loading row in the page loading table
+	 * @param stepname
+	 * @param stepchecker
+	 * @param status
+	 * @param comments
+	 * @param driver TODO
+	 * @throws IOException 
+	 */
+	public static void generatePageLoadTime(String pagename,Long pageloadtime, WebDriver driver) throws IOException{
+		 String pageloadingfile=REPORT_DIR+File.separator+"pageloading.log";
+		 boolean updatedbefore=false;
+		 File stepoutputfile=null;
+		 try{
+			 stepoutputfile= new File(pageloadingfile);
+			 if (!stepoutputfile.exists()) {
+				 stepoutputfile.createNewFile();
+				}			
+			    BufferedReader br=new BufferedReader(new FileReader(pageloadingfile));
+			    String strline = null;
+			    while ((strline = br.readLine()) != null) {
+					if (strline.contains(pagename)) {
+						//find the status report we had reported before
+		                FilesUtils.replaceStringOfFile(pageloadingfile,strline,pagename + "|" +pageloadtime);
+						updatedbefore=true;
+					}
+				}
+			    br.close();
+			    if(!updatedbefore){
+				    //if this is the first time to report the step
+				    FileWriter writer = new FileWriter(pageloadingfile, true);
+					BufferedWriter bufferwriter = new BufferedWriter(writer);
+					bufferwriter.write(pagename + "|"+pageloadtime + "\n");					
+					bufferwriter.close();
+			    }
+			    
+	    	}
+				catch (IOException e) {
+					logger.error("Sorry Met the IOException for the reporter file :"
+							+ stepoutputfile.getAbsolutePath() + " the error Exception is :"
+							+ e.getMessage());
+				}
+		 
+	 }
+
+	/**
+	 * get the current page loading time ,it will return seconds
+	 * @param driver
+	 * 
+	 * @see http://www.softwareishard.com/blog/firebug/support-for-performance-timing-in-firebug/
+	 */
+	public static long getPageLoadTime(WebDriver driver){
+		long pageloadtime=0;
+		@SuppressWarnings("unchecked")
+		Map<String,Long> pagetimer=(Map<String, Long>) executeJSReturn(driver, "var performance = window.performance || {};" + 
+	            "var timings = performance.timing || {};"+
+	            "return timings;");
+		
+		long pageloadend=(pagetimer.get("loadEventEnd"))/1000;
+		long pageloadstart=(pagetimer.get("navigationStart"))/1000;
+		pageloadtime=(pageloadend-pageloadstart);
+		logger.info("Get current page loading time is:"+pageloadtime);
+		return pageloadtime;
+	}
+	
 	
 	
 }

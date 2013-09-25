@@ -1,16 +1,17 @@
 package com.hp.tests;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
 import com.hp.pop.Login_Page;
-import com.hp.utility.BaseDriver_Remote;
+import com.hp.utility.BaseDriver;
 import com.hp.utility.RetryFail;
 import com.hp.utility.SeleniumCore;
 
-public class LoginHomeTest extends BaseDriver_Remote {
+public class LoginHomeTest extends BaseDriver {
 
 	private String username;
 	private String password;
@@ -35,11 +36,12 @@ public class LoginHomeTest extends BaseDriver_Remote {
 
 	}
 	@Test(retryAnalyzer=RetryFail.class,dependsOnMethods="test_loginInterface")
-	public void loginHome(){
+	public void loginHome() throws Exception{
 		// init all the used pages
 				Login_Page loginpage = PageFactory.initElements(driver,
 						Login_Page.class);
 				// log the home page as a valid username and password
+				loginpage.verifyPageElements("PAF Login Interface Page");
 				loginpage.logAsValidUser(username, password);
 /******************************************************************************/
 				SeleniumCore.generateEmailData("Login User Credential", username);

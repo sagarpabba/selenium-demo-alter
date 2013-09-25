@@ -74,12 +74,15 @@
     <target name="startSeleniumServer_local" description="Start the selenium server locally" >
         <echo>Starting Selenium Server...</echo>
          <MyTimestamp></MyTimestamp>
-        <java jar="${lib.dir}\selenium-server-standalone-2.35.0.jar" fork="true" spawn="off" >
+        <java jar="${lib.dir}\selenium-server-standalone-2.35.0.jar" fork="true" spawn="true" >
             <!--<arg line="-Dwebdriver.chrome.driver=${resource.dir}\chromedriver.exe -Dwebdriver.ie.driver=${resource.dir}\IEDriverServer.exe -Dhttp.proxyHost=web-proxy.atlanta.hp.com -Dhttp.proxyPort=8088 -singlewindow -log ${logs.dir}\selenium_server_startup.log" />
         	-->
-        	<arg line="-Dhttp.proxyHost=web-proxy.atlanta.hp.com -Dhttp.proxyPort=8088 -singlewindow -log ${logs.dir}\selenium_server_startup.log" />
+        	<arg line="-Dhttp.proxyHost=web-proxy.atlanta.hp.com" />
+        	<arg line="-Dhttp.proxyPort=8088" />
+        	<arg line="-singlewindow" />
+        	<arg line="-log ${logs.dir}\selenium_server_startup.log" />
         </java>
-        <sleep seconds="10" />
+        <sleep seconds="3" description="sleep the server running status"/>
         <echo message="We had started the selenium server in the local running host now ......"></echo>
         
     </target>
@@ -97,7 +100,7 @@
 	<target name="registerSeleniumserver" depends="startSeleniumServer_remote" description="register the selenium grid node">
 		    <echo>Starting Selenium Server...</echo>
 		    <MyTimestamp></MyTimestamp>
-		    <java jar="${lib.dir}\selenium-server-standalone-2.33.0.jar" fork="true" failonerror="true">
+		    <java jar="${lib.dir}\selenium-server-standalone-2.33.0.jar" fork="true" failonerror="true" timeout="120000">
 		          <arg line=" -role node  -hub http://localhost:4444/grid/register -singlewindow -log ${logs.dir}\selenium_server_startup.log" />
 		    </java>
 		    <sleep seconds="10" />
@@ -108,7 +111,7 @@
     <target name="compile" description="compile the java source code file to class file">
         <echo>Compiling  all java source files...</echo>     
          <MyTimestamp></MyTimestamp>  
-        <javac debug="true" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="build.class.path" includeantruntime="false" includes="**/**" encoding="UTF-8" />
+        <javac debug="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="build.class.path" includes="**/**" includeantruntime="false" encoding="UTF-8"/>
         <copy todir="${classes.dir}">
             <fileset dir="${src.dir}" excludes="**/*.java" />
         </copy>
@@ -129,7 +132,6 @@
   		        workingdir="${basedir}"
         	    >	    
   	           <xmlfileset dir="." includes="testng.xml"  />
-        	   <sysproperty key="hostname" value="${host.name}" />
                <sysproperty key="browsertype" value="${browser.type}"/>
   	    </testng>
   	    
@@ -143,7 +145,7 @@
     <target name="stopSeleniumServer" description="Stop the selenium server locally">
         <echo> Trying to stop selenium server ... </echo>
         <MyTimestamp></MyTimestamp>
-        <get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer" dest="${logs.dir}\selenium_server_shutdown.log" ignoreerrors="true" verbose="true" />
+        <get taskname="selenium-shutdown" src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer" dest="${logs.dir}\selenium_server_shutdown.log" ignoreerrors="true" verbose="false" />
         <echo taskname="selenium-shutdown" message="Shutdown selenium server complete,return ok.." />    
     </target>
  

@@ -39,6 +39,7 @@ public class FirefoxProfileFile {
 		//fp.addExtension(extensionToInstall);
 		//http://stackoverflow.com/questions/15292972/auto-download-pdf-files-in-firefox
 		//http://www.webmaster-toolkit.com/mime-types.shtml
+		
 		fp.setAcceptUntrustedCertificates(true);
 		fp.setAssumeUntrustedCertificateIssuer(true);
 		fp.setEnableNativeEvents(false);

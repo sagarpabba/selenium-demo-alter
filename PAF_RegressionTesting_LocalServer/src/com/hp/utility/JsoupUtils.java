@@ -189,6 +189,8 @@ public class JsoupUtils {
 		 String report_dir=SeleniumCore.getProjectWorkspace()+"reporter";
 		 String outpuvaluetfile=report_dir+File.separator+"dataoutput.log";
 		 String stepfile=report_dir+File.separator+"stepoutput.log";
+		 String pageloadingfile=report_dir+File.separator+"pageloading.log";
+		 
 		 String templatereport=SeleniumCore.getProjectWorkspace()+"resources"+File.separator+"report_template.htm";
 		 String reportfilename=report_dir+File.separator+"TestingExecutionReport_"+ 
 		                      new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime())+".htm";
@@ -434,7 +436,55 @@ public class JsoupUtils {
         valuebr.close();
         
 /**************************************************************************************************************/
-    	// this is the insertimage code MsoTableMediumShading2Accent5
+//this is to update the page loading time table,change the color
+        Element pageloadingnode=doc.select("table.MsoTableGrid tbody").first();
+        Element pageaveragenode=pageloadingnode.select("tr").get(1).select("td").get(1).select("p span").first();
+        BufferedReader pagebr=null;
+        pagebr=new BufferedReader(new FileReader(pageloadingfile));
+        String pageline=null;
+        int pagenumber=0;
+        long pagetotal=0;
+        while((pageline=pagebr.readLine())!=null){
+        	pagenumber=pagenumber+1;
+        	String[] rowdatavalue=pageline.split("\\|");
+        	String pagename=rowdatavalue[0];
+        	String pagetime=rowdatavalue[1];
+        	long pagetimelong=Long.parseLong(pagetime);
+        	pagetotal=pagetotal+pagetimelong;
+        	long averagetime=pagetotal/pagenumber;
+        	String pageloadrow=""
++ "<tr style=\"mso-yfti-irow:0;mso-yfti-lastrow:yes;height:24.5pt\">"
++ "<td width=\"431\" valign=\"top\" style=\"width:323.6pt;border-top:none;border-left:"
++ "solid white 1.0pt;mso-border-left-themecolor:background1;border-bottom:solid white 1.0pt;"
++ "  mso-border-bottom-themecolor:background1;border-right:solid white 1.5pt;"
++ "  mso-border-right-themecolor:background1;mso-border-top-alt:solid white .5pt;"
++ "  mso-border-top-themecolor:background1;mso-border-alt:solid white .5pt;"
++ "  mso-border-themecolor:background1;mso-border-right-alt:solid white 1.5pt;"
++ "  mso-border-right-themecolor:background1;background:#4472C4;mso-background-themecolor:"
++ "  accent5;padding:0in 5.4pt 0in 5.4pt;height:24.5pt\">"
++ "  <p style=\"mso-yfti-cnfc:68\" class=\"MsoNormal\"><span style=\"font-size:14.0pt;"
++ "  line-height:105%;color:white;mso-themecolor:background1;mso-bidi-font-weight:"
++ "  bold\">"+pagename+"<o:p></o:p></span></p>"
++ "  </td>"
++ "  <td width=\"588\" valign=\"top\" style=\"width:441pt;border-top:none;border-left:"
++ "  none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;"
++ "  mso-border-right-themecolor:background1;mso-border-top-alt:solid white .5pt;"
++ "  mso-border-top-themecolor:background1;mso-border-left-alt:solid windowtext 1.5pt;"
++ "  mso-border-top-alt:white .5pt;mso-border-top-themecolor:background1;"
++ "  mso-border-left-alt:windowtext 1.5pt;mso-border-bottom-alt:windowtext .5pt;"
++ "  mso-border-right-alt:white .5pt;mso-border-right-themecolor:background1;"
++ "  mso-border-style-alt:solid;background:#B4C6E7;mso-background-themecolor:accent5;"
++ "  mso-background-themetint:102;padding:0in 5.4pt 0in 5.4pt;height:24.5pt\">"
++ "  <p style=\"mso-yfti-cnfc:64\" class=\"MsoNormal\"><b style=\"mso-bidi-font-weight:"
++ "  normal\"><span style=\"font-size:14.0pt;line-height:105%\"><o:p>&nbsp;"+pagetime+"</o:p></span></b></p>"
++ "  </td>"
++ " </tr>";
+        	pageloadingnode.append(pageloadrow);
+        	pageaveragenode.text(averagetime+"s");
+        }
+        pagebr.close();
+/**************************************************************************************************************/
+    	// this is the insert image code MsoTableMediumShading2Accent5
 		Element imagetbodynode = doc.select("table.MsoTableMediumShading2Accent5 tbody").first();
 		logger.debug("the image node is :" + imagetbodynode.text());
 

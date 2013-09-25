@@ -25,14 +25,12 @@ public class Request_Review_Page extends PageObject{
 		super(driver);
 	}
 
-	public void verifyPageElements() {
+	public boolean verifyPageElements(String pagename) throws Exception {
 		
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
-		String headtitle = SeleniumCore.getElementText(header);
+	    String headtitle = SeleniumCore.getElementText(header);
 		logger.info("New request assessment review page,the head title is:"+ headtitle);
 		SeleniumCore.assertDisplayed("Assert the title is displayed in the page", header);
-		
+		return super.verifyPageElements(pagename);
 	}
 
 	public Request_Summary_Page RunRequest()
@@ -60,6 +58,7 @@ public class Request_Review_Page extends PageObject{
 		}
 		
 		SeleniumCore.sleepSeconds(3);
+		
 		return PageFactory.initElements(driver, Request_Summary_Page.class);
 	}
 

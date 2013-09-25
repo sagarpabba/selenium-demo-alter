@@ -70,10 +70,8 @@ public class Home_Page extends PageObject {
 		return buildnum;
 	}
 
-	public boolean verifyPageElements() {
-		boolean pageCorrect = false;
-		String pagename=this.getClass().getName();
-		logger.info("\n***************************************"+pagename+"****************************************************");
+	public boolean verifyPageElements(String pagename) throws Exception {
+	//	boolean pageCorrect = false;
 		try {
 			String buildnumber = getBuildNumber();
 			String pafnotes = SeleniumCore.getElementText(pafnote); // content
@@ -85,8 +83,7 @@ public class Home_Page extends PageObject {
 			logger.info("Current loaded page url is:"+testurl);
 			String browser=SeleniumCore.getBrowserType(driver);
 			logger.info("Get the browser field is:"+browser);
-/*********************************************************************/
-			
+/*********************************************************************/			
 			SeleniumCore.generateEmailData("PAF Application Build Version", buildnumber);
 			SeleniumCore.generateEmailData("PAF URL", testurl);
 /**********************************************************************/
@@ -108,7 +105,7 @@ public class Home_Page extends PageObject {
 		
 			if (isnew && islistrun && islistsub & isfeedback && isnotes
 					) {
-				pageCorrect = true;
+			//	pageCorrect = true;
 				logger.info("Checking the content text in page is:" + pafnotes
 						+ ",but actually from test data is:" + expectednote);
 				logger.info("Checking the notification text in page is:"
@@ -124,7 +121,12 @@ public class Home_Page extends PageObject {
 			Reporter.log("Web elment cannot be found in the home page:"
 					+ e.getMessage());
 		}
-		return pageCorrect;
+		
+		long hometime=SeleniumCore.getPageLoadTime(driver);
+		SeleniumCore.generatePageLoadTime("PAF Home Page", hometime, driver);
+		
+		//***************************************************************
+		return super.verifyPageElements(pagename);
 	}
 
 	public Launch_Assessment_Page newAssessment() throws Exception {
