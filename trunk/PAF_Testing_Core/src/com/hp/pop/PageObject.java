@@ -19,7 +19,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -860,18 +859,41 @@ public abstract class PageObject {
 		 */
 		public long getPageLoadTime(){
 			long pageloadtime=0;
+			long pagestarttime=0;
+			long pageendtime=0;
 			
 			//try{
 			//different with browser ,ie will return is double value but firefox and chrome will return is long
-		//	long pagestartedtime=(Long) executeJSReturn("return window.performance.timing.navigationStart;");
-		//	Long tempvalue=(Long) executeJSReturn("return window.performance.timing.loadEventEnd;");
-			@SuppressWarnings("unchecked")
-			Map<String,Long> pagetimer=(Map<String, Long>)executeJSReturn("var performance = window.performance || window.webkitPerformance || window.mozPerformance || window.msPerformance || {};"+
-                           " var timings = performance.timing || {};"+
-                           " return timings;");
-			long pageloadend=(pagetimer.get("loadEventEnd"))/1000;
-			long pageloadstart=(pagetimer.get("navigationStart"))/1000;
-			pageloadtime=(pageloadend-pageloadstart);
+	  	    Object startobject=executeJSReturn("return window.performance.timing.navigationStart;");
+			Object endobject=executeJSReturn("return window.performance.timing.loadEventEnd;");
+			//@SuppressWarnings("unchecked")
+			// pagetimer=executeJSReturn("var performance = window.performance || window.webkitPerformance || window.mozPerformance || window.msPerformance || {};"+
+              //             " var timings = performance.timing || {};"+
+                //           " return timings;");
+			//long pageloadend=(pagetimer.get("loadEventEnd"))/1000;
+		   //	long pageloadstart=(pagetimer.get("navigationStart"))/1000;
+			//pageloadtime=(pageloadend-pageloadstart);
+			//think it's the firefox or chrome browser
+			if(startobject instanceof Long){
+				pagestarttime=(Long) startobject;
+				logger.debug("the page navigate start time is:"+pagestarttime);
+			}
+			if(startobject instanceof Double){
+				Double tempvalue=(Double) startobject;
+				pagestarttime=new Double(tempvalue).longValue();
+				logger.debug("the page navigate start time is:"+pagestarttime);
+			}
+			if(endobject instanceof Long){
+				pageendtime=((Long) endobject);
+				logger.debug("the page end time is:"+pageendtime);
+			}
+			if(endobject instanceof Double){
+				double tempvalue=(Double) endobject;
+				pageendtime=new Double(tempvalue).longValue();
+				logger.debug("the page end time is:"+pageendtime);
+			}
+			
+			pageloadtime=(pageendtime-pagestarttime)/1000;
 			logger.info("Get current page loading time is:"+pageloadtime);
 		
 			return pageloadtime;
@@ -902,5 +924,37 @@ public abstract class PageObject {
 			}
 		
 		}	
+		
+		
+	   /**wait for the ajax to be completed
+	    * inspired by the the blow url:
+	    * @link  http://hedleyproctor.com/2012/07/effective-selenium-testing/
+	    * @link  http://stackoverflow.com/questions/3272883/how-to-use-selenium-2-pagefactory-init-elements-with-wait-until
+	    * @author huchan
+	    * @param timeoutInSeconds
+	    */
+	public void waitForAjaxPresent(int timeoutInSeconds)  {			 
+			   if (driver instanceof JavascriptExecutor) {
+				   final long currentbowserstate=(Long)executeJS("return return jQuery.active;");
+					logger.info("Current ajax active code  is:"+currentbowserstate);
+					WebDriverWait wdw=new WebDriverWait(driver, timeoutInSeconds);
+					ExpectedCondition<Boolean> ec=new ExpectedCondition<Boolean>() {
+						@Override
+						public Boolean apply(WebDriver driver) {
+							// TODO Auto-generated method stub
+							long newpagestate=(Long) executeJS("return return jQuery.active;");
+							logger.debug("the new ajax active code is:"+newpagestate);
+							return (newpagestate==0L);
+						}
+					};
+					
+					boolean loaded=wdw.until(ec);
+					logger.debug("finally the ajax had been loaded status is:"+loaded);
+				}
+				else{
+					logger.error("Web driver: " + driver + " cannot execute javascript");
+				}
+			
+			}
 }
 

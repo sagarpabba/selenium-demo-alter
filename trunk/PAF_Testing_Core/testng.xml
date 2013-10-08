@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="PAF_Smoke_Testing_Flow" preserve-order="true"  skipfailedinvocationcounts="true" configfailurepolicy="continue" thread-count="2" parallel="false">
- <parameter name="browsertype" value="firefox"></parameter> 
+ <!--  <parameter name="browsertype" value="firefox"></parameter>  -->
   <listeners>
 	  <listener class-name="com.hp.utility.RetryListener" />
   </listeners>
    
  <!-- login in the home page -->
- <test enabled="false" name="login_Interface" preserve-order="true" skipfailedinvocationcounts="true" >
+ <test enabled="true" name="login_Interface" preserve-order="true" skipfailedinvocationcounts="true" >
    <classes>
      <class name="com.hp.test.LoginHomeTest"></class>   
    </classes>
   </test>
  
   <!-- new a Proactive Scan Assessment -->
-  <test enabled="false" name="New_ProactiveScan_Assessment" preserve-order="true" skipfailedinvocationcounts="true">
+  <test enabled="true" name="New_ProactiveScan_Assessment" preserve-order="true" skipfailedinvocationcounts="true">
    <classes>
     <class name="com.hp.test.NewProactiveScanViaSNPNTest"></class> 
    </classes>
