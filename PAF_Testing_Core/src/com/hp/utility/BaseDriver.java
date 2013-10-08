@@ -5,12 +5,8 @@ import static java.io.File.separator;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
-
-
-
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -22,6 +18,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
@@ -124,15 +121,14 @@ public class BaseDriver{
 		  {
 			  logger.debug("the browser we used is Chrome......");
 			  //set the chrome system path
-			  String chromedriver=SeleniumCore.getProjectWorkspace()+"resources"+File.separator+"chromedriver.exe";
-			  System.setProperty("webdriver.chrome.driver",chromedriver);
-			  logger.debug("the chrome driver path is:"+chromedriver);
+			 
 			  //accept the ssl error
 			  capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 			  //disabled all the extensions
-			  capability.setCapability("chrome.switches", Arrays.asList("--disable-extensions"));
-			  capability.setCapability("chrome.switches", Arrays.asList("--disable-logging"));
-			  //capability.setCapability("chrome.binary","C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+			//  capability.setCapability("chrome.switches", Arrays.asList("--disable-extensions"));
+			//  capability.setCapability("chrome.switches", Arrays.asList("--disable-logging"));
+			  //capability.setCapability("chrome.binary","C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");	  
+			  capability.setCapability(ChromeOptions.CAPABILITY, ChromeProfileFile.setChromeProfile());
 			  driver=new ChromeDriver(capability);
 		  }
 			
