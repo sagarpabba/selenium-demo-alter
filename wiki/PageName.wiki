@@ -6,4 +6,4 @@
 = Details =
   * Update the whole framework graphic description ,so you can know this framework quickly;
   * move all the page objects to a single java class ;
-  https://code.google.com/p/selenium-demo-alter/source/browse/wiki/selenium_framework.jpg
+  http://code.google.com/p/selenium-demo-alter/source/browse/wiki/selenium_framework.jpg
