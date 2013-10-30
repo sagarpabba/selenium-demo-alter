@@ -1,0 +1,8 @@
+#summary One-sentence summary of this page.
+
+= Framework change log =
+
+10/30/2013 Alter.hu:
+= Details =
+  * Update the whole framework graphic description ,so you can know this framework quickly;
+  * move all the page objects to a single java class ;
