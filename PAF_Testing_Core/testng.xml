@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="PAF_Smoke_Testing_Flow" preserve-order="true"  skipfailedinvocationcounts="true" configfailurepolicy="continue" thread-count="2" parallel="false">
- <!--  <parameter name="browsertype" value="firefox"></parameter>  -->
+   <parameter name="browsertype" value="firefox"></parameter> 
   <listeners>
 	  <listener class-name="com.hp.utility.RetryListener" />
   </listeners>
