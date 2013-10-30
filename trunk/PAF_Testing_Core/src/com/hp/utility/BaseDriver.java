@@ -46,6 +46,8 @@ import org.testng.annotations.Parameters;
 public class BaseDriver{
 
 	protected  static WebDriver driver;
+	
+	private static String testStartTime;
 
 	protected static final Logger logger = Logger.getLogger(BaseDriver.class);
 
@@ -55,6 +57,8 @@ public class BaseDriver{
 	@Parameters({"browsertype"})
 	public void setupDriver(String browsertype,ITestContext context) throws Exception 
 	{
+		//get the test suite start time
+		testStartTime=TimeUtils.getCurrentTime(Calendar.getInstance().getTime());
 		String runhostname=HostUtils.getFQDN();
 //		String browsername=context.getCurrentXmlTest().getParameter("browsername");
 //		String proxyserver=context.getCurrentXmlTest().getParameter("proxyserver");
@@ -200,6 +204,7 @@ public class BaseDriver{
 	public void tearDown() {		
 	  //  driver.quit();
 		//server.stop();
+		//long endTime=System.nanoTime();
 		logger.debug("Involved AfterSuite method from parent.Now we quite the Browser instance");
 	}
 

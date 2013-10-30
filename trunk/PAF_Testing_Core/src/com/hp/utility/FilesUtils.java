@@ -30,13 +30,16 @@ public class FilesUtils {
 	 */
 	public static boolean newFile(String filename) {
 		boolean iscreated=false;
-		File file = new File(filename);		
-		try {
-			iscreated = file.createNewFile();
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		File file = new File(filename);	
+		if(!file.exists())
+		{
+			try {
+				iscreated = file.createNewFile();
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return iscreated;
 

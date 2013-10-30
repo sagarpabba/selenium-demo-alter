@@ -6,31 +6,31 @@ import java.io.IOException;
 import org.testng.annotations.Test;
 import org.openqa.selenium.support.PageFactory;
 
-import com.hp.pop.Assessment_Review_Page;
-import com.hp.pop.Assessment_Summary_Page;
-import com.hp.pop.Customer_Page;
-import com.hp.pop.Device_Page;
-import com.hp.pop.Home_Page;
-import com.hp.pop.Launch_Assessment_Page;
-import com.hp.pop.Options_Page;
-import com.hp.pop.PageObject;
-import com.hp.pop.SearchRunDetail_Page;
-import com.hp.pop.SearchRun_Page;
+import com.hp.action.AssessmentReviewPageAction;
+import com.hp.action.AssessmentSummaryPageAction;
+import com.hp.action.CustomerPageAction;
+import com.hp.action.DevicePageAction;
+import com.hp.action.HomePageAction;
+import com.hp.action.LaunchAssessmentPageAction;
+import com.hp.action.OptionsPageAction;
+import com.hp.action.SearchRunDetailPageAction;
+import com.hp.action.SearchRunPageAction;
+import com.hp.po.PageObject;
 import com.hp.utility.BaseDriver;
 import com.hp.utility.HostUtils;
 import com.hp.utility.SeleniumCore;
 
 public class NewProactiveScanViaSNPNTest extends BaseDriver {
   
-	private static Home_Page hp;
-	private static Launch_Assessment_Page lnp;
-	private static Customer_Page cp;
-	private static Device_Page dp;
-	private static Options_Page op;
-	private static Assessment_Review_Page arp;
-	private static Assessment_Summary_Page asp;
-	private static SearchRun_Page srp;
-	private static SearchRunDetail_Page srdp;
+	private static HomePageAction hp;
+	private static LaunchAssessmentPageAction lnp;
+	private static CustomerPageAction cp;
+	private static DevicePageAction dp;
+	private static OptionsPageAction op;
+	private static AssessmentReviewPageAction arp;
+	private static AssessmentSummaryPageAction asp;
+	private static SearchRunPageAction srp;
+	private static SearchRunDetailPageAction srdp;
 	
 	
 	public static String runid="";
@@ -39,7 +39,7 @@ public class NewProactiveScanViaSNPNTest extends BaseDriver {
 	
 	@Test(testName="Home Page Operation")
 	public void test_NavigateHomePage() throws Exception{
-		hp=PageFactory.initElements(driver,Home_Page.class);
+		hp=PageFactory.initElements(driver,HomePageAction.class);
 		hp.verifyPageElements("Home Page");
 			
 	}

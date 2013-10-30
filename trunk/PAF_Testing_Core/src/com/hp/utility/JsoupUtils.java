@@ -531,4 +531,89 @@ public class JsoupUtils {
 		}
 	}
 	
+	public void updateStepHtml(String reportfile) throws IOException{
+	    //the step table,this is the index 1
+		StringBuilder sb=new StringBuilder();
+		//String reportfile="abc.xml";
+		Document doc = Jsoup.parse(new File(reportfile), "UTF-8");
+        Element steptable=doc.select("table.MsoNormalTable").get(1).select("tbody").first();
+        logger.debug("the table text is:"+steptable.text());
+        String stepline="abc";
+        int stepnumber=0;
+        	stepnumber=stepnumber+1;
+         	String[] rowdata=stepline.split("\\|");
+        	String stepname=rowdata[0].trim();
+        	String checkername=rowdata[1].trim();
+        	String stepstatus=rowdata[2].trim();
+        	String commentdata=rowdata[3].trim();
+        	
+        	String backgroundcolor="";
+        	if(stepstatus.toLowerCase().contains("pass")){
+        		backgroundcolor="background:#00B050;";
+        	}
+        	if(stepstatus.toLowerCase().contains("failed")){
+        		backgroundcolor="background:#C00000;";
+        	}
+        	if(stepstatus.toLowerCase().contains("norun")){
+        		backgroundcolor="background:#FFC000;";
+        	}
+        	if(stepstatus.toLowerCase().contains("warning")){
+        		backgroundcolor="background:#FFC000;";
+        	}
+            
+        String tablerow=""
++ " <tr style=\"mso-yfti-irow:"+(stepnumber+1)+";height:15.75pt\">"
++"  <td width=\"65\" valign=\"top\" style=\"width:49.05pt;border:solid windowtext 1.0pt;"
++"   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;"
++"   padding:0in 0in 0in 0in;height:15.75pt\">"
++"   <p style=\"margin-left:0in;mso-add-space:auto\" class=\"MsoListParagraphCxSpFirst\"><b><span style=\"font-size:13.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
++"   mso-fareast-font-family:  &quot;Times New Roman&quot;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
++"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi\">"+stepnumber+"<o:p></o:p></span></b></p>"
++"   </td>"
++"   <td width=\"198\" valign=\"bottom\" style=\"width:148.55pt;border-top:none;border-left:"
++"   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
++"   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
++"   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.75pt\">"
++"   <p style=\"margin-left:0in;mso-add-space:"
++"   auto\" class=\"MsoListParagraphCxSpMiddle\"><b><span style=\"font-size:13.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
++"   mso-fareast-font-family:  &quot;Times New Roman&quot;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
++"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi\">"+stepname+"<o:p></o:p></span></b></p>"
++"   </td>"
++"   <td width=\"433\" valign=\"bottom\" style=\"width:324.45pt;border-top:none;border-left:"
++"   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
++"   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
++"   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.75pt\">"
++"   <p style=\"margin-left:0in;mso-add-space:"
++"   auto\" class=\"MsoListParagraphCxSpMiddle\"><span style=\"font-size:13.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
++"   mso-fareast-font-family: &quot;Times New Roman&quot;;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
++"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi;mso-bidi-font-weight:bold\">"+checkername+"<o:p></o:p></span></p>"
++"   </td>"
++"   <td width=\"323\" valign=\"bottom\" nowrap=\"\" style=\"width:242.55pt;border-top:none;"+backgroundcolor
++"   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
++"   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
++"   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.75pt\">"
++"   <p style=\"margin-left:0in;mso-add-space:"
++"   auto\" class=\"MsoListParagraphCxSpMiddle\"><b><span style=\"font-size:13.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
++"   mso-fareast-font-family: &quot;Times New Roman&quot;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
++"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi\">"+stepstatus+"<o:p></o:p></span></b></p>"
++"   </td>"
++"   <td width=\"528\" valign=\"bottom\" nowrap=\"\" style=\"width:5.5in;border-top:none;"
++"   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
++"   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
++"   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.75pt\">"
++"   <p style=\"margin-left:0in;mso-add-space:auto\" class=\"MsoListParagraphCxSpLast\"><span style=\"font-size:11.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
++"   mso-fareast-font-family: &quot;Times New Roman&quot;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
++"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi\">"+commentdata+"<o:p></o:p></span></p>"
++"   </td>"
++"   </tr>";
+        
+        steptable.append(tablerow);
+       }
+      // stepbr.close();
+		
+	
+	public void updateHtmlOverall(){
+		
+	}
+	
 }
