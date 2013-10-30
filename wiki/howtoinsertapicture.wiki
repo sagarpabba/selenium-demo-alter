@@ -1,7 +1,7 @@
 #summary One-sentence summary of this page.
 
 Do one of the following:
-#Checkout the wiki from svn. From the command line, this is
+# Checkout the wiki from svn. From the command line, this is
 svn checkout https://code.google.com/p/selenium-demo-alter/svn/wiki HeeksCAD/wiki
 #Checkout ALL of heekscad (not just the source). From the command line, this is
 svn checkout https://code.google.com/p/selenium-demo-alter/svn HeeksCAD
