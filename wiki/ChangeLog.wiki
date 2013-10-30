@@ -8,12 +8,12 @@
 = Details =
 
 Add your content here.  Format your content with:
-   === Latest Update:Supported generating Html Report; --09/12/2013 Done===
-   === Update a use guidline document ,you can know this framework easily from there --09/17/2013 Done===
+   *=== Latest Update:Supported generating Html Report; --09/12/2013 Done===
+   *=== Update a use guidline document ,you can know this framework easily from there --09/17/2013 Done===
 
-   ===Update wrapped API for using in Jenkins Slave host to run the Script ---09/18/2013 Done===
-   ===Update to give a simple page performance data analysis list ,it's much helpful ---09/25/2013 Done===  
-   ===Update the page base class,so we use use the selenium API easily in every page object --09/26/2013 Done===
-   ===Update the Page Object common function ,so you can access method easily,access testing status and comments everywhere you need --09/30/2013 Done===
-   ===Page performance testing also can be used for IE and Chrome now --10/08/2013 Done===
-   ===Move  all the page objects into a single java class ,access and maintenance the page object easily then before --10/30/2013 Done === 
+   *===Update wrapped API for using in Jenkins Slave host to run the Script ---09/18/2013 Done===
+   *===Update to give a simple page performance data analysis list ,it's much helpful ---09/25/2013 Done===  
+   *===Update the page base class,so we use use the selenium API easily in every page object --09/26/2013 Done===
+   *===Update the Page Object common function ,so you can access method easily,access testing status and comments everywhere you need --09/30/2013 Done===
+   *===Page performance testing also can be used for IE and Chrome now --10/08/2013 Done===
+   *===Move  all the page objects into a single java class ,access and maintenance the page object easily then before --10/30/2013 Done === 
