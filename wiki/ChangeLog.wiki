@@ -23,3 +23,4 @@ Add your content here.  Format your content with:
        #  TestNG Plugin;
        #  SVN Plugin;
        #  Slave Node offline notification plugin;
+  *===Re-factor all the existing report methods,no need to generate additional report log file now --11/05/2013 Done === 
