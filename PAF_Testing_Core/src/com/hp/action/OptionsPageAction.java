@@ -84,14 +84,14 @@ public class OptionsPageAction extends OptionsPage {
 		comments="Supported language list["+returnlanguage+"],Selected PAF Report language is:"+checkedlanguage;
 		if(returnlanguage.size()>0){
 			status="Passed";
-			SeleniumCore.generateEmailStep("", "Get the Report supported language list",status,comments, driver);
+			reporterNewStep("", "Get the Report supported language list",status,comments, driver);
 			
 		}
 		else
 		{
 			status="Failed";
 			comments="Language list is empty";
-			SeleniumCore.generateEmailStep("", "Get the Report supported language list",status,comments, driver);
+			reporterNewStep("", "Get the Report supported language list",status,comments, driver);
 			
 		}
 		return returnlanguage;
@@ -148,7 +148,7 @@ public class OptionsPageAction extends OptionsPage {
 	    clickElement(noendbox);
 		
 	    comments="The Schedule Name:"+inputname+",Start Run At:"+inputtime;
-		SeleniumCore.generateEmailStep("", "Schedule the new Assessment Run",status,comments, driver);
+		reporterNewStep("", "Schedule the new Assessment Run",status,comments, driver);
 	  
 		clickElement(nextbtn);
 		sleepSeconds(4);

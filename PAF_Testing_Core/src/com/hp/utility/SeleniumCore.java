@@ -1,26 +1,14 @@
 package com.hp.utility;
 
 
-import static java.io.File.separator;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Map;
 
 import org.apache.commons.collections.map.LinkedMap;
 
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -179,138 +167,8 @@ public class SeleniumCore {
 			return browserName+" "+browserVersion;
 		}
 	
-		
-		
-		
-		 /*
-		  * 
-		  * the blow is for generating an email we need 
-		  */
-		 public static void generateEmailData(String datadescription,String datavalue){
-			 String outputfolder=getProjectWorkspace()+"reporter";
-		     String outputfile=outputfolder+File.separator+"dataoutput.log";
-			 boolean updatedbefore=false;
-			 File dataoutputfile=null;			 
-			 try{
-				 
-				 FilesUtils.newFolder(outputfolder);
-				 logger.debug("As there is no reporter folder ,we created it again");
-				
-				 dataoutputfile= new File(outputfile);
-				 if (!dataoutputfile.exists()) {
-						dataoutputfile.createNewFile();
-						
-					}
-					
-				    BufferedReader br=new BufferedReader(new FileReader(outputfile));
-				    String strline = null;
-				    while ((strline = br.readLine()) != null) {
-						if (strline.contains(datadescription)) {
-							//find the status report we had reported before
-			                FilesUtils.replaceStringOfFile(outputfile,strline,datadescription + "|" + datavalue);
-							updatedbefore=true;
-						}
-					}
-				    br.close();
-				    if(!updatedbefore){
-					    //if this is the first time to report the step
-					    FileWriter writer = new FileWriter(outputfile, true);
-						BufferedWriter bufferwriter = new BufferedWriter(writer);
-						bufferwriter.write(datadescription + "|" + datavalue + "\n");					
-						bufferwriter.close();
-				    }
-				    
-		    	}
-					catch (IOException e) {
-						logger.error("Sorry Met the IOException for the reporter file :"
-								+ dataoutputfile.getAbsolutePath() + " the error Exception is :"
-								+ e.getMessage());
-					}
-			 
-		 }
-		 
-		 
-		
-		 /**
-		  * generate a email step 
-		 * @param stepname
-		 * @param stepchecker
-		 * @param status
-		 * @param comments
-		 * @param driver TODO
-		 * @throws IOException 
-		 */
-		public static void generateEmailStep(String stepname,String stepchecker,String status,String comments,WebDriver driver) throws IOException{
-			 String reporterdir=getProjectWorkspace()+"reporter";
-			 String stepfile=reporterdir+File.separator+"stepoutput.log";
-			 boolean updatedbefore=false;
-			 File stepoutputfile=null;
-			 try{
-				 
-				 FilesUtils.newFolder(reporterdir);
-				 logger.debug("As there is not the reporter folder ,so we created it again");
-				 stepoutputfile= new File(stepfile);
-				 if (!stepoutputfile.exists()) {
-					 stepoutputfile.createNewFile();
-					}			
-				    BufferedReader br=new BufferedReader(new FileReader(stepfile));
-				    String strline = null;
-				    while ((strline = br.readLine()) != null) {
-						if (strline.contains(stepchecker)) {
-							//find the status report we had reported before
-			                FilesUtils.replaceStringOfFile(stepfile,strline,stepname + "|" + stepchecker+"|"+status+"|"+comments);
-							updatedbefore=true;
-						}
-					}
-				    br.close();
-				    if(!updatedbefore){
-					    //if this is the first time to report the step
-					    FileWriter writer = new FileWriter(stepfile, true);
-						BufferedWriter bufferwriter = new BufferedWriter(writer);
-						bufferwriter.write(stepname + "|" + stepchecker+"|"+status+"|"+comments + "\n");					
-						bufferwriter.close();
-				    }
-				    
-		    	}
-					catch (IOException e) {
-						logger.error("Sorry Met the IOException for the reporter file :"
-								+ stepoutputfile.getAbsolutePath() + " the error Exception is :"
-								+ e.getMessage());
-					}
-			 //capture the screenshot if it's the warning or error
-			 if(status.toLowerCase().trim().contains("fail")||status.toLowerCase().trim().contains("warning")){
-				 captureErrorScreenshot(driver);
-			 }
-			 
-		 }
-		
-		 public static void captureErrorScreenshot(WebDriver driver)
-					throws IOException {
-				String filename = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Calendar
-								.getInstance().getTime()) + ".png";
-				logger.debug("we met the error,we will generate a screenshot file for this error, file name is "
-						+ filename);
-
-				//File scrFile = ((TakesScreenshot) new Augmenter().augment( driver ))
-			    File scrFile = ((TakesScreenshot) driver)
-						.getScreenshotAs(OutputType.FILE);
-				logger.debug("the source screenshot file is :"
-						+ scrFile.getCanonicalPath());
-				String path = new File(".").getAbsolutePath();
-				String screenshotpath = path.substring(0, path.length() - 1);
-				logger.debug("the saved screenshot path is :" + screenshotpath);
-				// create a new file
-				// try {
-				FileUtils.copyFile(scrFile, new File(screenshotpath + "reporter"
-						+ separator + filename));
-				// } catch (IOException e) {
-
-				// e.printStackTrace();
-				// logger.error("Sorry,we cannot save the error screenshot file for this file,Catch the IOException :"+screenshotpath);
-				// }
-				logger.debug("the screenshot file saved in this file path:"
-						+ screenshotpath + "screenshot" + separator + filename);
-		 }
+	
+	
 		
 	
 }

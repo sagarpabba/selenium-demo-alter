@@ -18,7 +18,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.hp.po.HomePage;
-import com.hp.utility.SeleniumCore;
 
 /**
  * ClassName:Home_Page 
@@ -78,7 +77,7 @@ public class HomePageAction extends HomePage {
 		//click the new assessment link
 		clickElement(newassessmentrequest);
 		logger.info("Now clicked the new assessment request link to the lauch new assessment page");
-		SeleniumCore.generateEmailStep("Home Page", "Verify Home Page's Elements", status, comments, driver);
+		reporterNewStep("Home Page", "Verify Home Page's Elements", status, comments, driver);
 		return PageFactory.initElements(driver, LaunchAssessmentPageAction.class);
 	}
 	

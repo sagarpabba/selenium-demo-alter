@@ -108,12 +108,12 @@ public class NewProactiveScanViaSNPNTest extends BaseDriver {
 		String paf_url=PageObject.comment_paf_url;
 		
 		
-		SeleniumCore.generateEmailData("Execution Start Time", runstart);
-		SeleniumCore.generateEmailData("PAF URL", paf_url);
-		SeleniumCore.generateEmailData("PAF Application Build Number", paf_build);
-		SeleniumCore.generateEmailData("PAF Login User", logincredential);
-		SeleniumCore.generateEmailData("Execution Host Name", hostname);
-		SeleniumCore.generateEmailData("Execution Host's System Version", systemname);
-		SeleniumCore.generateEmailData("Run Browser Name and Version", browsertype);
+		PageObject.reporterNewData("Execution Start Time", runstart);
+		PageObject.reporterNewData("PAF URL", paf_url);
+		PageObject.reporterNewData("PAF Application Build Number", paf_build);
+		PageObject.reporterNewData("PAF Login User", logincredential);
+		PageObject.reporterNewData("Execution Host Name", hostname);
+		PageObject.reporterNewData("Execution Host's System Version", systemname);
+		PageObject.reporterNewData("Run Browser Name and Version", browsertype);
 	}
 }

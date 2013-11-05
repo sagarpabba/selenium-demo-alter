@@ -83,12 +83,12 @@ public class SearchRunDetailPageAction extends SearchRunDetailPage {
 	   if(reportmap.size()==0){
 		  status="Failed";
 		  comments="Generated Report List is empty,see blow screenshot for more detail";
-		  SeleniumCore.generateEmailStep("Run ID Detail Review", "Get the Report generated list",status,comments, driver);
+		  reporterNewStep("Run ID Detail Review", "Get the Report generated list",status,comments, driver);
 	   }
 	   else{
 		   status="Passed";
 		   comments="Generated Report list is:"+reportmap.toString();
-		  SeleniumCore.generateEmailStep("Run ID Detail Review", "Get the Report generated list",status,comments, driver);
+		  reporterNewStep("Run ID Detail Review", "Get the Report generated list",status,comments, driver);
 	   }
 	 //click the download button and save the file into the default directory
 	  String reportdir=SeleniumCore.getProjectWorkspace()+"PAFRunReports";
@@ -104,7 +104,7 @@ public class SearchRunDetailPageAction extends SearchRunDetailPage {
 	  if(subzipfiles.length>1||subzipfiles.length<0){
 		  status="warning";
 		  comments="Generate zip Report number is:"+subzipfiles.length+",File path is:"+filepath;
-		  SeleniumCore.generateEmailStep("", "Verify the download zip file",status,comments, driver);
+		  reporterNewStep("", "Verify the download zip file",status,comments, driver);
 		  logger.error("the report directory is not clear ,the directory more than one zip file");
 	  }else{
 		//verify the file is download completed
@@ -125,7 +125,7 @@ public class SearchRunDetailPageAction extends SearchRunDetailPage {
 		String reporthtmlfile=reportdir+File.separator+"proactive-scan-report.html";
 		status="Passed";
 		comments="unzipped Report File path:"+reporthtmlfile;
-		SeleniumCore.generateEmailStep("", "Get the extracted PAF Report File",status,comments, driver);
+		reporterNewStep("", "Get the extracted PAF Report File",status,comments, driver);
 		//String filecontent=FilesUtils.returnFileContents(reporthtmlfile);		
 	  }
 	  
