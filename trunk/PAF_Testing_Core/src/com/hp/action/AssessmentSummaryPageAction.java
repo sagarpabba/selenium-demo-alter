@@ -52,7 +52,7 @@ public class AssessmentSummaryPageAction extends AssessmentSummaryPage {
 				+ returnrunid);
 		status="Passed";
 		comments="Run ID is:"+returnrunid;
-	    SeleniumCore.generateEmailStep("Request Summary detail", "Get the Request ID",status,comments, driver);
+	    reporterNewStep("Request Summary detail", "Get the Request ID",status,comments,driver);
 		return returnrunid;
 	}
 	

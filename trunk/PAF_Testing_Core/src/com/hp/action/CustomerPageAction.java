@@ -78,11 +78,11 @@ public class CustomerPageAction extends CustomerPage {
 		String displayedfilename=filename.getAttribute("value");
 	    String expectedfilename=new File(snpnfile).getName();
 	    if(expectedfilename.equals(displayedfilename)){
-	    	SeleniumCore.generateEmailStep("Select Customer", "Verify upload file name in editbox", "Passed", "Expected File name:["+expectedfilename+"],Actual File Name:["+displayedfilename+"]", driver);
+	    	reporterNewStep("Select Customer", "Verify upload file name in editbox", "Passed", "Expected File name:["+expectedfilename+"],Actual File Name:["+displayedfilename+"]",driver);
 	    }
 	    else
 	    {
-	    	SeleniumCore.generateEmailStep("Select Customer", "Verify upload file name in editbox", "Failed", "Expected File name:["+expectedfilename+"],Actual File Name:["+displayedfilename+"]", driver);  	
+	    	reporterNewStep("Select Customer", "Verify upload file name in editbox", "Failed", "Expected File name:["+expectedfilename+"],Actual File Name:["+displayedfilename+"]",driver);  	
 	    }
 		clickElement(uploadbtn);
 		
@@ -94,7 +94,7 @@ public class CustomerPageAction extends CustomerPage {
 		//check the edit box is clear
 		String cleardevice=filename.getAttribute("value");
 		if(!cleardevice.equals("")){
-			SeleniumCore.generateEmailStep("Select Customer", "Verify upload file name in editbox", "Warning", "Expected File name:[],Actual File Name:["+cleardevice+"]", driver);			
+			reporterNewStep("Select Customer", "Verify upload file name in editbox", "Warning", "Expected File name:[],Actual File Name:["+cleardevice+"]", driver);			
 		}
 		
 		checkboxed(driver.findElement(By.xpath("//*[@id='cb_optionalCustomersGrid']")));
@@ -117,7 +117,7 @@ public class CustomerPageAction extends CustomerPage {
 		sleepSeconds(2);
 		status="Passed";
 		comments="Selected Customer Name:"+actualCustomername+",Address is:"+actualAddress;
-		SeleniumCore.generateEmailStep("Select Specified Customer", "Select a Customer with Address", status, comments, driver);
+		reporterNewStep("Select Specified Customer", "Select a Customer with Address", status, comments, driver);
 		return PageFactory.initElements(driver, DevicePageAction.class);
 	}
 	
@@ -207,7 +207,7 @@ public class CustomerPageAction extends CustomerPage {
 		}
 		
         if(findcustomername){
-		    SeleniumCore.generateEmailStep("Customer Select", "Find Customer name and address", status, comments, driver);
+		    reporterNewStep("Customer Select", "Find Customer name and address", status, comments, driver);
 		    logger.info("Select customer page -we had found the matched customer then click the next button");		  
 		    clickElementViaJs(nextbtn);
 		    logger.info("click the next button now ...");
@@ -220,7 +220,7 @@ public class CustomerPageAction extends CustomerPage {
         {
         	status="Failed";
         	comments="Cannot find the specified Customer from the list,Customer Name:"+customerdata;
-        	SeleniumCore.generateEmailStep("Customer Select", "Find Customer name and address",status, comments, driver);
+        	reporterNewStep("Customer Select", "Find Customer name and address",status, comments, driver);
         		
             logger.info("Sorry we cannot find this customer name :"+customerdata+" ,with this site addrsss:"+addressdata);
         	Assert.fail("Sorry we cannot find this customer name :"+customerdata+" ,with this site addrsss:"+addressdata+",the customer name or address not matched in the page");

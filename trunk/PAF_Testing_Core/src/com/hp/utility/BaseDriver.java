@@ -37,6 +37,8 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
+import com.hp.po.PageObject;
+
 /**
  * this is the RemoteWebDriver instance ,every testNG test need to extends this class ,so we can catch
  * and setup our driver easily
@@ -47,7 +49,7 @@ public class BaseDriver{
 
 	protected  static WebDriver driver;
 	
-	private static String testStartTime;
+	public static String testStartTime;
 
 	protected static final Logger logger = Logger.getLogger(BaseDriver.class);
 
@@ -183,15 +185,15 @@ public class BaseDriver{
 			if (t instanceof AssertionError) {
 				logger.error("Sorry ,now we met the Assertion Error ,the Assert statement met error expecting result with the actual result ");
 				String errorType = "AssertionError";
-				SeleniumCore.generateEmailStep("", "Test Ocurred the AssertionError", "Failed", "This Error happened when we met the checkpoint error manually,please see the blow screenshot for detail",driver);
-				captureErrorScreenshot(result, errorType);
+				PageObject.reporterNewStep("", "Test Ocurred the AssertionError"+errorType, "Failed", "This Error happened when we met the checkpoint error manually,please see the blow screenshot for detail",driver);
+				//captureErrorScreenshot(result, errorType);
 			}
 				// if met the element cannot find in the page
 			if (t instanceof NoSuchElementException) {
 				logger.error("Sorry ,now we met the NoSuchElement Exception ,that means we cannot find the element in the page ,make sure you can identify the object correctly ");
 				String errorType = "NoSuchElementException";
-				SeleniumCore.generateEmailStep("", "We cannot find the Page Object in current step", "Failed", "Current page not showed currectly,we cannot find the page object we need ,please see the blow screenshot for detail",driver);
-				captureErrorScreenshot(result, errorType);
+				PageObject.reporterNewStep("", "We cannot find the Page Object in current step"+errorType, "Failed", "Current page not showed currectly,we cannot find the page object we need ,please see the blow screenshot for detail",driver);
+				//captureErrorScreenshot(result, errorType);
 			}
 	   }else{
 		   logger.debug("the throwable instance now is:"+t);

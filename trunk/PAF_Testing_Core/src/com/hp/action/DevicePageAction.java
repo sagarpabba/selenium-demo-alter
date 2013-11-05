@@ -126,14 +126,14 @@ public class DevicePageAction extends DevicePage {
 				    comments="the device list information showed is incorrect:[Devcie Name:"+devicedata+",Device Type:"+devicetype+",Device OS:"+
 							os+",Device OS Version:"+osversion+",Product Number:"+pn+",Serial Number:"+sn+",Collections:"+collection
 							+",Collection Date:"+collectiondate+"]";
-				    SeleniumCore.generateEmailStep("Device Select", "Selected Matched Device from page",status,comments, driver);
+				    reporterNewStep("Device Select", "Selected Matched Device from page",status,comments, driver);
 				}
 				else{
 					status="Passed";
 					comments="the device list information showed is incorrect:[Devcie Name:"+devicedata+",Device Type:"+devicetype+",Device OS:"+
 							os+",Device OS Version:"+osversion+",Product Number:"+pn+",Serial Number:"+sn+",Collections:"+collection
 							+",Collection Date:"+collectiondate+"]";
-					SeleniumCore.generateEmailStep("Device Select", "Selected Matched Device from page",status,comments, driver);
+				    reporterNewStep("Device Select", "Selected Matched Device from page",status,comments, driver);
 					
 				}
 		      
@@ -151,7 +151,7 @@ public class DevicePageAction extends DevicePage {
         {
         	status="Failed";
         	comments="From list cannot find this device:"+devicename;
-            SeleniumCore.generateEmailStep("Device Select", "Selected Matched Device from page",status,comments, driver);
+            reporterNewStep("Device Select", "Selected Matched Device from page",status,comments, driver);
         	logger.info("Sorry we cannot find this device name :"+devicename);
         	Assert.fail("Sorry we cannot find this device name :"+devicename+",the device name not matched in the page");
 
@@ -171,12 +171,12 @@ public class DevicePageAction extends DevicePage {
 	    if((expectedcustomer.equals(actualcustomer))&&(expectedaddress.equals(actualaddress))){
 	    	logger.info("Customer and Address infomation check is correct with the customer select page ");
 	    	status="Passed";
-	    	SeleniumCore.generateEmailStep("Device Select", "Select matched device",status,comments, driver);
+	    	reporterNewStep("Device Select", "Select matched device",status,comments, driver);
 	    	
 	    }
 	    else{
 	    	status="Warning";
-	    	SeleniumCore.generateEmailStep("Device Select", "Select matched device",status,comments, driver);    	
+	    	reporterNewStep("Device Select", "Select matched device",status,comments, driver);    	
 	    }
 	    
 		checkboxed(checkallbox);

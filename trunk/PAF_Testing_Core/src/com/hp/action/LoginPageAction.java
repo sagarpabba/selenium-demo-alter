@@ -16,7 +16,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.hp.po.LoginPage;
-import com.hp.utility.SeleniumCore;
 import com.hp.utility.TimeUtils;
 
 
@@ -58,7 +57,7 @@ public class LoginPageAction extends LoginPage {
 		 comment_executionstart=TimeUtils.getCurrentTime(Calendar.getInstance().getTime());
 		 comment_paf_url=testedURL;
 		 
-		 SeleniumCore.generateEmailStep("Login Page", "Verify URL can be opened", status, comments, driver);
+		 reporterNewStep("Login Page", "Verify URL can be opened", status, comments, driver);
 		 
 	}
 	
@@ -75,7 +74,7 @@ public class LoginPageAction extends LoginPage {
 		     }
 			comment_login_credential=username;
 			
-			SeleniumCore.generateEmailStep("", "Verify Login User's Credential", status, comments, driver);
+			reporterNewStep("", "Verify Login User's Credential", status, comments, driver);
 		    return PageFactory.initElements(driver, HomePageAction.class);
 	}
 

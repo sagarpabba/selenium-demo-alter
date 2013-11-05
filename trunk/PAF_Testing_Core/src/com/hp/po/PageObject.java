@@ -10,6 +10,8 @@
 package com.hp.po;
 
 
+import static java.io.File.separator;
+
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.io.BufferedReader;
@@ -25,6 +27,10 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -32,6 +38,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,6 +49,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
 import com.hp.utility.FilesUtils;
 import com.hp.utility.SeleniumCore;
@@ -92,7 +101,7 @@ public abstract class PageObject {
 		logger.info("\n"+Strings.repeat("*", 20)+pagename+Strings.repeat("*", 20));
 		//get the page loading time  in every page if we use this method
 		long pageloadingtime=getPageLoadTime();
-		generatePageLoadTime(pagename, pageloadingtime);			
+		reporterPageTime(pagename, pageloadingtime);			
 	}
 	
 	/** Is the text present in page. */ 
@@ -963,24 +972,369 @@ public abstract class PageObject {
 			}
 	
 	
-	 public static void newReporterStep(String stepname,String stepchecker,String status,String comments){
-         //find the template report file ,if not we copy it
+
+	 /**
+	  * generate a email step 
+	 * @param stepname
+	 * @param stepchecker
+	 * @param status
+	 * @param comments
+	 * @param driver TODO
+	 * @throws IOException 
+	 */
+	public static  void reporterNewStep(String stepname,String stepchecker,String status,String comments,WebDriver driver){
+		
 		 String projectdir=SeleniumCore.getProjectWorkspace();
 		 String templatereport=projectdir+"resources"+File.separator+"report_template.htm";
 		 String reportfilename=projectdir+"reporter"+File.separator+"TestingExecutionReport_"+ 
-               new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime())+".htm";
+              new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime())+".htm";
 		 File dailyreport=new File(reportfilename);
+		 // if  today's report not generated ,we will copy the template report file firstly
 		 if(!dailyreport.exists()){
-			 try {
-				FileUtils.copyFile(new File(templatereport), new File(reportfilename));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			   try {
+				    FileUtils.copyFile(new File(templatereport), dailyreport);
+			        } catch (IOException e) {
+				    // TODO Auto-generated catch block
+			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename);
+			       }
+		 }else{
+			 logger.debug("We found that today's report file had generated before...");
 		 }
 		 
-		 //update the content
+		//update the execution report step 
+		boolean alreadyupdated=false;
+		StringBuilder sb=new StringBuilder();
+		Document doc;
+		try {
+				doc = Jsoup.parse(dailyreport, "UTF-8");
+				
+				Element casetable=doc.select("table.MsoNormalTable").get(1).select("tbody").first();
+			    Elements caserows=doc.select("table.MsoNormalTable").get(1).select("tbody").first().select("tr");
+			    //    logger.debug("the table text is:"+steptable.text());
+			    int rownumber=caserows.size();
+			    int currentstepnumber=rownumber-1;
+			    for(int i=1;i<rownumber;i++){
+			    	// get the second column's text ,if the text we had generated before ,that means this step had done before
+			    	Element spancontent=caserows.get(i).select("td:eq(1)").first();
+			    	String beforecontent=spancontent.text().trim();
+			    	if(beforecontent.equals(stepname)){
+			    		alreadyupdated=true;
+			    		logger.debug("found this step had been updated before....");
+			    		break;
+			    	}
+			    }
+			   //if this step had generated before ,we will not generate it again 
+			    if(!alreadyupdated){
+						String backgroundcolor="";
+			        	if(status.toLowerCase().contains("pass")){
+			        		backgroundcolor="background:#00B050;";
+			        	}
+			        	if(status.toLowerCase().contains("failed")){
+			        		backgroundcolor="background:#C00000;";
+			        	}
+			        	if(status.toLowerCase().contains("no run")){
+			        		backgroundcolor="background:#FFC000;";
+			        	}
+			        	if(status.toLowerCase().contains("warning")){
+			        		backgroundcolor="background:#FFC000;";
+			        	}
+					    String tablerow=""
+					    		+ " <tr style=\"mso-yfti-irow:"+(currentstepnumber+1)+";height:15.75pt\">"
+					    		+"  <td width=\"65\" valign=\"top\" style=\"width:49.05pt;border:solid windowtext 1.0pt;"
+					    		+"   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;"
+					    		+"   padding:0in 0in 0in 0in;height:15.75pt\">"
+					    		+"   <p style=\"margin-left:0in;mso-add-space:auto\" class=\"MsoListParagraphCxSpFirst\"><b><span style=\"font-size:13.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
+					    		+"   mso-fareast-font-family:  &quot;Times New Roman&quot;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
+					    		+"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi\">"+currentstepnumber+"<o:p></o:p></span></b></p>"
+					    		+"   </td>"
+					    		+"   <td width=\"198\" valign=\"bottom\" style=\"width:148.55pt;border-top:none;border-left:"
+					    		+"   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
+					    		+"   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
+					    		+"   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.75pt\">"
+					    		+"   <p style=\"margin-left:0in;mso-add-space:"
+					    		+"   auto\" class=\"MsoListParagraphCxSpMiddle\"><b><span style=\"font-size:13.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
+					    		+"   mso-fareast-font-family:  &quot;Times New Roman&quot;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
+					    		+"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi\">"+stepname+"<o:p></o:p></span></b></p>"
+					    		+"   </td>"
+					    		+"   <td width=\"433\" valign=\"bottom\" style=\"width:324.45pt;border-top:none;border-left:"
+					    		+"   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
+					    		+"   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
+					    		+"   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.75pt\">"
+					    		+"   <p style=\"margin-left:0in;mso-add-space:"
+					    		+"   auto\" class=\"MsoListParagraphCxSpMiddle\"><span style=\"font-size:13.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
+					    		+"   mso-fareast-font-family: &quot;Times New Roman&quot;;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
+					    		+"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi;mso-bidi-font-weight:bold\">"+stepchecker+"<o:p></o:p></span></p>"
+					    		+"   </td>"
+					    		+"   <td width=\"323\" valign=\"bottom\" nowrap=\"\" style=\"width:242.55pt;border-top:none;"+backgroundcolor
+					    		+"   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
+					    		+"   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
+					    		+"   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.75pt\">"
+					    		+"   <p style=\"margin-left:0in;mso-add-space:"
+					    		+"   auto\" class=\"MsoListParagraphCxSpMiddle\"><b><span style=\"font-size:13.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
+					    		+"   mso-fareast-font-family: &quot;Times New Roman&quot;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
+					    		+"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi\">"+status+"<o:p></o:p></span></b></p>"
+					    		+"   </td>"
+					    		+"   <td width=\"528\" valign=\"bottom\" nowrap=\"\" style=\"width:5.5in;border-top:none;"
+					    		+"   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
+					    		+"   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
+					    		+"   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:15.75pt\">"
+					    		+"   <p style=\"margin-left:0in;mso-add-space:auto\" class=\"MsoListParagraphCxSpLast\"><span style=\"font-size:11.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
+					    		+"   mso-fareast-font-family: &quot;Times New Roman&quot;;mso-fareast-theme-font:major-fareast;mso-bidi-font-family:"
+					    		+"   &quot;Times New Roman&quot;;mso-bidi-theme-font:major-bidi\">"+comments+"<o:p></o:p></span></p>"
+					    		+"   </td>"
+					    		+"   </tr>";
+					   casetable.append(tablerow);
+			    }
+			    
+			   //if the step is failed or warning it will attach the error screenshot file,this will used in later email step independant
+			    
+			   sb.append(doc.body().toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		    logger.error("jsoup parse the html step met an ioexception:"+e.getMessage());
+		}
+	   logger.debug("Current report file is canwrite false or true:"+dailyreport.canWrite());
+	   FilesUtils.writeContents(reportfilename, sb.toString()); 
+	   //capture the screenshot
+	   if(status.toLowerCase().contains("fail")||status.toLowerCase().contains("warning")){		
+		       
+		   
+		       //capture the screenshot
+			    String filename = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Calendar
+								.getInstance().getTime()) + ".png";
+				logger.debug("we met the error,we will generate a screenshot file for this error, file name is "
+						+ filename);
+			
+				//File scrFile = ((TakesScreenshot) new Augmenter().augment( driver ))
+			    File scrFile = ((TakesScreenshot) driver)
+						.getScreenshotAs(OutputType.FILE);
+				try {
+						logger.debug("the source screenshot file is :"+ scrFile.getCanonicalPath());
+							
+						String path = new File(".").getAbsolutePath();
+						String screenshotpath = path.substring(0, path.length() - 1);
+						logger.debug("the saved screenshot path is :" + screenshotpath);
+						
+						FileUtils.copyFile(scrFile, new File(screenshotpath + "reporter"+ separator + filename));
+						logger.debug("the screenshot file saved in this file path:"
+								+ screenshotpath + "screenshot" + separator + filename);
+			    }
+				catch (IOException e) {
+					// TODO Auto-generated catch block
+					logger.error("the saved screenshot met the ioexception :" +e.getMessage());
+					
+				}
+
+	   }
+	   
+	   
+   }
+	
+	public static void reporterNewData(String datadescription,String datavalue){
+		
+		 String projectdir=SeleniumCore.getProjectWorkspace();
+		 String templatereport=projectdir+"resources"+File.separator+"report_template.htm";
+		 String reportfilename=projectdir+"reporter"+File.separator+"TestingExecutionReport_"+ 
+             new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime())+".htm";
+		 File dailyreport=new File(reportfilename);
+		 // if  today's report not generated ,we will copy the template report file firstly
+		 if(!dailyreport.exists()){
+			   try {
+				    FileUtils.copyFile(new File(templatereport), dailyreport);
+			        } catch (IOException e) {
+				    // TODO Auto-generated catch block
+			       // logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename);
+			       }
+		 }else{
+			// logger.debug("We found that today's report file had generated before...");
+		 }
 		 
+		//update the execution report step 
+		boolean alreadyupdated=false;
+		StringBuilder sb=new StringBuilder();
+		Document doc;
+		try {
+				doc = Jsoup.parse(dailyreport, "UTF-8");
+		
+				Element valuetable=doc.select("table.MsoTable15Grid5DarkAccent5 tbody").first();
+			    Elements valuerows=doc.select("table.MsoTable15Grid5DarkAccent5 tbody").first().select("tr");
+			    //    logger.debug("the table text is:"+steptable.text());
+			    int rownumber=valuerows.size();
+			    for(int i=0;i<rownumber;i++){
+			    	// get the second column's text ,if the text we had generated before ,that means this step had done before
+			    	Element valuecontent=valuerows.get(i).select("td:eq(0)").first();
+			    	String beforecontent=valuecontent.text().trim();
+			    	if(beforecontent.equals(datadescription)){
+			    		alreadyupdated=true;
+			    		//logger.debug("found this step had been updated before....");
+			    		break;
+			    	}
+			    }
+			   //if this step had generated before ,we will not generate it again 
+			    if(!alreadyupdated){
+			    	  String valuerow=""
+			    			  +"  <tr style=\"mso-yfti-irow:0;height:18.2pt\">"
+			    			  +"  <td width=\"269\" valign=\"top\" style=\"width:202.1pt;border:solid white 1.0pt;"
+			    			  +"  mso-border-themecolor:background1;border-top:none;mso-border-top-alt:solid white .5pt;"
+			    			  +"  mso-border-top-themecolor:background1;mso-border-alt:solid white .5pt;"
+			    			  +"  mso-border-themecolor:background1;background:#4472C4;mso-background-themecolor:"
+			    			  +"  accent5;padding:0in 5.4pt 0in 5.4pt;height:18.2pt\">"
+			    			  +"  <p style=\"tab-stops:center 95.6pt;mso-yfti-cnfc:68\" class=\"MsoNormal\"><b><span style=\"font-size:9.0pt;line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;"
+			    			  +"  mso-bidi-font-family:Arial;color:white;mso-themecolor:background1\">"+datadescription+"<o:p></o:p></span></b></p>"
+			    			  +"  </td>"
+			    			  +"  <td width=\"1278\" valign=\"top\" style=\"width:958.5pt;border-top:none;border-left:"
+			    			  +"  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;"
+			    			  +"  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;"
+			    			  +"  mso-border-alt:solid windowtext .5pt;background:#B4C6E7;mso-background-themecolor:"
+			    			  +"  accent5;mso-background-themetint:102;padding:0in 5.4pt 0in 5.4pt;height:18.2pt\">"
+			    			  +"  <p style=\"mso-yfti-cnfc:64\" class=\"MsoNormal\"><span style=\"font-size:9.0pt;"
+			    			  +"  line-height:105%;font-family:&quot;Cambria&quot;,&quot;serif&quot;;mso-bidi-font-family:Arial\">"+datavalue+"<o:p></o:p></span></p>"
+			    			  +"  </td>"
+			    			  +" </tr>";
+			    			 valuetable.append(valuerow);
+			    }
+			    
+			   //if the step is failed or warning it will attach the error screenshot file,this will used in later email step independant    
+			   sb.append(doc.body().toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  // logger.debug("Current report file is canwrite false or true:"+dailyreport.canWrite());
+	   FilesUtils.writeContents(reportfilename, sb.toString());       
+  }
+	
+	public static void reporterPageTime(String pagename,long loadtime){
+		
+		 String projectdir=SeleniumCore.getProjectWorkspace();
+		 String templatereport=projectdir+"resources"+File.separator+"report_template.htm";
+		 String reportfilename=projectdir+"reporter"+File.separator+"TestingExecutionReport_"+ 
+            new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime())+".htm";
+		 File dailyreport=new File(reportfilename);
+		 // if  today's report not generated ,we will copy the template report file firstly
+		 if(!dailyreport.exists()){
+			   try {
+				    FileUtils.copyFile(new File(templatereport), dailyreport);
+			        } catch (IOException e) {
+				    // TODO Auto-generated catch block
+			       // logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename);
+			       }
+		 }else{
+			// logger.debug("We found that today's report file had generated before...");
+		 }
+		 
+		//update the execution report step 
+		boolean alreadyupdated=false;
+		StringBuilder sb=new StringBuilder();
+		Document doc;
+		try {
+				doc = Jsoup.parse(dailyreport, "UTF-8");
+		
+				Element pageloadingnode=doc.select("table.MsoTableGrid tbody").first();
+		        Element pageaveragenode=pageloadingnode.select("tr").get(1).select("td").get(1).select("p span").first();
+			    Elements pagerows=doc.select("table.MsoTableGrid tbody").first().select("tr");
+			    //    logger.debug("the table text is:"+steptable.text());
+			    int rownumber=pagerows.size();
+			    int pagenumbers=rownumber-2;  //if 3  then it will plus the current number will be 2
+			    long totalpagetime=0;
+			    for(int i=2;i<rownumber;i++){
+			    	// get the second column's text ,if the text we had generated before ,that means this step had done before
+			    	Element valuecontent=pagerows.get(i).select("td:eq(0)").first();
+			    	String beforecontent=valuecontent.text().trim();
+			    	if(beforecontent.equals(pagename)){
+			    		alreadyupdated=true;
+			    		//logger.debug("found this step had been updated before....");
+			    		break;
+			    	}
+			    }
+			    if(rownumber>2){
+				    for(int i=2;i<rownumber;i++){
+				    	// get the second column's text ,if the text we had generated before ,that means this step had done before
+					    	//pagenumbers=pagenumbers+1;
+					    	String temploadvalue=pagerows.get(i).select("td:eq(1)").first().text().trim();
+					    	int valueindex=temploadvalue.indexOf("s");
+					    	String pagevaluetext=temploadvalue.substring(0, valueindex).trim();
+					    	pagevaluetext=CharMatcher.WHITESPACE.trimFrom(pagevaluetext);
+					    	System.out.println("page time is:"+pagevaluetext);
+					    	long pagevalue=Long.parseLong(pagevaluetext);
+					    	totalpagetime=totalpagetime+pagevalue;
+				    }
+			    }
+			   
+			   //if this step had generated before ,we will not generate it again 
+			    if(!alreadyupdated){
+			    	String pageloadrow=""
+			    			+ "<tr style=\"mso-yfti-irow:0;mso-yfti-lastrow:yes;height:24.5pt\">"
+			    			+ "<td width=\"431\" valign=\"top\" style=\"width:323.6pt;border-top:none;border-left:"
+			    			+ "solid white 1.0pt;mso-border-left-themecolor:background1;border-bottom:solid white 1.0pt;"
+			    			+ "  mso-border-bottom-themecolor:background1;border-right:solid white 1.5pt;"
+			    			+ "  mso-border-right-themecolor:background1;mso-border-top-alt:solid white .5pt;"
+			    			+ "  mso-border-top-themecolor:background1;mso-border-alt:solid white .5pt;"
+			    			+ "  mso-border-themecolor:background1;mso-border-right-alt:solid white 1.5pt;"
+			    			+ "  mso-border-right-themecolor:background1;background:#4472C4;mso-background-themecolor:"
+			    			+ "  accent5;padding:0in 5.4pt 0in 5.4pt;height:24.5pt\">"
+			    			+ "  <p style=\"mso-yfti-cnfc:68\" class=\"MsoNormal\"><span style=\"font-size:14.0pt;"
+			    			+ "  line-height:105%;color:white;mso-themecolor:background1;mso-bidi-font-weight:"
+			    			+ "  bold\">"+pagename+"<o:p></o:p></span></p>"
+			    			+ "  </td>"
+			    			+ "  <td width=\"588\" valign=\"top\" style=\"width:441pt;border-top:none;border-left:"
+			    			+ "  none;border-bottom:solid windowtext 1.0pt;border-right:solid white 1.0pt;"
+			    			+ "  mso-border-right-themecolor:background1;mso-border-top-alt:solid white .5pt;"
+			    			+ "  mso-border-top-themecolor:background1;mso-border-left-alt:solid windowtext 1.5pt;"
+			    			+ "  mso-border-top-alt:white .5pt;mso-border-top-themecolor:background1;"
+			    			+ "  mso-border-left-alt:windowtext 1.5pt;mso-border-bottom-alt:windowtext .5pt;"
+			    			+ "  mso-border-right-alt:white .5pt;mso-border-right-themecolor:background1;"
+			    			+ "  mso-border-style-alt:solid;background:#B4C6E7;mso-background-themecolor:accent5;"
+			    			+ "  mso-background-themetint:102;padding:0in 5.4pt 0in 5.4pt;height:24.5pt\">"
+			    			+ "  <p style=\"mso-yfti-cnfc:64\" class=\"MsoNormal\"><b style=\"mso-bidi-font-weight:"
+			    			+ "  normal\"><span style=\"font-size:14.0pt;line-height:105%\"><o:p>&nbsp;"+loadtime+"s</o:p></span></b></p>"
+			    			+ "  </td>"
+			    			+ " </tr>";
+			    			pageloadingnode.append(pageloadrow);
+			    			totalpagetime=totalpagetime+loadtime;
+			    			pagenumbers=pagenumbers+1;
+			    			
+			    }
+			    
+			  long averagetime=totalpagetime/pagenumbers;
+			   pageaveragenode.text(averagetime+"s");
+			   //if the step is failed or warning it will attach the error screenshot file,this will used in later email step independant    
+			   sb.append(doc.body().toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  // logger.debug("Current report file is canwrite false or true:"+dailyreport.canWrite());
+	   FilesUtils.writeContents(reportfilename, sb.toString());       
+ }
+	
+	 public  void captureErrorScreenshot(){
+			String filename = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Calendar
+							.getInstance().getTime()) + ".png";
+			logger.debug("we met the error,we will generate a screenshot file for this error, file name is "
+					+ filename);
+
+			//File scrFile = ((TakesScreenshot) new Augmenter().augment( driver ))
+		    File scrFile = ((TakesScreenshot) driver)
+					.getScreenshotAs(OutputType.FILE);
+			try {
+					logger.debug("the source screenshot file is :"+ scrFile.getCanonicalPath());
+						
+					String path = new File(".").getAbsolutePath();
+					String screenshotpath = path.substring(0, path.length() - 1);
+					logger.debug("the saved screenshot path is :" + screenshotpath);
+					
+					FileUtils.copyFile(scrFile, new File(screenshotpath + "reporter"+ separator + filename));
+					logger.debug("the screenshot file saved in this file path:"
+							+ screenshotpath + "screenshot" + separator + filename);
+	         }
+			catch (IOException e) {
+				// TODO Auto-generated catch block
+				logger.error("the saved screenshot met the ioexception :" +e.getMessage());
+				
+			}
+		
+			
 	 }
 }
 

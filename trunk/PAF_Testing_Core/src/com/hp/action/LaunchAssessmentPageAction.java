@@ -18,7 +18,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 import com.hp.po.LaunchAssessmentPage;
-import com.hp.utility.SeleniumCore;
 
 /**
  * ClassName:Launch_NewAssessment_Page 
@@ -61,7 +60,7 @@ public class LaunchAssessmentPageAction extends LaunchAssessmentPage {
 		logger.info("We had launched the proctive scan assessment");
 		clickElement(createbtn);
 		comments="Lauch Proctive Scan Assessment";
-		SeleniumCore.generateEmailStep("Launch Assessment", "Launch a Specified Assessment", status, comments, driver);
+		reporterNewStep("Launch Assessment", "Launch a Specified Assessment", status, comments, driver);
 		return PageFactory.initElements(driver, CustomerPageAction.class);
 	}
 }

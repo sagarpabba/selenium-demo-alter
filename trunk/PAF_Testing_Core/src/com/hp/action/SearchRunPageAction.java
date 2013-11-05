@@ -25,7 +25,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import com.hp.po.SearchRunPage;
-import com.hp.utility.SeleniumCore;
 import com.hp.utility.TimeUtils;
 
 /**
@@ -154,7 +153,7 @@ public class SearchRunPageAction extends SearchRunPage {
 							logger.info("Now we found the matched Run ID status is completed ,and we will check the box and then download the report.");
 						    status="Passed";
 						    comments="Expected:COMPLATED;Actual:"+runstatus+",the Search Run takes:"+totaltime;
-							SeleniumCore.generateEmailStep("Search the Run ID:"+runid, "Check the Run Assessment Status is Completed or Failed or Pending with 10 minutes Search", 
+							reporterNewStep("Search the Run ID:"+runid, "Check the Run Assessment Status is Completed or Failed or Pending with 10 minutes Search", 
 									status,comments, driver);
 							WebElement checkbox = row.findElement(By
 									.xpath("td[1]"));
@@ -172,7 +171,7 @@ public class SearchRunPageAction extends SearchRunPage {
 							logger.info("Now we found the matched Run ID status is failed ,maybe we need to retry this assessment again.");
 							status="Failed";
 							comments="Expected:COMPLATED;Actual:"+finalstate+",the Search Run takes:"+totaltime;
-							SeleniumCore.generateEmailStep("Search the Run ID:"+runid, "Check the Run Assessment Status is Completed or Failed or Pending with 10 minutes Search", 
+							reporterNewStep("Search the Run ID:"+runid, "Check the Run Assessment Status is Completed or Failed or Pending with 10 minutes Search", 
 									status,comments, driver);							
 							WebElement checkbox = row.findElement(By
 									.xpath("td[1]"));
@@ -208,7 +207,7 @@ public class SearchRunPageAction extends SearchRunPage {
 						+ " times,and time had took about 10 minutes");
 				status="Passed";
 				comments="Expected:COMPLATED;Actual:"+finalstate+",the Search Run takes:"+totaltime;
-				SeleniumCore.generateEmailStep("Search the Run ID:"+runid, "Check the Run Assessment Status is Completed or Failed or Pending with 10 minutes Search", 
+				reporterNewStep("Search the Run ID:"+runid, "Check the Run Assessment Status is Completed or Failed or Pending with 10 minutes Search", 
 						status,comments, driver);
 	           Assert.fail("We cannot find the RUN ID after 10 minutes,so this test gives failed result "
 						+ ",the Run ID is:"+runid+",Had run it from: "+runstarttime+",end search time is:"+endtime);
