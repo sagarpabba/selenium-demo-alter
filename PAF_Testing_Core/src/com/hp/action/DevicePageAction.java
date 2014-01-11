@@ -29,26 +29,28 @@ import com.hp.utility.SeleniumCore;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 27, 2013 9:35:11 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class DevicePageAction extends DevicePage {
 
 	
+	/**
+	 * Constructor for DevicePageAction.
+	 * @param driver WebDriver
+	 */
 	public DevicePageAction(WebDriver driver) {
 		this.driver=driver;
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	@Override
-	public void verifyPageElements(String pagename) throws IOException {
-		// TODO Auto-generated method stub
-		super.verifyPageElements(pagename);
-		//Date:Sep 27, 201310:23:41 AM
-	}
-	
+	/**
+	 * Method selectSpecifiedDevice.
+	 * @return OptionsPageAction
+	 * @throws IOException
+	 */
 	public OptionsPageAction selectSpecifiedDevice() throws IOException{
 		
 		
@@ -86,7 +88,7 @@ public class DevicePageAction extends DevicePage {
 				collectiondate=findElementByXpath(row, "td[12]").getText().trim();
 			}
 			catch(NoSuchElementException nsp){
-				logger.info("Current row had not fourth column ,so we ignore it");
+				logger.info("Current row had not fourth column ,so we ignore it"+nsp.getMessage());
 			}
 			logger.info("Select device page-the found device in the page  is:"
 					+ devicedata);
@@ -160,6 +162,11 @@ public class DevicePageAction extends DevicePage {
 		return PageFactory.initElements(driver, OptionsPageAction.class);
 	}
 	
+	/**
+	 * Method selectAllDevices.
+	 * @return OptionsPageAction
+	 * @throws IOException
+	 */
 	public OptionsPageAction selectAllDevices() throws IOException{
 		String customeraddress=getElementText(customerline);
 		String expectedcustomer=CustomerPageAction.actualCustomername;

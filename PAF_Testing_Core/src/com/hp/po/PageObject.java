@@ -61,10 +61,11 @@ import com.hp.utility.SeleniumCore;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 13, 2013 1:06:16 PM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	  http://chon.techliminal.com/page_object/#/slide4
  * @see       https://github.com/ChonC/wtbox/blob/master/src/wtbox/pages/PageBase.java
+ * @version $Revision: 1.0 $
  */
 /**
  * @author huchan
@@ -93,9 +94,9 @@ public abstract class PageObject {
 	/**
 	 * this is the first method we must use in every page ,so that we can get the page loading time 
 	 * @param pagename
-	 * @throws IOException 
-	 * @throws Exception
-	 */
+	
+	
+	 * @throws IOException  * @throws Exception */
 	public void verifyPageElements(String pagename) throws IOException{
 	//	this is a line seperator so that we can see the debug log clearly
 		logger.info("\n"+Strings.repeat("*", 20)+pagename+Strings.repeat("*", 20));
@@ -104,19 +105,24 @@ public abstract class PageObject {
 		reporterPageTime(pagename, pageloadingtime);			
 	}
 	
-	/** Is the text present in page. */ 
+	/** Is the text present in page. * @param text String
+	 * @return boolean
+	 */ 
 	public  boolean isTextPresent(String text){
 		  boolean textpresent=driver.getPageSource().contains(text); 
 		  logger.info("Verify the element text present in the page,the text seacrh is :"+text+",and found the element status is:"+textpresent);
 	      return textpresent;
 	}
 
-	/** Is the Element in page. */
+	/** Is the Element in page. * @param by By
+	 * @return boolean
+	 */
 	public boolean isElementPresent(By by) {
 			try {
 				driver.findElement(by);//if it does not find the element throw NoSuchElementException, thus returns false. 
 				return true;
 			} catch (NoSuchElementException e) {
+				logger.error("check the element is present in the page:"+e.getMessage());
 				return false;
 			}
 	 }
@@ -124,9 +130,10 @@ public abstract class PageObject {
 	  /**
 		* Checks if the elment is in the DOM and displayed. 
 		* 
-		* @param by - selector to find the element
-		* @return true or false
-		*/
+		* 
+		* 
+	 * @param e WebElement
+	  @return true or false	*/
 	  public boolean isElementPresentAndDisplay(WebElement e) {
 		  boolean isdisplay=false;
 			try {			
@@ -142,8 +149,8 @@ public abstract class PageObject {
 	   * Returns the first WebElement using the given method.  	   
 	   * It shortens "driver.findElement(By)". 
 	   * @param by 		element locater. 
-	   * @return 		the first WebElement
-	   */
+	  
+	   * @return 		the first WebElement */
 	  public WebElement getWebElement(By by){
 		  	return driver.findElement(by); 			
 	  }
@@ -153,7 +160,7 @@ public abstract class PageObject {
 		 * clear the text in the elment and then type the new string in this element
 		 * @param e -- the webelment you need to type 
 		 * @param text -- the text you want to input
-		 * @author huchan
+		
 		 */
 		public void clearAndTypeString(WebElement e, String text) {
 			logger.info("Type a text into the element is:" + e.getTagName()
@@ -172,7 +179,7 @@ public abstract class PageObject {
 		 * highLight:(highlight the web element in the page). 
 		 * 
 
-		 * @author huchan
+		
 		 * @param driver -- the web driver instance 
 		 * @param e -- the web element object
 		 * @since JDK 1.6
@@ -185,6 +192,10 @@ public abstract class PageObject {
 			logger.info("Had right click the object ,then press the escape key");
 			e.sendKeys(Keys.ESCAPE);
 		}
+		/**
+		 * Method highLight.
+		 * @param e WebElement
+		 */
 		public void highLight(WebElement e) {
 			if (driver instanceof JavascriptExecutor) {
 				executeJS("arguments[0].style.border='3px solid red'",e);
@@ -194,10 +205,11 @@ public abstract class PageObject {
 		/**
 		 * executeJS:(execute the java script in this page). 
 
-		 * @author huchan
-		 * @param driver -- the web driver's instance
+		
+		
 		 * @param script  --the java script we need to execute
 		 * @since JDK 1.6
+		 * @return Object
 		 */
 		public Object executeJS(String script) {
 			logger.info("Run the javascript from page ,the java script is:"
@@ -206,6 +218,11 @@ public abstract class PageObject {
 			return je.executeScript(script);
 
 		}
+		/**
+		 * Method executeJS.
+		 * @param script String
+		 * @param e WebElement
+		 */
 		public void executeJS(String script,WebElement e) {
 			logger.info("Run the javascript from page ,the java script is:"
 					+ script);
@@ -214,6 +231,12 @@ public abstract class PageObject {
 			je.executeScript(script,e);
 
 		}
+		/**
+		 * Method executeJSReturn.
+		 * @param script String
+		 * @param e WebElement
+		 * @return Object
+		 */
 		public Object executeJSReturn(String script,WebElement e) {
 			logger.info("Run the javascript from page ,the java script is:"
 					+ script);
@@ -223,6 +246,11 @@ public abstract class PageObject {
 			return object;
 
 		}
+		/**
+		 * Method executeJSReturn.
+		 * @param script String
+		 * @return Object
+		 */
 		public Object executeJSReturn(String script) {
 			logger.info("Run the javascript from page ,the java script is:"
 					+ script);
@@ -235,9 +263,9 @@ public abstract class PageObject {
 
 		/**
 		 * click an element in the page 
-		 * @param driver TODO
+		
 		 * @param e --the WebElment we need to click
-		 * @author huchan
+		
 		 */
 		public void clickElement(WebElement e) {
 			logger.info("Click elements in page-clicked this element:"
@@ -253,7 +281,7 @@ public abstract class PageObject {
 		/**
 		 * click an element in the page 
 		 * @param e --the WebElment we need to click
-		 * @author huchan
+		
 		 */
 		public void clickElementViaJs(WebElement e) {
 			logger.info("Click elements in page-clicked this element:"
@@ -265,8 +293,9 @@ public abstract class PageObject {
 		}
 		/**
 		 * click an element in the page 
-		 * @param e --the WebElment we need to click
-		 * @author huchan
+		
+		
+		 * @param elementid String
 		 */
 		public void clickElementViaJsID(String elementid) {
 			  logger.info("Click elements in page-clicked this element html id is"+elementid);
@@ -279,7 +308,7 @@ public abstract class PageObject {
 		/**
 		 * click an element in the page 
 		 * @param e --the WebElment we need to click
-		 * @author huchan
+		
 		 */
 		public void clickElementViaMouse(WebElement e) {
 			logger.info("Click elements in page-clicked this element:"
@@ -296,7 +325,7 @@ public abstract class PageObject {
 		/**
 		 * right click an element in the page 
 		 * @param e --the WebElment we need to click
-		 * @author huchan
+		
 		 */
 		public void rightClickElement(WebElement e) {
 			logger.info("Right Click elements in page-clicked this element:"
@@ -315,7 +344,7 @@ public abstract class PageObject {
 		 * send key to an element
 		 * @param e --the webelement you want to send the key
 		 * @param enter -- the key need to send 
-		 * @author huchan
+		
 		 */
 		public void sendKeys(WebElement e, String enter) {
 			logger.info("Send keys in this element:" + e.getTagName()
@@ -327,8 +356,8 @@ public abstract class PageObject {
 
 		/**
 		 * @param testedURL
-		 * @throws Exception 
-		 */
+		
+		 * @throws Exception  */
 		public void open(String testedURL) throws Exception {
 			// TODO Auto-generated method stub
 			//Date:Sep 26, 20139:14:57 AM
@@ -341,7 +370,7 @@ public abstract class PageObject {
 		 * select an option from the drop list, depends on the visible text
 		 * @param e --the web element object
 		 * @param text -- the visible text from the dropdown list
-		 * @author huchan
+		
 		 */
 		public void selectElementViaText(WebElement e, String text) {
 			logger.info("Select option text from the list ,list element is:"
@@ -355,7 +384,7 @@ public abstract class PageObject {
 		 * select an option from the drop list, depends on the tag's attribute value
 		 * @param e  --the web element object
 		 * @param value -- the value attribute for this element
-		 * @author huchan
+		
 		 */
 		public void SelectElementViaValue(WebElement e, String value) {
 			logger.info("Select option value from the list ,list element is:"
@@ -369,7 +398,7 @@ public abstract class PageObject {
 		 * select an option from the drop list, depends on the index ,the index begin with 0
 		 * @param e  --the web element object
 		 * @param index -- the index of this webelement ,begin with 0
-		 * @author huchan
+		
 		 */
 		public void SelectElementViaIndex(WebElement e, int index) {
 			logger.info("Select option index from the list ,list element is:"
@@ -385,11 +414,11 @@ public abstract class PageObject {
 		/**
 		 * wait for an object to be dislayed in the page
 		 * @param e -- the web element object
+		
+		
+		
 		 * @return  true: the object displayed ,
-		 *          false:the object not displayed in the page ;
-		 * @author huchan
-		 * @throws Exception 
-		 */
+		 *          false:the object not displayed in the page ; * @throws Exception  */
 		public boolean waitProcessBarNotAppear(WebElement e){
 			int waitcount = 0;
 			boolean isDisplayed = false;
@@ -412,9 +441,10 @@ public abstract class PageObject {
 		
 		/**
 		 * wait for the object displayed in the page ,the time out will be 120 seconds ,if it still not show ,it will failed
-		 * @param driver
+		
 		 * @param xpathExpression
-		 * @return
+		
+		 * @return boolean
 		 */
 		public boolean waitForObjectDisplay(final String xpathExpression){
 			boolean findobject=false;
@@ -442,10 +472,10 @@ public abstract class PageObject {
 	
 		/**
 		 * execute the script to set the datepicker value
-		 * @param driver --the webdriver instance
+		
 		 * @param elementid -- the web element's id
 		 * @param date   --the date we need to set ,it's string
-		 * @author huchan
+		
 		 */
 		public void setDateTimePicker(String elementid,
 				String date) {
@@ -460,7 +490,7 @@ public abstract class PageObject {
 		/**
 		 * select the checkbox ,if it selectd ,we will not select it again
 		 * @param e -- the web element object
-		 * @author huchan
+		
 		 */
 		public void checkboxed(WebElement e) {
 			highLight(e);
@@ -477,9 +507,9 @@ public abstract class PageObject {
 		/**
 		 * get the text in the web element
 		 * @param e  -- the web element object
-		 * @return  String -- the web element's text
-		 * @author huchan
-		 */
+		
+		
+		 * @return  String -- the web element's text */
 		public String getElementText(WebElement e) {
 			logger.info("Get the element text.The webelement is:" + e.getTagName()
 					+ ",the text in the webelement is:" + e.getText().trim());
@@ -490,9 +520,9 @@ public abstract class PageObject {
 		/**
 		 * verify the object is enabled in the page
 		 * @param e  -- the web element object
-		 * @return  true :the object is enabled ,false:the object is disabled
-		 * @author huchan
-		 */
+		
+		
+		 * @return  true :the object is enabled ,false:the object is disabled */
 		public boolean isEnabled(WebElement e) {
 			logger.info("Verify webelement Enabled in the page-the current webelement is:"
 					+ e.getTagName()
@@ -505,9 +535,9 @@ public abstract class PageObject {
 		/**
 		 * verify the object is selected in the page
 		 * @param e --the web element object
-		 * @return  true:the object is selected,false:the object is not selected
-		 * @author huchan
-		 */
+		
+		
+		 * @return  true:the object is selected,false:the object is not selected */
 		public boolean isSelected(WebElement e) {
 			logger.info("Verify webelement Selected in the page-the current webelement is:"
 					+ e.getTagName()
@@ -522,9 +552,9 @@ public abstract class PageObject {
 		 * get the webelement's attribute value
 		 * @param e  --the web element object
 		 * @param attributename  -- the web element's attribute
-		 * @return String-- the attribute value for this web element
-		 * @author huchan
-		 */
+		
+		
+		 * @return String-- the attribute value for this web element */
 		public String getAttribute(WebElement e, String attributename) {
 			logger.info("Get the webelement Attribute-the webelement's attribute:"
 					+ e.getTagName() + ",the text in the webelement is:"
@@ -538,9 +568,9 @@ public abstract class PageObject {
 		/**
 		 * get the web element's tag name 
 		 * @param e -- the web element object
-		 * @return  String --the web element's tag name
-		 * @author huchan
-		 */
+		
+		
+		 * @return  String --the web element's tag name */
 		public String getTagName(WebElement e) {
 			logger.info("Get the webelement TagName-the webelement's tag name is:"
 					+ e.getTagName() + ",the text in the webelement is:"
@@ -556,9 +586,9 @@ public abstract class PageObject {
 		 * get all the web elements behind the specified element
 		 * @param e -- the web element object
 		 * @param tagname  -- the web element's tag name
-		 * @return  List<WebElement> a list of all the sub web element we found
-		 * @author huchan
-		 */
+		
+		
+		 * @return  List<WebElement> a list of all the sub web element we found */
 		public List<WebElement> findElementListByTagName(WebElement e,
 				String tagname) {
 			logger.info("Find all subelements by Tag Name:" + e.getTagName()
@@ -572,8 +602,8 @@ public abstract class PageObject {
 		 * find the element by xpath in the page
 		 * @param e --the web element object
 		 * @param xpath -- the web element's xpath
-		 * @return  WebElement -- get the found web element
-		 */
+		
+		 * @return  WebElement -- get the found web element */
 		public WebElement findElementByXpath(WebElement e, String xpath) {
 			logger.info("Find subelement by Xpath-we will find an sub element with the xpath:"
 					+ xpath);
@@ -585,9 +615,10 @@ public abstract class PageObject {
 		/**
 		 * find the element by xpath in the page
 		 * @param e --the web element object
-		 * @param xpath -- the web element's xpath
-		 * @return  WebElement -- get the found web element
-		 */
+		
+		
+		 * @param css String
+		 * @return  WebElement -- get the found web element */
 		public WebElement findElementByCSS(WebElement e, String css) {
 			logger.info("Find subelement by css-we will find an sub element with the css selector:"
 					+ css);
@@ -598,9 +629,10 @@ public abstract class PageObject {
 		}
 		/**
 		 * click the ok button in the pop up dialog (alert dialog)
-		 * @param driver  -- the web driver's instance
+		
 		 * @param seconds -- the seconds we need to wait to click it
-		 * @author huchan
+		
+		 * @return boolean
 		 */
 		public boolean alertClickOK(int seconds) {
 			boolean isclicked=false;
@@ -613,7 +645,7 @@ public abstract class PageObject {
 			}catch(NoAlertPresentException e){
 				logger.info("the Alert didn't pop up currently:"+e.getMessage());
 			}catch(TimeoutException e){
-				logger.error("Time out we cannot find this OK button:"+seconds);
+				logger.error("Time out we cannot find this OK button:"+seconds+e.getMessage());
 			}
 			
 			return isclicked;
@@ -622,12 +654,13 @@ public abstract class PageObject {
 		
 		/**
 		 * this fuction is used for clicking the cancel button
-		 * @category click the Alert dialog ,click the cancel button
-		 * @param driver -- the web driver instance
+		
+		
 		 * @param seconds -- the second we need to wait to click the cancel button
-		 * @see alertClickOK
-		 * @author huchan
-		 */
+		
+		
+		 * @return boolean
+		 * @see alertClickOK */
 
 		public boolean alertClickCancel(int seconds) {
 			boolean isclicked=false;
@@ -641,7 +674,7 @@ public abstract class PageObject {
 				logger.info("the alert didn't pop up currently:"+e.getMessage());
 			}
 			catch(TimeoutException e){
-				logger.error("Time out we cannot find this Cancel button:"+seconds);
+				logger.error("Time out we cannot find this Cancel button:"+seconds+",exception:"+e.getMessage());
 			}
 			
 			return isclicked;
@@ -652,11 +685,11 @@ public abstract class PageObject {
 		/**
 		 * getCurrentURL:(get the current page URL address). 
 
-		 * @author huchan
-		 * @param driver  --- the web driver instance
-		 * @return String ---the url of current page
+		
+		
+		
 		 * @since JDK 1.6
-		 */
+		 * @return String ---the url of current page */
 		public String getCurrentPageURL(){
 			String pageurl="";
 			JavascriptExecutor je=(JavascriptExecutor) driver;
@@ -685,7 +718,8 @@ public abstract class PageObject {
 		/**
 		 * wait for the web page to full loading correctly ,it will wait for 3 minutes to load the page ,
 		 * if the page not loading in 3 minutes ;it will throw error;
-		 * @param driver
+		
+		 * @return boolean
 		 */
 		public boolean waitForBrowserFullSync(){
 			final String currentbowserstate=(String)executeJS("return document.readyState;");
@@ -712,12 +746,12 @@ public abstract class PageObject {
 		 * http://santoshsarmajv.blogspot.com/2012/04/how-to-switch-control-to-pop-up-window.html
 		 * http://stackoverflow.com/questions/11614188/switch-between-two-browser-windows-using-selenium-webdriver
 		 *
-		 * @author huchan
-		 * @param driver
+		
+		
 		 * @param windowTitle
-		 * @throws AWTException 
+		
 		 * @since JDK 1.6
-		 */
+		 * @throws AWTException  */
 		public void switchtoWindow(String windowTitle) throws AWTException{
 			Robot robot=new Robot();
 			Set<String> allwindows=driver.getWindowHandles();
@@ -732,7 +766,7 @@ public abstract class PageObject {
 		
 		/**
 		 * refresh the current page
-		 * @param driver
+		
 		 */
 		public void refreshPage(){
 			//driver.navigate().refresh();
@@ -743,9 +777,9 @@ public abstract class PageObject {
 		}
 		/**
 		 * get the page title
-		 * @param driver
-		 * @return String
-		 */
+		
+		
+		 * @return String */
 		public String getPageTitle(){
 			String title=driver.getTitle();
 			logger.info("Get current page title is:"+title);
@@ -754,10 +788,10 @@ public abstract class PageObject {
 		
 		/**
 		 * get the webelement's html code
-		 * @param driver
+		
 		 * @param e
-		 * @return String
-		 */
+		
+		 * @return String */
 		public String getInnerHtmlCode(WebElement e){
 			String contents = (String)executeJSReturn("return arguments[0].innerHTML;", e);
 			logger.info("Get the html code for this webelement:"+contents);
@@ -769,11 +803,11 @@ public abstract class PageObject {
 		
 		/**
 		 * wait for a few time to find the object displayed in the page
-		 * @param driver
+		
 		 * @param e
 		 * @param timeout
-		 * @return true found the element visible displayed in the page ,false ,cannot find the webelement
-		 */
+		
+		 * @return true found the element visible displayed in the page ,false ,cannot find the webelement */
 		public boolean waitForGUIAppear(WebElement e,long timeout){
 			boolean findelement=false;
 			WebDriverWait wdw=new WebDriverWait(driver, timeout);
@@ -785,7 +819,7 @@ public abstract class PageObject {
 		
 		/**
 		 * scroll the view to we can see in the page
-		 * @param driver
+		
 		 * @param e
 		 */
 		public void scrollToView(WebElement e){
@@ -797,7 +831,7 @@ public abstract class PageObject {
 		}
 		/**
 		 * click the upload button to upload the file ,this is for hte webFile element ,the input type is file
-		 * @param driver
+		
 		 * @param e
 		 * @param filepath
 		 * http://sauceio.com/index.php/2012/03/selenium-tips-uploading-files-in-remote-webdriver/
@@ -814,13 +848,15 @@ public abstract class PageObject {
 	
 		 /**
 		  * generate a email page loading row in the page loading table
-		 * @param stepname
-		 * @param stepchecker
-		 * @param status
-		 * @param comments
-		 * @param driver TODO
-		 * @throws IOException 
-		 */
+		
+		
+		
+		
+		
+		
+		 * @param pagename String
+		  * @param pageloadtime long
+		  * @throws IOException  */
 		public static void generatePageLoadTime(String pagename,long pageloadtime) throws IOException{
 			 String pageloadingfolder=SeleniumCore.getProjectWorkspace()+"reporter";
 			 String pageloadingfile=pageloadingfolder+File.separator+"pageloading.log";
@@ -864,13 +900,14 @@ public abstract class PageObject {
 
 		/**
 		 * get the current page loading time ,it will return seconds
-		 * @param driver
+		
 		 * 
-		 * @see http://www.softwareishard.com/blog/firebug/support-for-performance-timing-in-firebug/
-		 * @see http://selenium.polteq.com/en/implement-web-timings/
-		 * @see http://www.html5rocks.com/en/tutorials/webperformance/basics/
-		 * @see http://www.theautomatedtester.co.uk/blog/2010/selenium-webtimings-api.html
-		 */
+		
+		
+		
+		
+		 * @return long
+		 * @see http://www.softwareishard.com/blog/firebug/support-for-performance-timing-in-firebug/ * @see http://selenium.polteq.com/en/implement-web-timings/ * @see http://www.html5rocks.com/en/tutorials/webperformance/basics/ * @see http://www.theautomatedtester.co.uk/blog/2010/selenium-webtimings-api.html */
 		public long getPageLoadTime(){
 			long pageloadtime=0;
 			long pagestarttime=0;
@@ -916,9 +953,9 @@ public abstract class PageObject {
 		/**
 		 * sleep the current step for a few seconds 
 		 * @param seconds -- the seconds we need to sleep 
-		 * @throws InterruptedException
-		 * @author huchan
-		 */
+		
+		
+		 * @throws InterruptedException */
 		public void sleepSeconds(int seconds)
 				 {
 			logger.info("Begin to sleep current step for " + seconds
@@ -942,9 +979,9 @@ public abstract class PageObject {
 		
 	   /**wait for the ajax to be completed
 	    * inspired by the the blow url:
-	    * @link  http://hedleyproctor.com/2012/07/effective-selenium-testing/
-	    * @link  http://stackoverflow.com/questions/3272883/how-to-use-selenium-2-pagefactory-init-elements-with-wait-until
-	    * @author huchan
+	   
+	   
+	   
 	    * @param timeoutInSeconds
 	    */
 	public void waitForAjaxPresent(int timeoutInSeconds)  {			 
@@ -980,8 +1017,8 @@ public abstract class PageObject {
 	 * @param status
 	 * @param comments
 	 * @param driver TODO
-	 * @throws IOException 
-	 */
+	
+	 * @throws IOException  */
 	public static  void reporterNewStep(String stepname,String stepchecker,String status,String comments,WebDriver driver){
 		
 		 String projectdir=SeleniumCore.getProjectWorkspace();
@@ -995,7 +1032,7 @@ public abstract class PageObject {
 				    FileUtils.copyFile(new File(templatereport), dailyreport);
 			        } catch (IOException e) {
 				    // TODO Auto-generated catch block
-			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename);
+			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename+",Exception:"+e.getMessage());
 			       }
 		 }else{
 			 logger.debug("We found that today's report file had generated before...");
@@ -1130,6 +1167,11 @@ public abstract class PageObject {
 	   
    }
 	
+	/**
+	 * Method reporterNewData.
+	 * @param datadescription String
+	 * @param datavalue String
+	 */
 	public static void reporterNewData(String datadescription,String datavalue){
 		
 		 String projectdir=SeleniumCore.getProjectWorkspace();
@@ -1143,10 +1185,10 @@ public abstract class PageObject {
 				    FileUtils.copyFile(new File(templatereport), dailyreport);
 			        } catch (IOException e) {
 				    // TODO Auto-generated catch block
-			       // logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename);
+			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename+",Exception:"+e.getMessage());
 			       }
 		 }else{
-			// logger.debug("We found that today's report file had generated before...");
+			 logger.debug("We found that today's report file had generated before...");
 		 }
 		 
 		//update the execution report step 
@@ -1204,6 +1246,11 @@ public abstract class PageObject {
 	   FilesUtils.writeContents(reportfilename, sb.toString());       
   }
 	
+	/**
+	 * Method reporterPageTime.
+	 * @param pagename String
+	 * @param loadtime long
+	 */
 	public static void reporterPageTime(String pagename,long loadtime){
 		
 		 String projectdir=SeleniumCore.getProjectWorkspace();
@@ -1217,10 +1264,10 @@ public abstract class PageObject {
 				    FileUtils.copyFile(new File(templatereport), dailyreport);
 			        } catch (IOException e) {
 				    // TODO Auto-generated catch block
-			       // logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename);
+			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename+",Exception:"+e.getMessage());
 			       }
 		 }else{
-			// logger.debug("We found that today's report file had generated before...");
+			 logger.debug("We found that today's report file had generated before...");
 		 }
 		 
 		//update the execution report step 

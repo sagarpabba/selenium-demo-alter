@@ -9,6 +9,7 @@
 
 package com.hp.utility;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -16,18 +17,21 @@ import org.openqa.selenium.WebDriver;
 
  * Date:     Aug 22, 2013 9:23:06 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class RecoveryScenario {
 	
 //	private WebDriver driver;
 
-	//private static Logger logger=Logger.getLogger(RecoveryScenario.class);
+	private static Logger logger=Logger.getLogger(RecoveryScenario.class);
 	
 	/**
-	 * @return
+	
+	 * @param driver WebDriver
+	 * @return boolean
 	 */
 	public static boolean invokeAllRecoveries(WebDriver driver){
 	    boolean userecovery=false;
@@ -43,19 +47,21 @@ public class RecoveryScenario {
 	    return userecovery;
 	}
 	//met the ie continue to run error
+	/**
+	 * Method ieContinueToRun.
+	 * @param driver WebDriver
+	 * @return boolean
+	 */
 	public static boolean ieContinueToRun(WebDriver driver){
 		 boolean userecovery=false;
-		 try{
-		//	 driver.navigate().to("javascript:document.getElementById('overridelink').click();");
-		//	 logger.debug("Now actually we had use the javascript to click the override link in the page");
-		//	 userecovery=true;
-		 }
-		 catch(Exception e){
-			 userecovery=false;
-		 }
+	
 		 return userecovery;
 	}
 	
+	/**
+	 * Method firefoxAddException.
+	 * @return boolean
+	 */
 	public static boolean firefoxAddException(){
 		boolean userecovery=false;
 		

@@ -14,9 +14,10 @@ package com.hp.utility;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 24, 2013 8:51:09 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class IEProfileFile {
 

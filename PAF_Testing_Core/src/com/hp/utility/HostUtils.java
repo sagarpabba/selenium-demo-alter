@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import java.net.UnknownHostException;
 
 
+/**
+ */
 public class HostUtils {
 
 	
@@ -14,8 +16,8 @@ public class HostUtils {
 	
 	/**
 	 * get the current host name
-	 * @return String host name
-	 */
+	
+	 * @return String host name */
 	public static String getShortHostName() {
 
 		String hostname = null;
@@ -30,8 +32,8 @@ public class HostUtils {
 
 	/**
 	 * get the host IP address
-	 * @return string host ip address
-	 */
+	
+	 * @return string host ip address */
 	public static String getHostIP() {
 		String hostip = null;
 		try {
@@ -46,7 +48,8 @@ public class HostUtils {
 
 	/**
 	 * get the host name with domain name ,like pdeauto17.fc.hp.com
-	 * @return
+	
+	 * @return String
 	 */
 	public static String getFQDN() {
 		String fqdn = null;
@@ -62,8 +65,9 @@ public class HostUtils {
 	
    /**
     * get the current JAVA version in the host
- * @return
- */
+
+ * @return String
+    */
 public static String getJREType(){
 	   String jretype=System.getProperty("os.arch");
 	   logger.info("The JRE architecture is: "+jretype);
@@ -71,13 +75,16 @@ public static String getJREType(){
    }
    
    /**
-    * get the os type ,like 32 bit or 64 bit
- * @return
- */
+    * get the os type ,like 32 bit or 64 bit, this is only can be used in windows
+
+ * @return String
+    */
 public static String getOSType(){
 	  // SystemEnvironment env =SystemEnvironment.getSystemEnvironment();
 		 //   final String envArch = env.getOsArchitecture();
+	   //System.getProperty("os.arch");
 	   String ostype=System.getenv("PROCESSOR_ARCHITEW6432");
+	 //  String ostype=System.getProperty("os.arch");
 	   logger.info("The os original type is : "+ostype);
 	   if(ostype.contains("64")){
 		   return "64bit";
@@ -90,8 +97,9 @@ public static String getOSType(){
    
    /**
     * get the operating system version
- * @return
- */
+
+ * @return String
+    */
 public static String getOperatingSystemName(){
 	   String osname=System.getProperty("os.name");
 	   logger.info("the Operating system name is:"+osname);
@@ -100,8 +108,9 @@ public static String getOperatingSystemName(){
    
    /**
     * get the operation system os core version
- * @return
- */
+
+ * @return String
+    */
 public static String getOperatingSystemVersion(){
 	   String osversion=System.getProperty("os.version");
 	   logger.info("the Operating system version:"+osversion);

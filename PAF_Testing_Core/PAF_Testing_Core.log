@@ -1,0 +1,16 @@
+javaToKdm executed in 131.372s.
+Cannot overload Ecore
+Invalid implements, from : kdmInput!Anonymous type
+to : kdmInput!Authenticator
+Invalid implements, from : kdmInput!Anonymous type
+to : kdmInput!Authenticator
+KDMtoUML executed in 4.424s.
+javaToKdm executed in 132.63s.
+Cannot overload Ecore
+Invalid implements, from : kdmInput!Anonymous type
+to : kdmInput!Authenticator
+Invalid implements, from : kdmInput!Anonymous type
+to : kdmInput!Authenticator
+KDMtoUML executed in 3.757s.
+Cannot find metamodel element uml::ExecutionEvent in model uml
+Trying to continue execution despite the error.

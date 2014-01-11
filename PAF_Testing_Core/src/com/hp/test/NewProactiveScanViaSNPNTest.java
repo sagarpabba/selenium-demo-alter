@@ -20,6 +20,8 @@ import com.hp.utility.BaseDriver;
 import com.hp.utility.HostUtils;
 import com.hp.utility.SeleniumCore;
 
+/**
+ */
 public class NewProactiveScanViaSNPNTest extends BaseDriver {
   
 	private static HomePageAction hp;
@@ -37,6 +39,10 @@ public class NewProactiveScanViaSNPNTest extends BaseDriver {
 	public static String runstart="";
 	
 	
+	/**
+	 * Method test_NavigateHomePage.
+	 * @throws Exception
+	 */
 	@Test(testName="Home Page Operation")
 	public void test_NavigateHomePage() throws Exception{
 		hp=PageFactory.initElements(driver,HomePageAction.class);
@@ -44,6 +50,10 @@ public class NewProactiveScanViaSNPNTest extends BaseDriver {
 			
 	}
 	
+	/**
+	 * Method test_Launch_new_Assessment.
+	 * @throws Exception
+	 */
 	@Test(testName="Launch a New Assessment",dependsOnMethods="test_NavigateHomePage")
 	public void test_Launch_new_Assessment() throws Exception{
 		lnp=hp.newAssessment();
@@ -51,24 +61,40 @@ public class NewProactiveScanViaSNPNTest extends BaseDriver {
 		cp=lnp.launchPSAssessment();
 	}
 	
+	/**
+	 * Method test_SelectCustomer.
+	 * @throws Exception
+	 */
 	@Test(testName="Select customer we specified",dependsOnMethods="test_Launch_new_Assessment")
 	public void test_SelectCustomer() throws Exception{		
 		cp.verifyPageElements("Customer Select Page");
 		String snpnfile=SeleniumCore.getProjectWorkspace()+"PAFdevices"+File.separator+"testdevice.xlsx";	
 		dp=cp.selectCustomerViaSNPN(snpnfile);
 	}
+	/**
+	 * Method test_SelectDevice.
+	 * @throws IOException
+	 */
 	@Test(testName="select device list",dependsOnMethods="test_SelectCustomer")
 	public void test_SelectDevice() throws IOException{
 		dp.verifyPageElements("Device Page");
 		op=dp.selectAllDevices();
 	}
 	
+	/**
+	 * Method test_Options.
+	 * @throws Exception
+	 */
 	@Test(description = "New schedule page", dependsOnMethods = "test_SelectDevice")
 	public void test_Options() throws Exception {
 		op.verifyPageElements("Assessment Option Page");	
 		arp=op.reviewAndRunNow();
 	}
 
+	/**
+	 * Method test_Review.
+	 * @throws Exception
+	 */
 	@Test(description = "New Request review page", dependsOnMethods = "test_Options")
 	public void test_Review() throws Exception {
 		
@@ -82,6 +108,10 @@ public class NewProactiveScanViaSNPNTest extends BaseDriver {
 		srp=asp.goSearchRunPage();
 	}
 
+	/**
+	 * Method test_ListRun.
+	 * @throws Exception
+	 */
 	@Test(description = "list run result", dependsOnMethods = "test_Review")
 	public void test_ListRun() throws Exception {
 
@@ -89,6 +119,10 @@ public class NewProactiveScanViaSNPNTest extends BaseDriver {
 		srdp=srp.downloadRun("pc", runid,runstart);	
 
 	}
+	/**
+	 * Method test_ListRunDetail.
+	 * @throws Exception
+	 */
 	@Test(description = "list run detail reuslt", dependsOnMethods = "test_ListRun")
 	public void test_ListRunDetail() throws Exception {
 	

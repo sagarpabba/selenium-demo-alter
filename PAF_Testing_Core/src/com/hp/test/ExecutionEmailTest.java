@@ -32,6 +32,8 @@ import com.hp.utility.FilesUtils;
 import com.hp.utility.JsoupUtils;
 import com.hp.utility.SeleniumCore;
 
+/**
+ */
 public class ExecutionEmailTest {
 
 	private static final Logger logger = Logger.getLogger(ExecutionEmailTest.class);
@@ -49,6 +51,13 @@ public class ExecutionEmailTest {
 	/*
 	 * send the email via SMTP Sever ,this is the main test param: the email
 	 * setting data from the excel file
+	 */
+	/**
+	 * Method sendEmail.
+	 * @param emailmap Map<String,String>
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws SQLException
 	 */
 	@Test(dataProviderClass = com.hp.utility.ExcelUtils.class, dataProvider = "devEmail")
 	public void sendEmail(Map<String, String> emailmap) throws IOException,
@@ -70,6 +79,19 @@ public class ExecutionEmailTest {
 		}
 	}
 
+	/**
+	 * Method sendMultiEmail.
+	 * @param smtpserver String
+	 * @param authenuser boolean
+	 * @param username String
+	 * @param password String
+	 * @param from String
+	 * @param to String
+	 * @param subject String
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws SQLException
+	 */
 	public void sendMultiEmail(String smtpserver, boolean authenuser,
 			final String username, final String password, String from,
 			String to, String subject) throws IOException, ParseException, SQLException {

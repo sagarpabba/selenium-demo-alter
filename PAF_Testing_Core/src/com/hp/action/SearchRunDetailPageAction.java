@@ -29,26 +29,27 @@ import com.hp.utility.SeleniumCore;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 27, 2013 9:33:52 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class SearchRunDetailPageAction extends SearchRunDetailPage {
 
 	
+	/**
+	 * Constructor for SearchRunDetailPageAction.
+	 * @param driver WebDriver
+	 */
 	public SearchRunDetailPageAction(WebDriver driver) {
 		this.driver=driver;
 		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public void verifyPageElements(String pagename) throws IOException {
-		// TODO Auto-generated method stub
-		super.verifyPageElements(pagename);
-		//Date:Sep 27, 201310:24:16 AM
-	}
 	
-	
+	/**
+	 * Method downloadReport.
+	 * @throws IOException
+	 */
 	public void downloadReport() throws IOException{
 		
 		//check the check all box 

@@ -12,8 +12,7 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.26-bin.jar"/>
-	<classpathentry kind="lib" path="lib/selenium-java-2.35.0-srcs.jar"/>
-	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.35.0.jar" sourcepath="lib/selenium-java-2.35.0-srcs.jar"/>
 	<classpathentry kind="lib" path="lib/testng-6.8.jar"/>
+	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.35.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

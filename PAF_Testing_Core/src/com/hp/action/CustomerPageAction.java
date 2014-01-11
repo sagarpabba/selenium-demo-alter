@@ -32,9 +32,10 @@ import com.hp.utility.SeleniumCore;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 27, 2013 9:34:58 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 /**
  * @author huchan
@@ -58,6 +59,11 @@ public class CustomerPageAction extends CustomerPage {
 	}
 
 	
+	/**
+	 * Method verifyPageElements.
+	 * @param pagename String
+	 * @throws IOException
+	 */
 	@Override
 	public void verifyPageElements(String pagename) throws IOException {
 		// TODO Auto-generated method stub
@@ -67,6 +73,12 @@ public class CustomerPageAction extends CustomerPage {
 		comments="Customer Page Elements displayed correctly";
 	}
 	
+	/**
+	 * Method selectCustomerViaSNPN.
+	 * @param snpnfile String
+	 * @return DevicePageAction
+	 * @throws IOException
+	 */
 	public DevicePageAction selectCustomerViaSNPN(String snpnfile) throws IOException{
 		
 		
@@ -121,6 +133,11 @@ public class CustomerPageAction extends CustomerPage {
 		return PageFactory.initElements(driver, DevicePageAction.class);
 	}
 	
+	/**
+	 * Method selectCustomerViaFilter.
+	 * @return DevicePageAction
+	 * @throws IOException
+	 */
 	public DevicePageAction selectCustomerViaFilter() throws IOException{
 		
 		boolean findcustomername=false;
