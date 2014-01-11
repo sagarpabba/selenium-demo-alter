@@ -47,9 +47,10 @@ import com.hp.utility.SeleniumCore;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 7, 2013 10:49:06 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class OverviewEmailTest {
 
@@ -61,6 +62,13 @@ public class OverviewEmailTest {
 	/*
 	 * send the email via SMTP Sever ,this is the main test param: the email
 	 * setting data from the excel file
+	 */
+	/**
+	 * Method sendEmail.
+	 * @param emailmap Map<String,String>
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws SQLException
 	 */
 	@Test(dataProviderClass = com.hp.utility.ExcelUtils.class, dataProvider = "devEmail")
 	public void sendEmail(Map<String, String> emailmap) throws IOException,
@@ -82,6 +90,19 @@ public class OverviewEmailTest {
 		}
 	}
 
+	/**
+	 * Method sendMultiEmail.
+	 * @param smtpserver String
+	 * @param authenuser boolean
+	 * @param username String
+	 * @param password String
+	 * @param from String
+	 * @param to String
+	 * @param subject String
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws SQLException
+	 */
 	public void sendMultiEmail(String smtpserver, boolean authenuser,
 			final String username, final String password, String from,
 			String to, String subject) throws IOException, ParseException, SQLException {

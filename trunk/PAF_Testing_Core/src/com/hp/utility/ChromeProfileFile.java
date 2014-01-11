@@ -22,15 +22,20 @@ import org.openqa.selenium.chrome.ChromeOptions;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 24, 2013 8:51:26 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class ChromeProfileFile {
 	
 	
 	private static Logger logger=Logger.getLogger(ChromeProfileFile.class);
 	
+	/**
+	 * Method setChromeProfile.
+	 * @return ChromeOptions
+	 */
 	public static ChromeOptions setChromeProfile(){
 		
 		 String chromedriver=SeleniumCore.getProjectWorkspace()+"resources"+File.separator+"chromedriver.exe";

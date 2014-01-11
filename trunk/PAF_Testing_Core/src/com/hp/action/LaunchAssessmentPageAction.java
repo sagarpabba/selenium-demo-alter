@@ -28,6 +28,7 @@ import com.hp.po.LaunchAssessmentPage;
  * @version  
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 /**
  * @author huchan
@@ -45,6 +46,11 @@ public class LaunchAssessmentPageAction extends LaunchAssessmentPage {
 	}
 
 	
+	/**
+	 * Method verifyPageElements.
+	 * @param pagename String
+	 * @throws IOException
+	 */
 	@Override
 	public void verifyPageElements(String pagename) throws IOException {
 		// TODO Auto-generated method stub
@@ -55,6 +61,11 @@ public class LaunchAssessmentPageAction extends LaunchAssessmentPage {
 		
 	}
 	
+	/**
+	 * Method launchPSAssessment.
+	 * @return CustomerPageAction
+	 * @throws IOException
+	 */
 	public CustomerPageAction launchPSAssessment() throws IOException{
 		SelectElementViaValue(options, "PRO_SCAN");
 		logger.info("We had launched the proctive scan assessment");

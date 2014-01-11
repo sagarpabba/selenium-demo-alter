@@ -38,14 +38,7 @@ public class AssessmentSummaryPageAction extends AssessmentSummaryPage {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	@Override
-	public void verifyPageElements(String pagename) throws IOException {
-		// TODO Auto-generated method stub
-		super.verifyPageElements(pagename);
-		//Date:Sep 27, 201310:23:30 AM
-	}
-	
+
 	public String getRunID() throws InterruptedException, IOException {
 		String returnrunid = getElementText(runid);
 		logger.info("Request summary view page .Currently the request run over ,and the Run ID is:"

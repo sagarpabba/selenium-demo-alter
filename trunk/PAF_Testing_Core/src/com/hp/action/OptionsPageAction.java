@@ -34,9 +34,10 @@ import com.hp.utility.TimeUtils;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 27, 2013 9:35:29 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 /**
  * @author huchan
@@ -52,18 +53,21 @@ public class OptionsPageAction extends OptionsPage {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void verifyPageElements(String pagename) throws IOException {
-		// TODO Auto-generated method stub
-		super.verifyPageElements(pagename);
-		//Date:Sep 27, 201310:23:56 AM
-	}
+	/**
+	 * Method getEmailRequstor.
+	 * @return String
+	 */
 	public String getEmailRequstor(){
 		String emailaddress=getElementText(mailname);
 		logger.info("get the email address is:"+emailaddress);
 		return emailaddress;
 	}
 	
+	/**
+	 * Method getReportLanguageList.
+	 * @return List<String>
+	 * @throws IOException
+	 */
 	public List<String> getReportLanguageList() throws IOException{
 		String checkedlanguage="";
 		List<String> returnlanguage=new LinkedList<String>();
@@ -97,6 +101,11 @@ public class OptionsPageAction extends OptionsPage {
 		return returnlanguage;
 		
 	}
+	/**
+	 * Method reviewAndRunNow.
+	 * @return AssessmentReviewPageAction
+	 * @throws IOException
+	 */
 	public AssessmentReviewPageAction reviewAndRunNow() throws IOException{
 		
 		getEmailRequstor();
@@ -106,6 +115,11 @@ public class OptionsPageAction extends OptionsPage {
 		return PageFactory.initElements(driver, AssessmentReviewPageAction.class);
 	}
 	
+	/**
+	 * Method reviewAndScheduleLaterRun.
+	 * @return AssessmentReviewPageAction
+	 * @throws IOException
+	 */
 	public AssessmentReviewPageAction reviewAndScheduleLaterRun() throws IOException{
 		Map<String, String> mapdata = SeleniumCore
 				.importDataTable("device_detail");

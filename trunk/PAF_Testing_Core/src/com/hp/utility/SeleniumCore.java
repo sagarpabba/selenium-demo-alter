@@ -38,21 +38,21 @@ public class SeleniumCore {
 	/**
 	 * import the test data into the test flow for testing
 	 * @param sheetname -- the sheet name in this excel file
-	 * @return the map data for this row 
-	 * @author huchan
-	 */
+	
+	
+	 * @return the map data for this row  */
 	public static Map<String, String> importDataTable(String sheetname) {
 		String excelpath = getProjectWorkspace()+ "resources" + File.separator + "TestData.xls";
 		//String casetype = HostUtils.getFQDN();
 		@SuppressWarnings("unchecked")
 		Map<String, String> mapdata = new LinkedMap();
-		if (sheetname.toLowerCase() == "login_page") {
+		if (sheetname.toLowerCase().equals("login_page")) {
 			mapdata = ExcelUtils.getSpecifySheet(excelpath,"Login_Page","postive");
-		} else if (sheetname.toLowerCase() == "home_page") {
+		} else if (sheetname.toLowerCase().equals("home_page")) {
 			mapdata =ExcelUtils.getSpecifySheet(excelpath,"Home_Page","postive");
-		} else if (sheetname.toLowerCase() == "device_detail") {
+		} else if (sheetname.toLowerCase().equals("device_detail")) {
 			mapdata = ExcelUtils.getSpecifySheet(excelpath,"Device_Detail","postive");
-		} else if (sheetname.toLowerCase() == "email_settings") {
+		} else if (sheetname.toLowerCase().equals("email_settings")) {
 			mapdata=ExcelUtils.getSpecifySheet(excelpath,"Email_Settings","postive");
 		} else {
 			logger.error("Import datatable into project-Sorry we cannot find the sheet in the test data ,stop the testing now ");
@@ -64,7 +64,8 @@ public class SeleniumCore {
 	
 	/**
 	 * get current eclipse workspace we used 
-	 * @return
+	
+	 * @return String
 	 */
 	public static String getProjectWorkspace(){
 		String path = new File(".").getAbsolutePath();
@@ -77,9 +78,10 @@ public class SeleniumCore {
 	/**
 	 * getAutoItX:(get the AutoItX instance). 
 	 *
-	 * @author huchan
-	 * @return
+	
+	
 	 * @since JDK 1.6
+	 * @return AutoItXUtils
 	 */
 	public static AutoItXUtils getAutoItX(){
 		File file;
@@ -148,17 +150,24 @@ public class SeleniumCore {
 	//read the email
 	//http://www.avajava.com/tutorials/lessons/how-do-i-receive-email-in-java.html?page=1
 	//http://metoojava.wordpress.com/2010/03/21/java-code-to-receive-mail-using-javamailapi/
+	 /**
+	  * Method receiveEmail.
+	  * @param pop3Host String
+	  * @param storeType String
+	  * @param user String
+	  * @param password String
+	  */
 	 public static void receiveEmail(String pop3Host, String storeType, String user, String password) {
 		 
 	   }
 	
 		/**
 		 * getBrowserType:(get the current running browser type and version number). 
-		 * @author huchan
+		
 		 * @param driver  ---the web driver instance
-		 * @return String --- the browser type and version number
+		
 		 * @since JDK 1.6
-		 */
+		 * @return String --- the browser type and version number */
 		public static String getBrowserType(WebDriver driver){
 			Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
 			String browserName = caps.getBrowserName();

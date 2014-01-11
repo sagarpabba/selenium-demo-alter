@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +24,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ */
 public class JsoupUtils {
 
 	private static Logger logger = Logger.getLogger(JsoupUtils.class);
@@ -49,12 +50,12 @@ public class JsoupUtils {
 	/**
 	 * updateContents:(Here describle the usage of this function). 
 	 *
-	 * @author huchan
-	 * @throws IOException
-	 * @throws SQLException 
-	 * @throws ParseException
+	
+	
+	
+	
 	 * @since JDK 1.6
-	 */
+	 * @throws IOException * @throws SQLException  * @throws ParseException */
 	public static void updateOverviewReport() throws IOException, SQLException {
 		
 		String monday=TimeUtils.getMondayOfThisWeek();
@@ -152,9 +153,10 @@ public class JsoupUtils {
 	
 	/**
 	 * this function is not used any more now
-	 * @return
-	 * @throws IOException
-	 */
+	
+	
+	 * @return Map<Integer,List<String>>
+	 * @throws IOException */
 	public static Map<Integer,List<String>> getReportSteps() throws IOException{
 		
 		Map<Integer,List<String>> steplist=new TreeMap<Integer, List<String>>();
@@ -184,10 +186,10 @@ public class JsoupUtils {
 	//we will take to create a new template for the report,the report column will generate automacially
 	/**
 	 * generate the html report as we had run ,if the test had not run the step will not generate
-	 * @return the test execution status:passed ,failed ,no run or not completed
-	 * @throws IOException
-	 * @throws SQLException 
-	 */
+	
+	
+	
+	 * @return the test execution status:passed ,failed ,no run or not completed * @throws IOException * @throws SQLException  */
 	public static String generateHtmlReport() throws IOException, SQLException{
 		
 		 //first table for the overview table, 
@@ -211,7 +213,7 @@ public class JsoupUtils {
 				    FileUtils.copyFile(new File(templatereport), dailyreport);
 			   } catch (IOException e) {
 				    // TODO Auto-generated catch block
-			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename);
+			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename+",Exception:"+e.getMessage());
 			   }
 		 }else{
 			 logger.debug("We found that today's report file had generated before...");
@@ -253,11 +255,16 @@ public class JsoupUtils {
 					sb.append(doc.body().html());
 			}
 			catch(IOException exception){
-				logger.error("jsoup parse the image met the ioexception error");
+				logger.error("jsoup parse the image met the ioexception error"+",Exception:"+exception.getMessage());
 			}
 		    FilesUtils.writeContents(reportfilename, sb.toString());
 	}
 	
+	/**
+	 * Method updateOverviewTable.
+	 * @return String
+	 * @throws SQLException
+	 */
 	public static String updateOverviewTable() throws SQLException{	
 		 File dailyreport=new File(reportfilename);
 		 // if  today's report not generated ,we will copy the template report file firstly
@@ -266,7 +273,7 @@ public class JsoupUtils {
 				    FileUtils.copyFile(new File(templatereport), dailyreport);
 			   } catch (IOException e) {
 				    // TODO Auto-generated catch block
-			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename);
+			        logger.debug("Sorry cannot copy the report_template.html file into the report directory:"+reportfilename+",Exception:"+e.getMessage());
 			   }
 		 }else{
 			 logger.debug("We found that today's report file had generated before...");
@@ -393,7 +400,7 @@ public class JsoupUtils {
 			   sb.append(doc.body().toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			 logger.error("Jsoup parse the document met the IOException error");
+			 logger.error("Jsoup parse the document met the IOException error"+",Exception:"+e.getMessage());
 		}
 	
 	  // logger.debug("Current report file is canwrite false or true:"+dailyreport.canWrite());

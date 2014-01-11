@@ -44,6 +44,7 @@ import com.hp.po.PageObject;
  * and setup our driver easily
  * @author huchangyuan
  *
+ * @version $Revision: 1.0 $
  */
 public class BaseDriver{
 
@@ -55,6 +56,12 @@ public class BaseDriver{
 
 	
 	
+	/**
+	 * Method setupDriver.
+	 * @param browsertype String
+	 * @param context ITestContext
+	 * @throws Exception
+	 */
 	@BeforeSuite(description="this test run before our testNG test suite,it only run once ")
 	@Parameters({"browsertype"})
 	public void setupDriver(String browsertype,ITestContext context) throws Exception 
@@ -157,10 +164,16 @@ public class BaseDriver{
 		   
 		 }
 		catch(TimeoutException e){
-			logger.error("The page or the webelment had been waited for 120 second,it cannot showed ,so the test failed");
+			logger.error("The page or the webelment had been waited for 120 second,it cannot showed ,so the test failed"+",Exception:"+e.getMessage());
 			Assert.fail("The page or the webelment had been waited for 120 second,it cannot showed ,so the test failed");
 		}
 	}
+	/**
+	 * Method errorReport.
+	 * @param result ITestResult
+	 * @param context ITestContext
+	 * @throws Exception
+	 */
 	@AfterMethod
 	public void errorReport(ITestResult result, ITestContext context)throws Exception {
 		final Throwable t = result.getThrowable();
@@ -174,7 +187,8 @@ public class BaseDriver{
 		}
 	   if(!userecovery){
 		   
-		   logger.debug("Sorry ,we had not used the recovery to catch the exception ,so we will capture this error screenshot ");
+		   logger.debug("Sorry ,we had not used the recovery"
+		   		+ " to catch the exception ,so we will capture this error screenshot ");
            logger.debug("the throwable instance now is:"+t);
 		   if(t instanceof WebDriverException) {
 				logger.error("Sorry ,now we met the WebDriver Exception "+t.getMessage()+",maybe you had not opened the browser caused this ");
@@ -211,6 +225,12 @@ public class BaseDriver{
 	}
 
 	// capture the error screenshot if ocurred the error
+	/**
+	 * Method captureErrorScreenshot.
+	 * @param result ITestResult
+	 * @param errortype String
+	 * @throws IOException
+	 */
 	public void captureErrorScreenshot(ITestResult result, String errortype)
 			throws IOException {
 		String filename = result.getTestClass().getName()

@@ -10,6 +10,8 @@ import com.hp.utility.BaseDriver;
 import com.hp.utility.RetryFail;
 import com.hp.utility.SeleniumCore;
 
+/**
+ */
 public class LoginHomeTest extends BaseDriver {
 
 	private String username;
@@ -18,6 +20,10 @@ public class LoginHomeTest extends BaseDriver {
 	public static LoginPageAction loginpage;
 	private String testedURL;
 	
+	/**
+	 * Method test_loginInterface.
+	 * @throws Exception
+	 */
 	@Test(description = "Login PAF Home Page", testName = "Login in PAF", alwaysRun = true, successPercentage = 10, groups = "logininterface")
 	public void test_loginInterface() throws Exception {
 
@@ -36,6 +42,10 @@ public class LoginHomeTest extends BaseDriver {
 		logger.info("We open the login page to input the username and password......");	
 		
 	}
+	/**
+	 * Method loginHome.
+	 * @throws Exception
+	 */
 	@Test(retryAnalyzer=RetryFail.class,dependsOnMethods="test_loginInterface")
 	public void loginHome() throws Exception{
 

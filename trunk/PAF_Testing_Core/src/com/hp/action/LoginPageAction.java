@@ -25,19 +25,29 @@ import com.hp.utility.TimeUtils;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 27, 2013 9:29:02 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class LoginPageAction extends LoginPage {
 	
 	
 	
+	/**
+	 * Constructor for LoginPageAction.
+	 * @param driver WebDriver
+	 */
 	public LoginPageAction(WebDriver driver) {
 		this.driver=driver;
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Method verifyPageElements.
+	 * @param pagename String
+	 * @throws IOException
+	 */
 	@Override
 	public void verifyPageElements(String pagename) throws IOException {
 		// TODO Auto-generated method stub
@@ -47,6 +57,11 @@ public class LoginPageAction extends LoginPage {
 		status="Passed";
 	}
     
+	/**
+	 * Method open.
+	 * @param testedURL String
+	 * @throws Exception
+	 */
 	@Override
 	public  void open(String testedURL) throws Exception {
 		// TODO Auto-generated method stub
@@ -63,6 +78,13 @@ public class LoginPageAction extends LoginPage {
 	
 	// log in the system using the valid credential
 	
+	/**
+	 * Method logHomePage.
+	 * @param username String
+	 * @param inputpassword String
+	 * @return HomePageAction
+	 * @throws IOException
+	 */
 	public HomePageAction logHomePage(String username, String inputpassword) throws IOException {
 			if (isLoginPage()) {
 				logger.info("User now is logging the PAF,input username and password......");
@@ -79,6 +101,10 @@ public class LoginPageAction extends LoginPage {
 	}
 
 	// verify the user is logged before
+	/**
+	 * Method isLoginPage.
+	 * @return boolean
+	 */
 	public boolean isLoginPage() {
 		// driver.findElement(By.)
 		boolean bemail = isElementPresentAndDisplay(emailinput);

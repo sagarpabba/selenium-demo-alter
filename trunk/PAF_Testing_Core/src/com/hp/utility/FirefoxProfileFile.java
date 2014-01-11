@@ -20,9 +20,10 @@ import org.openqa.selenium.firefox.FirefoxProfile;
  * Reason:	 TODO ADD REASON. 
  * Date:     Aug 27, 2013 2:24:13 PM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class FirefoxProfileFile {
 	
@@ -31,9 +32,10 @@ public class FirefoxProfileFile {
 	
 	/**
 	 * set the firefox profile ,like download file automatically .
-	 * @return
-	 * @throws IOException
-	 */
+	
+	
+	 * @return FirefoxProfile
+	 * @throws IOException */
 	public static FirefoxProfile setFirefoxProfile() throws IOException{
 		FirefoxProfile fp=new FirefoxProfile();
 		//fp.addExtension(extensionToInstall);

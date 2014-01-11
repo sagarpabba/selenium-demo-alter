@@ -18,6 +18,8 @@ import java.util.zip.ZipInputStream;
 
 import org.apache.log4j.Logger;
 
+/**
+ */
 public class FilesUtils {
 
 	private static Logger logger = Logger.getLogger(FilesUtils.class);
@@ -26,7 +28,8 @@ public class FilesUtils {
 	/**
 	 * create a new text file
 	 * @param filename
-	 * @return
+	
+	 * @return boolean
 	 */
 	public static boolean newFile(String filename) {
 		boolean iscreated=false;
@@ -46,8 +49,10 @@ public class FilesUtils {
 	}
 	/**
 	 * create a new text file
-	 * @param filename
-	 * @return
+	
+	
+	 * @param folderpath String
+	 * @return boolean
 	 */
 	public static boolean newFolder(String folderpath) {
 		boolean iscreated=false;
@@ -63,7 +68,8 @@ public class FilesUtils {
 	 * write some strings into the file
 	 * @param filepath
 	 * @param Contents
-	 * @return
+	
+	 * @return boolean
 	 */
 	public static boolean writeContents(String filepath, String Contents) {
 
@@ -97,7 +103,8 @@ public class FilesUtils {
 	 * @param begintext
 	 * @param spliteseparator
 	 * @param spliteindex
-	 * @return
+	
+	 * @return String
 	 */
 	public static String getSpliteValue(String filepath,String begintext,String spliteseparator,int spliteindex) {
 
@@ -125,9 +132,11 @@ public class FilesUtils {
 			reader.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
+			logger.error("File met Exception:"+e.getMessage());
 			return null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			logger.error("file met Exception:"+e.getMessage());
 			return null;
 		}
 
@@ -139,7 +148,8 @@ public class FilesUtils {
 	 * get the sub files number in a directory ,if not find ,will return 0;
 	 * @param directory
 	 * @param filenamefilter
-	 * @return
+	
+	 * @return int
 	 */
 	public static int getSubFilesSize(String directory,
 			final String filenamefilter) {
@@ -164,7 +174,8 @@ public class FilesUtils {
 	 * get all the sub files in a directory, the return is the files object
 	 * @param directory
 	 * @param filenamefilter
-	 * @return
+	
+	 * @return File[]
 	 */
 	public static File[] listFilesEndsWith(String directory, final String filenamefilter) {
 		File dir = new File(directory);
@@ -189,7 +200,8 @@ public class FilesUtils {
 	 * get all the sub files in a directory ,the return is the files object ,the sub file name need start with the filter name
 	 * @param directory
 	 * @param filenamefilter
-	 * @return
+	
+	 * @return File[]
 	 */
 	public static File[] listFilesStartWith(String directory, final String filenamefilter) {
 		File dir = new File(directory);
@@ -213,7 +225,8 @@ public class FilesUtils {
 	/**
 	 * return the file's content with string
 	 * @param filepath
-	 * @return
+	
+	 * @return String
 	 */
 	public static String returnFileContents(String filepath) {
 		StringBuffer htmlcontent = new StringBuffer("");
@@ -230,7 +243,7 @@ public class FilesUtils {
 			file.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			logger.error("we cannot find this  file :" + filepath);
+			logger.error("we cannot find this  file :" + filepath+",Exception:"+e.getMessage());
 			return null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -243,7 +256,8 @@ public class FilesUtils {
 	/**
 	 * get the sub files lists in a directory
 	 * @param listfolder
-	 * @return
+	
+	 * @return List<String>
 	 */
 	public static List<String> getSubFiles(String listfolder){
 		List<String> filelists=new ArrayList<String>();
@@ -262,8 +276,8 @@ public class FilesUtils {
 	 * @param filepath
 	 * @param replacedstr
 	 * @param newstr
-	 * @throws IOException
-	 */
+	
+	 * @throws IOException */
 	public static void replaceStringOfFile(String filepath,String replacedstr,String newstr) throws IOException{
 		File file=new File(filepath);
 		List<String> sb=new ArrayList<String>();
@@ -297,8 +311,9 @@ public class FilesUtils {
 	 /**
      * Unzip it
      * @param zipFile input zip file
-     * @param output zip file output folder
-     */
+    
+     * @param outputFolder String
+	  */
     public static void unZipIt(String zipFile, String outputFolder){
  
      byte[] buffer = new byte[1024];

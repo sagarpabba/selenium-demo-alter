@@ -31,9 +31,10 @@ import org.testng.annotations.DataProvider;
  * Reason:	 TODO ADD REASON. 
  * Date:     Aug 24, 2013 2:03:52 PM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class ExcelUtils {
 
@@ -42,6 +43,12 @@ public class ExcelUtils {
 	
 	private static String emailsheetname="Email_Settings";
 	
+	/**
+	 * Method getPostiveData.
+	 * @param result ITestContext
+	 * @param sheetname String
+	 * @return Iterator<Object[]>
+	 */
 	@DataProvider(name = "getPostiveLine")
 	public static Iterator<Object[]> getPostiveData(ITestContext result,String sheetname) {
 
@@ -94,6 +101,12 @@ public class ExcelUtils {
 		return rowdata.iterator();
 	}
 
+	/**
+	 * Method getExcelIteratorData.
+	 * @param result ITestContext
+	 * @param sheetname String
+	 * @return Iterator<Object[]>
+	 */
 	@DataProvider(name = "getAll")
 	public static Iterator<Object[]> getExcelIteratorData(ITestContext result,String sheetname) {
 
@@ -142,6 +155,13 @@ public class ExcelUtils {
 		return rowdata.iterator();
 	}
 
+	/**
+	 * Method getSpecifySheet.
+	 * @param excelpath String
+	 * @param sheetname String
+	 * @param casetype String
+	 * @return Map<String,String>
+	 */
 	public static Map<String, String> getSpecifySheet(String excelpath,String sheetname,String casetype) {
 
 		// List<Object[]> rowdata=new ArrayList<Object[]>();
@@ -208,7 +228,8 @@ public class ExcelUtils {
 	/**
 	 * this function is for get the excel data for email settings
 	 * @param result
-	 * @return
+	
+	 * @return Iterator<Object[]>
 	 */
 	@DataProvider(name = "devEmail")
 	public static Iterator<Object[]> getPostiveData(ITestContext result) {

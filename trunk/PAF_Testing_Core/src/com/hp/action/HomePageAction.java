@@ -25,9 +25,10 @@ import com.hp.po.HomePage;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 27, 2013 9:31:37 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 /**
  * @author huchan
@@ -47,6 +48,11 @@ public class HomePageAction extends HomePage {
 	}
 
 	
+	/**
+	 * Method verifyPageElements.
+	 * @param pagename String
+	 * @throws IOException
+	 */
 	@Override
 	public void verifyPageElements(String pagename) throws IOException {
 		// TODO Auto-generated method stub
@@ -69,10 +75,19 @@ public class HomePageAction extends HomePage {
 
 		
 	}
+	/**
+	 * Method searchRun.
+	 * @return SearchRunPageAction
+	 */
 	public SearchRunPageAction searchRun(){
 		clickElement(listrun);
 		return PageFactory.initElements(driver, SearchRunPageAction.class);
 	}
+	/**
+	 * Method newAssessment.
+	 * @return LaunchAssessmentPageAction
+	 * @throws IOException
+	 */
 	public LaunchAssessmentPageAction newAssessment() throws IOException{
 		//click the new assessment link
 		clickElement(newassessmentrequest);

@@ -44,9 +44,10 @@ import org.jfree.ui.TextAnchor;
  * Reason:	 Used for operating the mysql database
  * Date:     Sep 7, 2013 9:34:48 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class DatabaseUtils {
 	
@@ -61,6 +62,10 @@ public class DatabaseUtils {
 	
 	private static final String CHART_FILE_DIR = SeleniumCore.getProjectWorkspace() + "reporter";
 	
+	/**
+	 * Method getConnection.
+	 * @return Connection
+	 */
 	public static Connection getConnection(){
 		
 		try
@@ -80,6 +85,12 @@ public class DatabaseUtils {
 		return con;
 	}
 	
+	/**
+	 * Method getResultSet.
+	 * @param con Connection
+	 * @param sql String
+	 * @return ResultSet
+	 */
 	public static ResultSet getResultSet(Connection con,String sql){
 		try {
 			rs=con.prepareStatement(sql).executeQuery();
@@ -90,6 +101,12 @@ public class DatabaseUtils {
 		
 		return rs;
 	}
+    /**
+     * Method updateRecord.
+     * @param con Connection
+     * @param deletesql String
+     * @return int
+     */
     public static int updateRecord(Connection con,String deletesql){
     	int updaterows=0;
 		try {
@@ -103,6 +120,11 @@ public class DatabaseUtils {
 		return updaterows;
     	
     }
+    /**
+     * Method closeAllConnections.
+     * @param con Connection
+     * @param rs ResultSet
+     */
     public static void closeAllConnections(Connection con,ResultSet rs){
     	try {
 			rs.close();
@@ -124,8 +146,8 @@ public class DatabaseUtils {
  * @param width
  * @param height
  * @param charname
- * @throws IOException
- */
+
+ * @throws IOException */
 public static void generate3DBarChart(String begindate,String enddate,List<String> rangedate,int width,int height,String charname) throws IOException{
     	
     	String chartitle="PAF Automation Execution Report status From "+begindate+" to "+enddate;		
@@ -180,8 +202,8 @@ public static void generate3DBarChart(String begindate,String enddate,List<Strin
      * @param width
      * @param height
      * @param charname
-     * @throws IOException
-     */
+    
+     * @throws IOException */
     public static void generate3DLineChart(String begindate,String enddate,List<String> rangedate,int width,int height,String charname) throws IOException{
     		String chartitle="PAF Automation Execution Report status From "+begindate+" to "+enddate;	
     		CategoryDataset dataset=createDataset(rangedate);
@@ -204,7 +226,7 @@ public static void generate3DBarChart(String begindate,String enddate,List<Strin
     	        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
     	        
     	        LineRenderer3D lineRenderer = (LineRenderer3D) plot.getRenderer();
-    	        lineRenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());// 显示每个柱的数值
+    	        lineRenderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());// 显示�?个柱的数值
     	        lineRenderer.setBaseItemLabelsVisible(true);
     	        //to show the number in the line
     	        ItemLabelPosition itemLabelPosition = new ItemLabelPosition(
@@ -225,7 +247,8 @@ public static void generate3DBarChart(String begindate,String enddate,List<Strin
         /**
          * 
          * @param timerange
-         * @return
+        
+         * @return CategoryDataset
          */
         public static CategoryDataset createDataset(List<String> timerange)
     	{

@@ -33,9 +33,10 @@ import com.hp.utility.TimeUtils;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 27, 2013 9:32:42 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 /**
  * @author huchan
@@ -51,15 +52,15 @@ public class SearchRunPageAction extends SearchRunPage {
 		this.driver=driver;
 		// TODO Auto-generated constructor stub
 	}
-	
-   @Override
-   public void verifyPageElements(String pagename) throws IOException {
-	// TODO Auto-generated method stub
-	super.verifyPageElements(pagename);
-	//Date:Sep 27, 201310:24:04 AM
-   }
-   
-   
+	  
+   /**
+    * Method downloadRun.
+    * @param assessmenttype String
+    * @param runid String
+    * @param runstarttime String
+    * @return SearchRunDetailPageAction
+    * @throws IOException
+    */
    public SearchRunDetailPageAction downloadRun(String assessmenttype, String runid,String runstarttime) throws IOException{
 	   boolean findresult = false;	
 		int searchcount = 0;

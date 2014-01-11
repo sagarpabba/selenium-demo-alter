@@ -24,9 +24,10 @@ import org.apache.log4j.Logger;
  * Reason:	 TODO ADD REASON. 
  * Date:     Sep 7, 2013 10:33:19 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class TimeUtils {
 
@@ -36,8 +37,8 @@ public class TimeUtils {
 		/**
 		 * get the system's current time 
 		 * @param date
-		 * @return String the datetime
-		 */
+		
+		 * @return String the datetime */
 		public static String getCurrentTime(Date date){
 			String currenttime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 			logger.debug("Get current running time is :"+currenttime);
@@ -47,7 +48,8 @@ public class TimeUtils {
 		/**
 		 * @param starttime
 		 * @param endtime
-		 * @return
+		
+		 * @return String
 		 */
 		/**
 		 * @param starttime
@@ -71,8 +73,8 @@ public class TimeUtils {
 		
 		/**
 		 * get  the random number from 1 to 100000000
-		 * @return the random number we need
-		 */
+		
+		 * @return the random number we need */
 		public static int getRandomNumber() {
 			int minimum = 1;
 			int maximum = 100000000;
@@ -83,8 +85,8 @@ public class TimeUtils {
 		/**
 		  * get the monday
 		  * 
-		  * @return yyyy-MM-dd
-		  */
+		 
+		  * @return yyyy-MM-dd */
 		 public static String getMondayOfThisWeek() {
 		  Calendar c = Calendar.getInstance();
 		  int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
@@ -97,8 +99,8 @@ public class TimeUtils {
 		 /**
 		  * get the sunday
 		  * 
-		  * @return yyyy-MM-dd
-		  */
+		 
+		  * @return yyyy-MM-dd */
 		 public static String getSundayOfThisWeek() {
 		  Calendar c = Calendar.getInstance();
 		  int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
@@ -111,7 +113,8 @@ public class TimeUtils {
 		 
 		/**
 		 * get current week days as a list object
-		 * @return
+		
+		 * @return List<String>
 		 */
 		public static List<String> getCurrentWeekDays()
 		{
@@ -131,7 +134,8 @@ public class TimeUtils {
 		
 		/**
 		 * get currently month's days as a list object
-		 * @return
+		
+		 * @return List<String>
 		 */
 		public static List<String> getCurrentMonthday()
 		{
@@ -151,7 +155,8 @@ public class TimeUtils {
 		}
 		/**
 		 * get the first day of current month
-		 * @return
+		
+		 * @return String
 		 */
 		public static String getFirstdayofMonth()
 		{
@@ -162,7 +167,8 @@ public class TimeUtils {
 		}
 		/**
 		 * get the last day of current month
-		 * @return
+		
+		 * @return String
 		 */
 		public static String getLastdayofMonth()
 		{

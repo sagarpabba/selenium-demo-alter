@@ -22,9 +22,10 @@ import org.openqa.selenium.support.How;
  * Reason:	 TODO ADD REASON. 
  * Date:     Oct 27, 2013 10:30:02 AM 
  * @author   huchan
- * @version  
+
  * @since    JDK 1.6
  * @see 	 
+ * @version $Revision: 1.0 $
  */
 public class LoginPage extends PageObject {
 
