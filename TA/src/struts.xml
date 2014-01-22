@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+	<struts>
+		<constant name="struts.enable.DynamicMethodInvocation" value="true" /> 
+		<!-- <constant name="struts.action.extension" value=""/>  -->
+        <constant name="struts.devMode" value="true" />
+
+		<package name="default" namespace="" extends="struts-default,json-default,jfreechart-default">	
+<!--************************************************interceptor**********************************************************************-->				
+				
+			<!-- interceptor -->
+			<interceptors>
+				<!-- login checker-->
+				<interceptor name="loginVerify"
+					class="com.hp.utility.LoginInterceptor">
+				</interceptor>
+				<interceptor-stack name="defaultlogin">
+					<interceptor-ref name="defaultStack"></interceptor-ref>
+					<interceptor-ref name="loginVerify"></interceptor-ref>
+				</interceptor-stack>
+			</interceptors>
+		
+<!--************************************************Global Actions**********************************************************************-->				
+		
+		
+			<global-results>
+			   <result name="login">login.jsp</result>
+			   <result name="error">error.jsp</result>
+			</global-results>
+<!--************************************************Vistors**********************************************************************-->				
+
+		<!--
+			<action name="loginAction" class="com.hp.action.LoginAction" method="loginSystem">
+						   <result name="success" type="redirect">index.jsp</result>
+						   <result name="error">error.jsp</result>
+					</action>-->
+		
+<!--************************************************Vistors**********************************************************************-->				
+		    <!-- this used for listing all the vistors in the system -->
+			<action name="latestVistorAction" class="com.hp.action.VistorAction" method="listVistors">
+				<result name="success" type="json">
+					<param name="root">listVistorsObj</param> 
+				</result>				
+			</action>	
+			
+			<action name="postVistorInfo" class="com.hp.action.VistorAction" method="newVistor">
+				<result name="success" type="json">
+					<param name="root">newVistorObj</param> 
+				</result>				
+			</action>	
+			
+<!--***********************************************Builds***********************************************************************-->				
+
+			<!-- this used for listing the latest 10 builds-->
+			<action name="latestBuildAction" class="com.hp.action.BuildAction" method="latestBuild">
+				 <result name="success" type="json">
+				 	   <param name="root">latestBuildObj</param>
+				 </result>	
+			</action>
+			<!-- this action used to submit a new build-->
+			<action name="newBuildAction" class="com.hp.action.BuildAction" method="saveBuild">
+				<result name="success" type="json">
+				   <param name="root">newBuildObj</param>
+			    </result>
+			</action>
+			<action name="deleteBuildAction" class="com.hp.action.BuildAction" method="deleteBuild">
+				<result name="success" type="json">
+				   <param name="root">deleteBuildObj</param>
+			    </result>
+			</action>
+			<action name="searchBuildAction" class="com.hp.action.BuildAction" method="searchBuild">
+				<result name="success" type="json">
+				   <param name="root">searchBuildObj</param>
+			    </result>
+			</action>
+			
+<!--*******************************************Build Detail***************************************************************************-->				
+			
+			<action name="listBuildResult" class="com.hp.action.BuildResultAction" method="listBuildResult">
+				<result name="success" type="json">
+					 <param name="root">listResultsObj</param>
+			    </result>					
+			</action>
+<!--**************************************************SVN********************************************************************-->				
+			
+			<!-- source code management action-->
+			<action name="listReversionLog" class="com.hp.action.SCMAction" method="listSCMLogs">
+				  <result name="success" type="json">
+				  	    <param name="root">listlogsObj</param>
+				  </result>
+			</action>
+<!--*********************************************event action*************************************************************************-->				
+            <action name="eventsTypeAction" class="com.hp.action.EventTypeAction" method="listEvents">
+			        <result name="success" type="json">
+				  	    <param name="root">eventTypeObj</param>
+				    </result>
+		    </action>
+		    <action name="eventsAction" class="com.hp.action.EventsAction" method="listEvents">
+			        <result name="success" type="json">
+				  	    <param name="root">eventObj</param>
+				    </result>
+		    </action>
+		    
+<!--*************************************************login page*********************************************************************-->						    
+		    <!-- login action -->
+			<action name="loginAction" class="com.hp.action.LoginAction" method="loginSystem">
+				<!--    <interceptor-ref name="defaultlogin" /> -->
+				<result type="redirect" name="success">homeAction</result>
+				<result name="input">/login.jsp</result>
+			</action>
+			<!-- home action page -->
+			<action name="homeAction" class="com.hp.action.LoginAction" method="home">
+				<!--    <interceptor-ref name="defaultlogin" /> -->
+				<interceptor-ref name="defaultlogin"></interceptor-ref>
+				<result type="redirect" name="success">/index.jsp</result>
+			</action>
+			<!-- log out action -->
+			<action name="logoutAction" class="com.hp.action.LoginAction" method="logOut">
+				<!--    <interceptor-ref name="defaultlogin" /> -->
+				<result  type="redirect" name="success">/login.jsp</result>
+			</action>
+			<action name="registerAction" class="com.hp.action.LoginAction" method="newRegister">
+				 <result name="success" type="json">
+				  	    <param name="root">eventObj</param>
+				 </result>
+			</action>
+	    
+
+<!--*************************************************dashborad page*********************************************************************-->						    
+		    <action name="pieChartAction" class="com.hp.action.DashboardAction" method="PieChart">
+					        <result name="success" type="json">
+						  	    <param name="root">objDashboard</param>
+						    </result>
+		    </action>
+		    
+		    <action name="barChartAction" class="com.hp.action.DashboardAction" method="barChart">
+					        <result name="success" type="json">
+						  	    <param name="root">objDashboard</param>
+						    </result>
+		    </action>
+<!--*************************************************charts*********************************************************************-->						    
+		    <action name="executionBarChartWeeklyAction" class="com.hp.action.ChartActions" method="barChartWeekly">
+					        <result name="success" type="json">
+						  	    <param name="root">objExecutionBarChartWeekly</param>
+						    </result>
+		    </action>	  <!-- week report -->
+		     <action name="month3dBarAction" class="com.hp.action.charts.Char3DBarMonthAction">
+		       <result name="success" type="chart">
+		         <param name="width">3000</param>
+		         <param name="height">600</param>
+		       </result>
+		     </action>
+		     
+		     	    
+  </package>
+</struts>

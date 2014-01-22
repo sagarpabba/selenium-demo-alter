@@ -1,0 +1,24 @@
+***************************changes log*******************************
+20140103 Alter 
+1,after updating the execution ,the datagrid will refresh ,using the parent object in jquery;
+2,insert the logged user info which will track these uses;
+
+20140107 Alter
+1,compare the flot chart with freechat and ,finally we choose to use  the flot chart;
+2,for the flot chart ,want to show the bar number, but the number not showed correctly;
+3,write a produre to trigger the report result after we update the summary table;
+
+20140108 Alter
+1,add the validation using easyui plugin in the registration page;
+2,move the weekly report to the dashboard page (add the date format plugin);
+20140109 Alter
+1,after saving the test data ,it will check in the file's change into SVN Server;
+2,Send SMS message support,maybe sometimes it will not work;
+3,add the delete feature to delete the unnessary exeuction result;
+4,change the weekly report chart to show the correct date;
+
+20140110 Alter
+1,the table result from 0 changed to empty string;
+2,add the multiply search feature ,still working on it;
+20140111 Alter
+1,if the parameter we need is int but the parameter is null ,so 

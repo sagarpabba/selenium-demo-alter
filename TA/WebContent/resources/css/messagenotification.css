@@ -1,0 +1,80 @@
+.message {
+  float:left;
+  margin:5; 
+  padding:5px;
+  border:0px; 
+}
+.app-box {
+    width: 20%;
+    margin-top:35px;
+    display: inline;
+}
+.app-title {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    padding-top: 10px;
+}
+.reminder {
+    background: #DDD;
+    height: 45px;
+    margin-bottom: 24px;
+    position: relative;
+    width: 200px;
+}
+.notifications {
+    border: 5px solid #f9f9f9;
+    border-radius: 50%;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    left: 90%;
+    line-height: 40px;
+    margin: -24px 0 0 -24px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 40px;
+}
+.red {
+    background: #d9383c;
+}
+.red-shadow {
+    -webkit-box-shadow: 4px 4px 6px rgba(217, 56, 60, 0.75);
+    -moz-box-shadow: 4px 4px 6px rgba(217, 56, 60, 0.75);
+    box-shadow: 4px 4px 6px rgba(217, 56, 60, 0.75);
+}
+.green {
+    background: #4cbe83;
+}
+.green-shadow {
+    -webkit-box-shadow: 4px 4px 6px rgba(76, 190, 131, 0.75);
+    -moz-box-shadow: 4px 4px 6px rgba(76, 190, 131, 0.75);
+    box-shadow: 4px 4px 6px rgba(76, 190, 131, 0.75);
+}
+.blue {
+    background: #6cc8d4;
+}
+.blue-shadow {
+    -webkit-box-shadow: 4px 4px 6px rgba(108, 200, 212, 0.75);
+    -moz-box-shadow: 4px 4px 6px rgba(108, 200, 212, 0.75);
+    box-shadow: 4px 4px 6px rgba(108, 200, 212, 0.75);
+}
+.yellow {
+    background: #feb742;
+}
+.yellow-shadow {
+    -webkit-box-shadow: 4px 4px 6px rgba(254, 183, 66, 0.75);
+    -moz-box-shadow: 4px 4px 6px rgba(254, 183, 66, 0.75);
+    box-shadow: 4px 4px 6px rgba(254, 183, 66, 0.75);
+}
+.purple {
+    background: #9d5da0;
+}
+.purple-shadow {
+    -webkit-box-shadow: 4px 4px 6px rgba(157, 93, 160, 0.75);
+    -moz-box-shadow: 4px 4px 6px rgba(157, 93, 160, 0.75);
+    box-shadow: 4px 4px 6px rgba(157, 93, 160, 0.75);
+}
