@@ -1,0 +1,312 @@
+1,download the latest struts 2 zip folder: 
+   http://archive.apache.org/dist/struts/binaries/ 
+2,
+
+*************************************************javascript calendar*******************************************************************************
+http://dhtmlx.com/docs/products/dhtmlxScheduler/
+******************************************change jsp file with default UTF-8***************************************************************
+IN 
+'********************************jquery.min.js error in eclipse*******************************************
+'jquery.min.js error in eclipse
+http://stackoverflow.com/questions/10410191/jquery-ui-min-script-errors
+exclusion pattern e.g. **/jquery*.js
+
+
+
+'********************************easyui not display*******************************************
+'first including the themes folder and plugins folder;
+'import the css and js file;
+'test the code in IE, Chrome and firefox ,it didn't support in IE seems;
+
+
+*******************************spket didn't show the jquery click method******************
+using this location jquery file:https://code.google.com/p/jquery-api-zh-cn/downloads/list
+
+steps:http://www.spket.com/jquery.html
+
+after that any jquery version cannot support ,only this version can be used for spket :
+https://code.google.com/p/jquery-api-zh-cn/downloads/list
+
+
+***************************Apatana didn't show the jquery click method**************
+method 1: 1,   using proxy to install jquery : git config --global http.proxy http://web-proxy.atlanta.hp.com:8088 
+          2,   git clone https://github.com/aptana/javascript-jquery.ruble.git
+              command like blow ,it means successful:
+          
+            Cloning into 'javascript-jquery.ruble'...
+			remote: Counting objects: 136, done.
+			remote: Compressing objects: 100% (82/82), done.
+			remote: Total 136 (delta 71), reused 78 (delta 42)
+			Receiving objects: 100% (136/136), 280.97 KiB | 104.00 KiB/s, done.
+			Resolving deltas: 100% (71/71), done.
+
+
+
+method 2:1 , download the zip folder:https://github.com/aptana/javascript-jquery.ruble/archive/stable.zip 
+2, and then rename it as :javascript-jquery.ruble
+3 , move it to this locatin:
+		C:\Users\huchan\Aptana Rubles\javascript-jquery.ruble
+		C:\Users\huchan\Aptana Rubles\javascript-jquery.ruble\commands
+
+----file associate  javascript source editor
+
+
+************************************************************************
+http://www.webjx.com/jsp/jsp_2007_12_11_1976.html
+jsp including page
+
+*******************************js  browser.mizilla throw  js error in browser****************************************
+
+http://pupunzi.open-lab.com/2013/01/16/jquery-1-9-is-out-and-browser-has-been-removed-a-fast-workaround/
+With the new 1.9 jQuery release they removed definitely their $.browser method.
+
+Surely many of you used this thousand of time to catch specific browsers; now it doesnâ€™t work anymore. Here is a fast and short piece of code you can use before deciding how to procede:
+
+
+1
+2
+3
+4
+5
+jQuery.browser = {};
+jQuery.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+ 
+
+This catches the browser vendor but not the browser version, so $.browser.version will fire an exception.
+
+I wrote an extended plugin that replaces the $.browser object including many information retrieved from the user agent;
+
+you can get it from jsfiddle: http://jsfiddle.net/pupunzi/dnJNS/
+
+
+******************************************sqlite 3 jdbc driver************************************************************************************************
+
+http://blog.sina.com.cn/s/blog_654337ca01016x4n.html
+
+**************************************************jsonresult error***********************************************************************
+----struts2 new bug
+The result type [org.apache.struts2.json.JSONResult] doesn't have a default param [DEFAULT_PARAM] defined! 
+[com.opensymphony.xwork2.config.providers.XmlConfigurationProvider]java.lang.NoSuchFieldException: DEFAULT_PARAM 
+http://www.iteye.com/problems/95205
+https://issues.apache.org/jira/browse/WW-4163
+
+[org.apache.struts2.json.JSONResult] doesn't have a default param [DEFAULT_PARAM] defined! 
+
+check the struts-json-plugin jar 
+
+using the struts2 version :
+http://archive.apache.org/dist/struts/binaries/
+***********************************************jsonobject error*************************************************
+this jar file :commons-lang3-3.1.jar
+had change to this name :org/apache/commons/lang3/exception/NestableRuntimeException
+java.lang.NoClassDefFoundError: org/apache/commons/lang/exception/NestableRuntimeException
+
+*******************************************************************************************************************
+Caused by: No object in the CompoundRoot has a publicly accessible property named 'order' (no setter could be found). - [unknown location]
+http://www.myexception.cn/web/611502.html
+comment the devnmode
+
+
+*********************************************************************************************************************
+java record an replay
+
+
+***********************************java svn history tool************
+http://wiki.svnkit.com/Printing_Out_Repository_History
+1,download it from this url:http://www.svnkit.com/org.tmatesoft.svn_1.8.0.standalone.zip
+2,using this svnkit library file:svnkit-1.8.0.jar
+3,reversion history example:http://svn.svnkit.com/repos/svnkit/tags/1.3.4-rc1/doc/examples/src/org/tmatesoft/svn/examples/repository/History.java
+
+
+*******************************************ajax commit*************************
+1,retrun type is json as before we defined in struts2:(return a jsonobject)
+
+2, in front page ,
+  $.post(
+            
+                "ajaxlogin",        
+                params,   
+                function cbf(data){  //here the data is a json object ,no need to eval convert to a object again
+                    //alert(data);
+                    //var member = eval("("+data+")");    //convert to json object
+                     alert(data);
+                    $('#result').html("  "+data.name);
+                    
+                }, 
+                
+                'json'  //return type
+            
+            );
+***************************************Fullcalendar: why is the calendar appearing twice on the page?**************
+solving :http://stackoverflow.com/questions/5264681/fullcalendar-why-is-the-calendar-appearing-twice-on-the-page
+plugin page:http://plugins.jquery.com/once/
+
+just copy the jquery.once.min.js it will be ok then
+
+
+**************************************website template************************************
+https://www.google.com/search?q=easyui+input+twice&oq=easyui+input+twice&aqs=chrome..69i57.10169j0j7&sourceid=chrome&espv=210&es_sm=122&ie=UTF-8#es_sm=122&espv=210&q=admin+panel+template
+http://www.webhostingjams.com/10-amazing-admin-panel-template-designs/
+
+
+for free: http://www.twelveskip.com/resources/themes/757/10-awesome-and-free-backend-dashboard-templates-and-admin-panels-of-2013
+****************************jquery notify*************
+http://needim.github.io/noty/#layouts
+http://marcosesperon.es/apps/messi/
+http://www.ericmmartin.com/projects/simplemodal-demos/
+
+
+http://fabien-d.github.io/alertify.js/
+*********************************************
+http://www.jquery4u.com/plugins/top-10-jquery-graphs/
+http://www.jquery4u.com/plugins/10-jquery-grids/
+
+********************************ajax loader********************
+http://ajaxload.info/
+
+*********************************** comments template**************
+http://designshack.net/articles/css/build-css3-notifications-with-fade-animations/
+
+
+*****************************admin panel download****************
+http://bootstrapthemes.quora.com/25-Awseome-Twitter-Bootstrap-Themes-For-Better-Bootstrap-Designs
+http://bootstrapthemes.quora.com/Top-30-Best-Quality-Bootstrap-Admin-Dashboard-Themes-And-Templates
+
+
+***********************comments plugin*****************
+http://sandbox.sebnitu.com/jquery/quovolver/
+
+http://henyana.github.io/jquery-comment/
+http://demos.devgrow.com/jcollapsible/
+
+**********************notification plugin***********
+http://www.jquery2dotnet.com/2013/07/counter-notification-css-on-inbox-top.html
+
+*************************jquery ui custom plugin download**********
+1,go to this page:http://jqueryui.com/
+2,at the bottom this page to click the download button to custom download it;
+
+
+*****************************div in one line************************
+1,every sub div with percent difine ,like 10%,90%;
+2,the top sub div with float:left;
+***************************schedule ajax loading data****************
+http://stackoverflow.com/questions/5052543/how-to-fire-ajax-request-periodically
+
+function executeQuery() {
+  $.ajax({
+    url: 'url/path/here',
+    success: function(data) {
+      // do something with the return value here if you like
+    }
+  });
+  setTimeout(executeQuery, 5000); // you could choose not to continue on failure...
+}
+
+$(document).ready(function() {
+  // run the first time; all subsequent calls will take care of themselves
+  setTimeout(executeQuery, 5000);
+});
+
+
+***************************************SQL Subquery with limit***************************************
+http://blog.xmnn.cn/?uid-525196-action-viewspace-itemid-330161
+
+
+********************************************flot pie***********************************************************
+http://www.pikemere.co.uk/blog/flot-how-to-create-pie-charts/
+
+http://www.jqueryflottutorial.com/how-to-make-jquery-flot-bar-chart.html
+
+*******************************************ajax loading with a modal image*****************************
+http://jsfiddle.net/jonathansampson/VpDUG/170/
+
+
+***************************html width height************************
+
+not write :width:auto
+
+**********************html form template create********************************************
+http://www.jotform.com/myforms/
+
+*********************jquery dateformat plugin***************
+https://github.com/phstc/jquery-dateFormat
+
+*******************IE 8  trim() Message: Object doesn't support this property or method************
+http://stackoverflow.com/questions/3439316/ie8-and-jquerys-trim
+use $.trim() instead
+
+**********************disabled not send  to server *****************************
+
+http://stackoverflow.com/questions/3757806/i-want-to-get-the-value-of-disabled-text-box-in-our-next-jsp-but-i-am-getting-nu
+
+Input fields marked with disabled="disabled" never send their value to the server when the form is posted. 
+You could use the readOnly="readonly" attribute in order to still make the field not editable by the user 
+but send the initial value to the server when the form is submitted.
+**************************
+Message: Canvas is not available. If you're using IE with a fall-back such as Excanvas, then there's either a mistake in your conditional include, or the page has no DOCTYPE and is rendering in Quirks Mode.*******
+
+including this file :
+<script language="javascript" type="text/javascript" src="resources/flot/jquery.flot.js"></script>
+<script language="javascript" type="text/javascript" src="resources/flot/excanvas.min.js"></script>
+
+
+********************************java web spreadsheet************
+1)http://www.gelsheet.org/demo#
+2) http://www.zkoss.org/documentation/zkspreadsheet
+*************************** to top********************************
+http://jsfiddle.net/fjXSq/161/
+
+******************session get ****************
+http://www.myexception.cn/program/1261326.html
+
+
+******************scrollup plugin  fresh jquery plugin http://www.smashingapps.com/2013/09/10/40-fresh-jquery-plugins-to-make-your-website-user-friendly.html******************
+http://markgoodyear.com/labs/scrollup/   https://github.com/markgoodyear/scrollup
+
+
+****************IP Location plugin**********
+http://jquery-plugins.net/jqIpLocation/jqIpLocation.html
+http://docs.shopify.com/manual/configuration/store-customization/get-a-visitors-location
+
+*******************chat room**************
+1)http://www.webappers.com/2012/06/12/open-source-chat-rooms-web-application-with-node-js/
+2)https://www.firebase.com/blog/2013-07-09-announcing-firechat.html
+4)http://codegeekz.com/10-free-chat-applications-for-your-websites/
+
+*****************bar chart ************
+http://tanyamadurapperuma.blogspot.com/2013/10/flot-multi-bar-chart-with-text-based-x.html
+http://www.pikemere.co.uk/blog/tutorial-flot-how-to-create-bar-charts/
+
+**********change to use jfreechart for the chart*************
+1,use these two libraries in the jfreechart folder:
+  jfreechart-1.0.17.jar
+  jcommon-1.0.21.jar
+  
+***********mobile message sending****************
+1,using fexin interface:https://quanapi.sinaapp.com/fetion.php?u=15026726960&p=guchan1026&to=15026726960&m=test
+2,using SMS cat with SMSlib.org
+*****************svn commit code************
+http://stackoverflow.com/questions/15515110/commit-a-particular-file-in-svn-using-svnkit
+
+
+http://stackoverflow.com/questions/1953884/svn-ant-error-is-not-a-working-copy
+org.tmatesoft.svn.core.SVNException: svn: E155007: 'C:\PAF_Automation\Test_Data\New Book(1).xlsx' is not a working copy
+	at org.tmatesoft.svn.core.internal.wc.SVNErrorManager.error(SVNErrorManager.java:64)
+	at org.tmatesoft.svn.core.internal.wc.SVNErrorManager.error(SVNErrorManager.java:51)
+	at org.tmatesoft.svn.core.internal.wc17.db.SVNWCDb.parseDir(SVNWCDb.java:1813)
+	at org.tmatesoft.svn.core.internal.wc17.db.SVNWCDb.parseDir(SVNWCDb.java:1704)
+	at org.tmatesoft.svn.core.internal.wc17.db.SVNWCDb.getWCRoot(SVNWCDb.java:5408)
+	at org.tmatesoft.svn.core.internal.wc2.ng.SvnNgCommit.determineLockTargets(SvnNgCommit.java:338)
+	at org.tmatesoft.svn.core.internal.wc2.ng.SvnNgCommit.collectCommitItems(SvnNgCommit.java:69)
+	at org.tmatesoft.svn.core.wc2.SvnOperationFactory.collectCommitItems(SvnOperationFactory.java:1695)
+	at org.tmatesoft.svn.core.wc2.SvnCommit.collectCommitItems(SvnCommit.java:178)
+	at org.tmatesoft.svn.core.wc2.SvnCommit.run(SvnCommit.java:196)
+	at org.utils.SVNKitCore.checkinOneFile(SVNKitCore.java:243)
+****************int cannot convert ********************
+Null and Blank Values
+http://stackoverflow.com/questions/3011073/struts2-converting-empty-string-parameter-to-an-int
+Some properties cannot be set to null. Primitives like boolean and int cannot be null. If your action needs to or will accept null or blank values, use the object equivalents Boolean and Integer. Similarly, a blank string "" cannot be set on a primitive. At the time of writing, a blank string also cannot be set on a BigDecimal or BigInteger. Use server-side validation to prevent invalid values from being set on your properties (or handle the conversion errors appropriately).	

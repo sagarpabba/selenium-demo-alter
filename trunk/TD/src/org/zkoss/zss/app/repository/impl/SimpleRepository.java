@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.utils.SVNKitCore;
 import org.zkoss.zk.ui.WebApps;
 import org.zkoss.zss.api.Exporters;
 import org.zkoss.zss.api.Importers;
@@ -81,13 +82,14 @@ public class SimpleRepository implements BookRepository{
 			File temp = File.createTempFile("temp", f.getName());
 			fos = new FileOutputStream(temp);
 			Exporters.getExporter().export(book, fos);
-			//backup the file 
+			//backup the file 20131230 Alter
 			String backup_filepath=f.getParent();
 			String backup_filename="backup_"+f.getName()+"_"+new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime())+".xls";
 			File backupfile=new File(backup_filepath+File.separator+backup_filename);
 			fos=new FileOutputStream(backupfile);
-			Exporters.getExporter().export(book, fos);					
-					
+			Exporters.getExporter().export(book, fos);	
+			//check in the code into SVN
+			SVNKitCore.checkinOneFile(f.getAbsolutePath(), "Commit TestData.xls file from the web page");		
 			fos.close();
 			fos = null;
 			

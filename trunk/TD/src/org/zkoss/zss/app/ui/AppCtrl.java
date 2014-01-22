@@ -242,7 +242,7 @@ public class AppCtrl extends CtrlBase<Component>{
 		BookRepository rep = getRepository();
 		try {
 			rep.save(selectedBookInfo, loadedBook);
-			UiUtil.showInfoMessage("Save book to "+selectedBookInfo.getName());
+			UiUtil.showInfoMessage("Save book to "+selectedBookInfo.getName()+" and Check in the change into SVN Server!");
 			pushAppEvent(AppEvts.ON_SAVED_BOOK,loadedBook);
 			if(close){
 				doCloseBook();
@@ -286,7 +286,8 @@ public class AppCtrl extends CtrlBase<Component>{
 						}else{
 							updatePageInfo();
 						}
-						UiUtil.showInfoMessage("Save book to "+selectedBookInfo.getName());
+						UiUtil.showInfoMessage("Save book to "+selectedBookInfo.getName()+" and Check in the change into SVN Server!");
+						
 					} catch (IOException e) {
 						log.error(e.getMessage(),e);
 						UiUtil.showWarnMessage("Can't save book");

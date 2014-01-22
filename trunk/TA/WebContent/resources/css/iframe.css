@@ -1,0 +1,50 @@
+
+#myframe {
+	margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+	 overflow:hidden; 
+	 line-height:0;
+}
+.commentsAreaTitle {
+font: bold 22px Arial;
+color: #999;
+}
+.commentTitle {
+font: bold 16px Arial;
+color: #999;
+}
+
+.btn-primary, .btn-primary:hover {
+color: white;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+background-color: #3DAAE9;
+background-repeat: repeat-x;
+background-image: linear-gradient(to bottom, #46AEEA, #2FA4E7);
+border-left-color: #2FA4E7;
+border-right-color: #2FA4E7;
+border-top-color: #2FA4E7;
+border-bottom-color: #157AB5;
+background-image: -webkit-linear-gradient(top,#46AEEA,#2FA4E7);
+background-image: -o-linear-gradient(top,#46AEEA,#2FA4E7);
+background-image: linear-gradient(to bottom,#46AEEA,#2FA4E7);
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
+color: #fff;
+background-color: #04c;
+}
+.btn:hover {
+color: #333;
+text-decoration: none;
+background-color: #e6e6e6;
+background-position: 0 -15px;
+-webkit-transition: background-position .1s linear;
+-moz-transition: background-position .1s linear;
+-o-transition: background-position .1s linear;
+transition: background-position .1s linear;
+}
+.btn:hover, .btn:active, .btn.active, .btn.disabled, .btn[disabled] {
+color: #333;
+background-color: #e6e6e6;
+}
