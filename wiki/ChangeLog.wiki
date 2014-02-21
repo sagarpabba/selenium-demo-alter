@@ -25,3 +25,5 @@ Add your content here.  Format your content with:
        #  Slave Node offline notification plugin;
   *===Re-factor all the existing report methods,no need to generate additional report log file now --11/05/2013 Done === 
  *===Add a online spreadsheet system to manage our excel data easily,which i location this path:/trunk/TD   --01/03/2014 Done ===
+
+ *=== add the retry class to remove the error anlysis number in testNG report   --02/21/2014 Done ===
