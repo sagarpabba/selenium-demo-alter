@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 
 /**
  * @author sumeetmisri@gmail.com
@@ -17,12 +18,12 @@ import org.testng.ITestResult;
 public class RetryFail implements IRetryAnalyzer {
 	
 	private static Logger logger=Logger.getAnonymousLogger();
-	private final int m_maxRetries = 1;
+	public static int m_maxRetries = 4;
 	private final int m_sleepBetweenRetries = 1000;
 	private int currentTry;
 	private String previousTest = null;
 	private String currentTest = null;
-
+   
 	public RetryFail() {
 		currentTry = 0;
 	}
@@ -34,7 +35,7 @@ public class RetryFail implements IRetryAnalyzer {
 	public boolean retry(final ITestResult result) {
 		// If a testcase has succeeded, this function is not called.
 		boolean retValue = false;
-
+		System.out.println("Verify if need to retry the method:"+currentTry+",result is:"+result.isSuccess());
 		// Getting the max retries from suite.
 		// String maxRetriesStr =
 		// result.getTestContext().getCurrentXmlTest().getParameter("maxRetries");
@@ -79,11 +80,18 @@ public class RetryFail implements IRetryAnalyzer {
 			} catch (final InterruptedException e) {
 				e.printStackTrace();
 			}
-			currentTry++;
-			result.setStatus(ITestResult.SUCCESS_PERCENTAGE_FAILURE);
+			currentTry=currentTry+1;
+			result.setStatus(ITestResult.FAILURE);
+			Reporter.setCurrentTestResult(result);
+			 String message = Thread.currentThread().getName() + ": Error in " + result.getName() + " Retrying "
+			            + (currentTry) + " more times";
+			        //System.out.println(message);
+			Reporter.log(message);
 			retValue = true;
 
 		} else {
+			result.setStatus(ITestResult.SUCCESS);
+			Reporter.setCurrentTestResult(result);
 			currentTry = 0;
 		}
 		previousTest = currentTest;
