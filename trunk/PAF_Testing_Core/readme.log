@@ -1,3 +1,22 @@
+**********************
+20140221 Alter: about retry failed 
+1, first  enter the testNG test, find the annotation init the retryAnalyzer class,and then enter the test method .
+    if  the test passed .the retry test will not run;
+    
+    2 if the test is failed it will return true value means the retry need to;
+
+
+
+TestListenerAdapter  this is the class for test listener ;
+
+IConfigurationListener, IConfigurationListener2, org.testng.internal.IResultListener, org.testng.internal.IResultListener2, ITestListener, ITestNGListener
+
+
+
+
+
+
+
 ************
 You need to be in a synchronized block in order for Object.wait() to work.
 Also, I recommend looking at the concurrency packages instead of the old school threading packages. They are safer and way easier to work with.
