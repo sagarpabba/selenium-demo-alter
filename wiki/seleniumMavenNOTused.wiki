@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#this selenium demo not using maven to build the project instead using ant.
 
 = Introduction =
 
