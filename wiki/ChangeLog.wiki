@@ -27,3 +27,4 @@ Add your content here.  Format your content with:
  *===Add a online spreadsheet system to manage our excel data easily,which i location this path:/trunk/TD   --01/03/2014 Done ===
 
  *=== add the retry class to remove the error anlysis number in testNG report   --02/21/2014 Done ===
+ *=== Change the project to Maven project, but I don't think this's a good choice ,i will stay the project with based JAVA project ;  --04/03/2014 Done ===
