@@ -1,1 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<project name="ANT_build_TestNG_SeleniumTesting" default="run" basedir=".">
+	<property name="classes.dir" value="bin" />
+    <property name="src.dir" value="src" />
+    <property name="testngreport.dir" value="test-output" />
+    <property name="lib.dir" value="libs" />
+    <property name="logs.dir" location="log" />
+	<property name="dailyreport.dir" location="reporter" />
+	<property name="projectreport.dir" location="ProjectRunReports" />
+	<property name="resource.dir" location="resources" />
+ 
+	<echo>get the Ant arguments in the Jenkins Job which we need to run the testNG script</echo>
+	<echo>the host name running is:${host.name}</echo>
+	<echo>the browser name we need to run is:${browser.type} </echo>	
+</project>
