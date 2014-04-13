@@ -28,3 +28,4 @@ Add your content here.  Format your content with:
 
  *=== add the retry class to remove the error anlysis number in testNG report   --02/21/2014 Done ===
  *=== Change the project to Maven project, but I don't think this's a good choice ,i will stay the project with based JAVA project ;  --04/03/2014 Done ===
+ *=== Based on the QTP features ,this will support the recovery feature,which will capture the unexpected exceptions when you run the selenium code; --04/12/2014 Done ===
