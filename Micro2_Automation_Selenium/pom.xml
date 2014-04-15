@@ -1,0 +1,184 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.selenium</groupId>
+  <artifactId>Micro2_Automation_Selenium</artifactId>
+  <version>0.0.2-SNAPSHOT</version>
+  
+  <name>Selenium Automation testing framework baseline</name>
+  <description>This framework designed by Alter,who is a contributor of the automatio testing world.</description>
+  
+
+  <!--  the build source code encoding  -->
+   <properties> 
+       <org.selenium-version>2.41.0</org.selenium-version>
+       <xmlSuiteFile>./test_suite/testng_template.xml</xmlSuiteFile>
+       
+       
+       <jdk.version>1.7</jdk.version>
+       <resources.encoding>UTF-8</resources.encoding>
+       <sources.encoding>UTF-8</sources.encoding>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+       
+  </properties>
+  
+  <!-- All dependency jar file -->
+  <dependencies>
+	    <!-- selenium jar file -->
+	  	<dependency>
+	  		<groupId>org.seleniumhq.selenium</groupId>
+	  		<artifactId>selenium-server</artifactId>
+	  		<version>${org.selenium-version}</version>        
+        </dependency>
+   	
+	  	<!-- log4j -->
+	  	<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-api</artifactId>
+		    <version>2.0-rc1</version>
+	    </dependency>
+	    <dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.0-rc1</version>
+	    </dependency>    
+	    <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
+			<version>1.2.17</version>
+	    </dependency>
+	    <!-- testNg -->          
+	    <dependency>
+		  <groupId>org.testng</groupId>
+		  <artifactId>testng</artifactId>
+		  <version>6.8.8</version>
+	    </dependency>
+	    <!-- Jsoup ,Which is used for analysis the html document -->
+	    <dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.7.3</version>
+	   </dependency>
+	   <!--  java mail,which is used for sending email via java -->
+	   <dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.5.0-b01</version>
+	   </dependency>
+	   
+	   <!--  mysql ,which is used for connecting to mysql database -->
+	   <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.30</version>
+	   </dependency>
+	     
+	    <!--  jacob ,which is a java bridge used to run the autoItX API -->                        
+	    <dependency>
+			<groupId>net.sf.jacob-project</groupId>
+			<artifactId>jacob</artifactId>
+			<version>1.14.3</version>
+	   </dependency>
+	   <!--  Jfreechart ,which can generate the chart picture as you want -->
+	   <dependency>
+		<groupId>jfree</groupId>
+		<artifactId>jfreechart</artifactId>
+		<version>1.0.13</version>
+	   </dependency>
+	   <!-- jxl(java excel api),which used for reading the excel test data -->
+	   <dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+	   </dependency>
+
+	   <dependency>
+	   	<groupId>org.jcodec</groupId>
+	   	<artifactId>jcodec</artifactId>
+	   	<version>RELEASE</version>
+	   </dependency>
+  </dependencies>
+  
+  <build>
+    <resources>
+        <resource>
+           <directory>src/main/resources</directory>
+           <filtering>true</filtering>
+        </resource>
+    </resources>
+    <!-- clean the environment -->
+   
+	<plugins>
+	    <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-clean-plugin</artifactId>
+		    <version>2.5</version>
+		    <configuration>
+		      <filesets>
+		        <fileset>
+		          <directory>${project.basedir}/test-result</directory>
+		          <directory>${project.basedir}/test-output</directory>
+		          <directory>${project.basedir}/logs</directory>
+		          <includes>
+		            <include>**/*.*</include>
+		          </includes>
+		         <!--  <excludes>
+		            <exclude>**/important.log</exclude>
+		            <exclude>**/another-important.log</exclude>
+		          </excludes> -->
+		          <followSymlinks>false</followSymlinks>
+		        </fileset>
+		      </filesets>
+		    </configuration>
+         </plugin>
+         <!-- compiler the JAVA source code -->
+	     <plugin>
+	         <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-compiler-plugin</artifactId>
+             <version>2.5.1</version>
+             <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+              </configuration>             
+	      </plugin>
+	      
+	    <!--   <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>selenium-maven-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start-server</goal>
+						</goals>
+						<configuration>
+							<background>true</background>
+							<logOutput>true</logOutput>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin> -->
+	       <!--  run the testNG testings -->
+	       <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <version>2.17</version>
+		        <configuration>
+		           <forkMode>always</forkMode>
+                   <systemPropertyVariables>
+                         <reporter.debug>false</reporter.debug>                      
+                   </systemPropertyVariables>
+		           <suiteXmlFiles>
+		              <suiteXmlFile>${xmlSuiteFile}</suiteXmlFile>
+		           </suiteXmlFiles>
+		        </configuration>
+           </plugin> 
+                
+	 </plugins>
+  </build>
+  
+</project>
