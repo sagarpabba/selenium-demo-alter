@@ -1,0 +1,6 @@
+#surefire_0
+#Tue Apr 15 16:44:14 CST 2014
+user.dir=C\:\\workspace\\Micro2_Automation_Selenium
+reporter.debug=false
+localRepository=C\:\\apache-maven_Repository
+basedir=C\:\\workspace\\Micro2_Automation_Selenium

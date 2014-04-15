@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="3591" started-at="2014-04-15T10:50:09Z" finished-at="2014-04-15T10:50:13Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="3591" started-at="2014-04-15T10:50:09Z" finished-at="2014-04-15T10:50:13Z">
+      <class name="com.selenium.tests.SendEmailReporter">
+        <test-method status="PASS" signature="sendDetailReport()[pri:0, instance:com.selenium.tests.SendEmailReporter@22a6bb]" name="sendDetailReport" duration-ms="3576" started-at="2014-04-15T18:50:09Z" finished-at="2014-04-15T18:50:13Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sendDetailReport -->
+      </class> <!-- com.selenium.tests.SendEmailReporter -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
