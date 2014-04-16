@@ -26,7 +26,7 @@ public class GlobalDefinition {
 	  public final static String MOUSE_CURSE_ICON="src/main/resources/cursor_white.png";
 	  public final static String E2E_EXCEL_FILE="src/main/resources/TestData.xls";
 	  public final static String REPORT_TEMPLATE_FILE="src/main/resources/report_template.htm";
-	  public final static String SELENIUM_DRIVER_PATH=PROJECT_DIR+"selenium_driver";
+	  public final static String SELENIUM_DRIVER_PATH=PROJECT_DIR+"selenium-driver";
 	  public final static String DESKTOP_SCREEN_RECORDER=PROJECT_DIR+"test-result"
 	                             +File.separator+new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().getTime())+".mp4";
 	  //JDBC settings
