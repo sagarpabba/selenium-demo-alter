@@ -15,9 +15,9 @@
        <org.selenium-version>2.41.0</org.selenium-version>
        
        <testng.testsuite.dir>${project.basedir}/test-suite</testng.testsuite.dir>
-       <testng.output.dir>${project.basedir}/test-output</testng.output.dir>
-       <dailyreport.dir>${project.basedir}/test-result</dailyreport.dir>
-       <log4j.dir>${project.basedir}/logs</log4j.dir>
+       <testng.output.dir>test-output</testng.output.dir>
+       <dailyreport.dir>test-result</dailyreport.dir>
+       <log4j.dir>logs</log4j.dir>
        
          
        <xmlSuiteFile>${testng.testsuite.dir}/testng_template.xml</xmlSuiteFile>
@@ -159,15 +159,15 @@
 		        <fileset>		         
 		          <directory>${project.basedir}</directory>
 		          <includes>
-		            <include>${dailyreport.dir}\**\*.*</include>
-		            <include>${testng.output.dir}\**\*.*</include>
-		            <include>${log4j.dir}\**\*.*</include>
+		            <include>${dailyreport.dir}/*.*</include>
+		            <include>${testng.output.dir}/*.*</include>
+		            <include>${log4j.dir}/*.*</include>
 		          </includes>
 		        <!--   <excludes>
 		            <exclude>**/important.log</exclude>
 		            <exclude>**/another-important.log</exclude>
 		          </excludes>-->
-		          <followSymlinks>true</followSymlinks> 
+		          <followSymlinks>false</followSymlinks> 
 		        </fileset>
 		      </filesets>
 		    </configuration>
