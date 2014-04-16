@@ -34,3 +34,4 @@ Add your content here.  Format your content with:
      # Structure re-factor;
      # Email detail execution report;
      # Maven pom.xml with Jenkins integrate solution;
+ *=== the built jar file can run the testNG case from the command-line,so every time a stable selenium code will wrap to a executable jar file,marked the different built version  04/16/2014 ===
