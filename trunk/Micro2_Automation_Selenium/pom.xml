@@ -13,10 +13,19 @@
   <!--  the build source code encoding  -->
    <properties> 
        <org.selenium-version>2.41.0</org.selenium-version>
-       <xmlSuiteFile>./test_suite/testng_template.xml</xmlSuiteFile>
-       <standalonejarname>${project.artifactId}-${project.version}-STANDALONE.jar</standalonejarname>
+       
+       <testng.testsuite.dir>${project.basedir}/test-suite</testng.testsuite.dir>
+       <testng.output.dir>${project.basedir}/test-output</testng.output.dir>
+       <dailyreport.dir>${project.basedir}/test-result</dailyreport.dir>
+       <log4j.dir>${project.basedir}/logs</log4j.dir>
+       
+         
+       <xmlSuiteFile>${testng.testsuite.dir}/testng_template.xml</xmlSuiteFile>
        
        
+       <standalone.name.jar>${project.artifactId}-${project.version}-STANDALONE.jar</standalone.name.jar>
+       
+         
        <jdk.version>1.7</jdk.version>
        <resources.encoding>UTF-8</resources.encoding>
        <sources.encoding>UTF-8</sources.encoding>
@@ -110,33 +119,60 @@
            <filtering>true</filtering>
         </resource>
     </resources>
+   <!--  <pluginManagement> -->
+      
     <!-- clean the environment -->
-   
-	<plugins>
+    
+	 <plugins>
+	 <!--    <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>createThriftDir</id>
+                    <phase>process-resources</phase>
+                    <configuration>
+                        <tasks>
+                            <delete dir="${dailyreport.dir}"/>
+                            <mkdir dir="${dailyreport.dir}"/>
+                            <delete dir="${testng.testsuite.dir}"/>
+                            <mkdir dir="${testng.testsuite.dir}"/>
+                            <delete dir="${testng.output.dir}" />
+                            <mkdir dir="${testng.output.dir}" />
+                            <delete dir="${log4j.dir}" />
+                            <mkdir dir="${log4j.dir}" />
+                        </tasks>
+                    </configuration>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin> -->
+         
 	    <plugin>
 	        <groupId>org.apache.maven.plugins</groupId>
 		    <artifactId>maven-clean-plugin</artifactId>
 		    <version>2.5</version>
 		    <configuration>
 		      <filesets>
-		        <fileset>
-		          <directory>${project.basedir}/test-result</directory>
-		          <directory>${project.basedir}/test-output</directory>
-		          <directory>${project.basedir}/logs</directory>
+		        <fileset>		         
+		          <directory>${project.basedir}</directory>
 		          <includes>
-		            <include>**/*.*</include>
+		            <include>${dailyreport.dir}\**\*.*</include>
+		            <include>${testng.output.dir}\**\*.*</include>
+		            <include>${log4j.dir}\**\*.*</include>
 		          </includes>
-		         <!--  <excludes>
+		        <!--   <excludes>
 		            <exclude>**/important.log</exclude>
 		            <exclude>**/another-important.log</exclude>
-		          </excludes> -->
-		          <followSymlinks>false</followSymlinks>
+		          </excludes>-->
+		          <followSymlinks>true</followSymlinks> 
 		        </fileset>
 		      </filesets>
 		    </configuration>
          </plugin>
-         <!-- compiler the JAVA source code -->
-         
+         <!-- compiler the JAVA source code -->        
 	     <plugin>
 	         <groupId>org.apache.maven.plugins</groupId>
              <artifactId>maven-compiler-plugin</artifactId>
@@ -146,7 +182,8 @@
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
               </configuration>             
-	      </plugin>	      
+	      </plugin>
+	      <!-- build a execuable jar file to run the whole test suite -->	      
 	      <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -181,16 +218,17 @@
                             </binlibs>  -->
                             <!-- Optional, default is false -->
                             <attachToBuild>true</attachToBuild>
-                            <!-- Optional, default is "onejar" -->
+                            <!-- Optional, default is "onejar" ${standalone.name.jar} -->
                             <classifier>onejar</classifier>
-                            <filename>${standalonejarname}</filename>
+                            <filename>${standalone.name.jar}</filename> 
                         </configuration>
                         <goals>
                             <goal>one-jar</goal>
                         </goals>
                     </execution>
                 </executions>
-            </plugin>     
+            </plugin> 
+            <!-- start the selenium server from the maven file -->    
 	    <!--   <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>selenium-maven-plugin</artifactId>
@@ -208,6 +246,7 @@
 					</execution>
 				</executions>
 			</plugin> -->
+			
 	       <!--  run the testNG testings -->
 	       <plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
@@ -224,8 +263,10 @@
 		        </configuration>
            </plugin> 
                 
-	 </plugins>
+	  </plugins>
+	<!-- </pluginManagement>  -->
   </build>
+  <!--  this is the one-jar file used to build a execuable jar file -->
   <pluginRepositories>
         <pluginRepository>
             <id>onejar-maven-plugin.googlecode.com</id>
