@@ -21,7 +21,7 @@
 		         
 		         
 		         
-		         
+		      <class name="com.selenium.tests.SendEmailReporter"/>  
 		    </classes>
 	    </test> <!-- Test -->
 	  	  
