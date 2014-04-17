@@ -302,12 +302,12 @@ public class EmailerUtils {
 				/*
 				 * attached the company log file 
 				 */
-				String logopath="src//main//resources//logo.png";
+				//String logopath="resources/logo.png";
 				bodypart = new MimeBodyPart();
-				DataSource ds = new FileDataSource(logopath);
+				DataSource ds = new FileDataSource(GlobalDefinition.EMAIL_LOG_FILE);
 				bodypart.setDataHandler(new DataHandler(ds));
 				logger.debug("the email logo file path is :"
-						+ logopath);
+						+ GlobalDefinition.EMAIL_LOG_FILE);
 				logger.debug("the email's image content id is :companylog");
 				// be careful this content must contain with <>
 				bodypart.addHeader("Content-ID", "<imagecompanylog@selenium>");

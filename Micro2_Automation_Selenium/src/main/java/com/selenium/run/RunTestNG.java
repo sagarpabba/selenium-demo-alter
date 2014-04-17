@@ -6,10 +6,12 @@ import org.apache.log4j.Logger;
 import org.testng.TestNG;
 import org.testng.xml.XmlSuite;
 
+import com.selenium.utilities.GlobalDefinition;
+
 public class RunTestNG {
     private static Logger logger=Logger.getLogger(RunTestNG.class);
     static TestNG testng;
-    private static String TESTNG_SUITE_FILE="./test_suite/testng_template.xml";
+    private static String TESTNG_SUITE_FILE=GlobalDefinition.TESTSUITE_DIR+"/testng_template.xml";
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
         logger.info("Runing the selenium project testing via TestNG Now......");
@@ -24,10 +26,10 @@ public class RunTestNG {
 		// create a test case for the suite
 		/*XmlTest xmltest = new XmlTest(suite);
 		xmltest.setName("Test 1");
-		xmltest.setXmlClasses(Arrays.asList(new XmlClass("FastTest")))*/;
+		xmltest.setXmlClasses(Arrays.asList(new XmlClass("FastTest")));*/
 
 		// add a suite-file to the suite
-		suite.setSuiteFiles(Arrays.asList(TESTNG_SUITE_FILE));
+		//suite.setSuiteFiles(Arrays.asList(TESTNG_SUITE_FILE));
 
 		// 1. To run with testng.xml file, uncomment this one, comment 2
 		// testng.setTestSuites(Arrays.asList("testng.xml"));
@@ -38,6 +40,7 @@ public class RunTestNG {
 	    testng.setTestSuites(Arrays.asList(TESTNG_SUITE_FILE));
 
 		testng.run();
+      
 	}
 
 }
