@@ -24,8 +24,7 @@
        
        
        <standalone.name.jar>${project.artifactId}-${project.version}-STANDALONE.jar</standalone.name.jar>
-       
-         
+               
        <jdk.version>1.7</jdk.version>
        <resources.encoding>UTF-8</resources.encoding>
        <sources.encoding>UTF-8</sources.encoding>
@@ -115,8 +114,13 @@
   <build>
     <resources>
         <resource>
-           <directory>src/main/resources</directory>
-           <filtering>true</filtering>
+           <directory>${project.basedir}</directory>
+           <includes>
+              <include>test-resources/**/*.*</include>
+              <include>selenium-driver/**/*.*</include>
+              <include>test-suite/**/*.*</include>
+              <!-- <include>test-result/**/*.log</include> -->
+           </includes>
         </resource>
     </resources>
    <!--  <pluginManagement> -->
@@ -157,17 +161,20 @@
 		    <configuration>
 		      <filesets>
 		        <fileset>		         
-		          <directory>${project.basedir}</directory>
-		          <includes>
-		            <include>${dailyreport.dir}/*.*</include>
-		            <include>${testng.output.dir}/*.*</include>
-		            <include>${log4j.dir}/*.*</include>
-		          </includes>
-		        <!--   <excludes>
-		            <exclude>**/important.log</exclude>
-		            <exclude>**/another-important.log</exclude>
-		          </excludes>-->
-		          <followSymlinks>false</followSymlinks> 
+			          <directory>${project.basedir}</directory>
+			          <includes>
+			            <include>${dailyreport.dir}/*.*</include>
+			            <include>${log4j.dir}/*.*</include>
+			          </includes>
+			           <!--   <excludes>
+			            <exclude>**/important.log</exclude>
+			            <exclude>**/another-important.log</exclude>
+			          </excludes>-->
+			          <followSymlinks>false</followSymlinks> 
+		        </fileset>
+		        <fileset>		         
+			          <directory>${testng.output.dir}</directory>		         
+			          <followSymlinks>false</followSymlinks> 
 		        </fileset>
 		      </filesets>
 		    </configuration>

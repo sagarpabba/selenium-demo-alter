@@ -14,20 +14,30 @@ import java.util.Calendar;
 
 public class GlobalDefinition {
 	
-	  //folder path settings
+	  //project base directory
 	  public final static String PROJECT_DIR=new File("").getAbsolutePath()+File.separator; //like "C:\workspace\Micro2_Automation_Selenium\"
-	
-	  public final static String Log4J_LOG_DIR=PROJECT_DIR+"logs";   // IE console log folder
-	  public final static String REPORTRESULT_DIR=PROJECT_DIR+"test-result";
-	  public final static String DAILY_REPORT_FILE=REPORTRESULT_DIR+File.separator+"TestingExecutionReport_"+ 
-                                                   new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime())+".htm";
-	  public final static String TESTNG_REPORT_DIR=PROJECT_DIR+"test-output";
 	  
-	  public final static String MOUSE_CURSE_ICON="src/main/resources/cursor_white.png";
-	  public final static String E2E_EXCEL_FILE="src/main/resources/TestData.xls";
-	  public final static String REPORT_TEMPLATE_FILE="src/main/resources/report_template.htm";
-	  public final static String SELENIUM_DRIVER_PATH=PROJECT_DIR+"selenium-driver";
-	  public final static String DESKTOP_SCREEN_RECORDER=PROJECT_DIR+"test-result"
+	 //additional folder path settings
+	  public final static String Log4J_LOG_DIR="logs";   // IE console log folder
+	  public final static String REPORTRESULT_DIR="test-result";
+	  public final static String TESTNG_REPORT_DIR="test-output";
+	  public final static String RESOURCES_DIR="test-resources";
+	  public final static String TESTSUITE_DIR="test-suite";
+	  public final static String SELENIUM_DRIVER_PATH="selenium-driver";
+	  
+	  //email report file name
+	  public final static String DAILY_REPORT_FILE=REPORTRESULT_DIR+File.separator+"TestingExecutionReport_"+ 
+              new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime())+".htm";
+	  
+	  //resource folder  
+	  public final static String MOUSE_CURSE_ICON=RESOURCES_DIR+"/cursor_white.png";
+	  public final static String E2E_EXCEL_FILE=RESOURCES_DIR+"/TestData.xls";
+	  public final static String REPORT_TEMPLATE_FILE=RESOURCES_DIR+"/report_template.htm";
+	  public final static String EMAIL_LOG_FILE=RESOURCES_DIR+"/logo.png";
+	  public final static String AUTOITX_FILE=RESOURCES_DIR+"/AutoItX3.dll";
+	  	  
+	  //screen capture file name convercation 
+	  public final static String DESKTOP_SCREEN_RECORDER="test-result"
 	                             +File.separator+new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().getTime())+".mp4";
 	  //JDBC settings
 	  public static String DB_DRIVER_NAME="com.mysql.jdbc.Driver";
@@ -43,7 +53,7 @@ public class GlobalDefinition {
 	  //script started time
 	  public static String CURRENT_TIME=TimeUtils.getCurrentTime(Calendar.getInstance().getTime());
 	  
-	  //Chrome settings
+	  //browser download folder settings
 	  public static String BROWSER_DOWNLOAD_DIR=PROJECT_DIR+"Downloads";
 	  
 	  

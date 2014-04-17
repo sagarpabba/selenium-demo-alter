@@ -63,7 +63,7 @@ public class BaseDriver{
         	 * started the browser instance ,then we can invoke the selenium API in ur testing	
         	 */
 		//RecoveryScenario.registerExceptionHandler();
-		
+		//logger.info("path is :"+new File(GlobalDefinition.MOUSE_CURSE_ICON).getAbsolutePath());
 		//capture the screenshot when we run the testing execution	
 		RecordConfig recConfig=new RecordConfig();
 		recConfig.setFramesRate(24);
