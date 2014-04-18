@@ -222,6 +222,10 @@
 			          <directory>${testng.output.dir}</directory>		         
 			          <followSymlinks>false</followSymlinks> 
 		        </fileset>
+		        <fileset>		         
+			          <directory>target</directory>		         
+			          <followSymlinks>false</followSymlinks> 
+		        </fileset>
 		      </filesets>
 		    </configuration>
          </plugin>
