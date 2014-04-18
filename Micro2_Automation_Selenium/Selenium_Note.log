@@ -1,0 +1,9 @@
+//////////////////////////////////////////////////////////////////
+20140411 Alter:
+Question : 
+       Selenium run error:f.QueryInterface is not a function 
+Solution:
+       http://stackoverflow.com/questions/21401318/while-creating-a-test-script-in-selenium-i-am-getting-following-error
+       change url to add the http prefix 
+       
+///////////////////////////////////////////////////////////////////
