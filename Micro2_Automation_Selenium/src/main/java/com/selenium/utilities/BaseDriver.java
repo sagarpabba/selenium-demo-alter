@@ -18,12 +18,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import com.opera.core.systems.OperaDriver;
 import com.selenium.utilities.recorder.RecordConfig;
 import com.selenium.utilities.recorder.ScreenRecorder;
 
@@ -85,20 +87,32 @@ public class BaseDriver{
 		    SeleniumCore.browserProxySettings(capability, proxy);
 		}
 	    
-		if (browsername.trim().equalsIgnoreCase("ie")){
+		else if (browsername.trim().equalsIgnoreCase("ie")){
 			SeleniumCore.browserIESettings(capability);
 			driver=new InternetExplorerDriver(capability);
 		}
 		
-		 if (browsername.trim().equalsIgnoreCase("firefox")) {
+		else if (browsername.trim().equalsIgnoreCase("firefox")) {
 			SeleniumCore.browserFirefoxSettings(capability);
 			driver=new FirefoxDriver(capability);
 		 }
 		 
-		 if(browsername.trim().equalsIgnoreCase("chrome")) {
+		else if(browsername.trim().equalsIgnoreCase("chrome")) {
 			SeleniumCore.browserChromeSettings(capability);
 			driver=new ChromeDriver(capability);
 		 }
+		else if(browsername.trim().equalsIgnoreCase("safari")){
+			SeleniumCore.browserSafariSettings(capability);
+			driver=new SafariDriver(capability);
+		}
+		else if(browsername.trim().equalsIgnoreCase("opera")){
+			SeleniumCore.browserOperaSettings(capability);
+			driver=new OperaDriver(capability);
+		}else{  //default using IE browser
+			SeleniumCore.browserIESettings(capability);
+			driver=new InternetExplorerDriver(capability);
+		}
+		 
 		 //check the browser settings is as desired before
 		 Capabilities actualCapabilities = ((RemoteWebDriver) driver).getCapabilities();
 		 logger.info("Selenium Server Capabilities actually is :\n"+ actualCapabilities.toString());

@@ -14,8 +14,10 @@ import java.util.Calendar;
 
 public class GlobalDefinition {
 	
-	  //project base directory
+	  //project configuration
+	  public final static String PROJECT_NAME="Micro2_Automation";
 	  public final static String PROJECT_DIR=new File("").getAbsolutePath()+File.separator; //like "C:\workspace\Micro2_Automation_Selenium\"
+	 
 	  
 	 //additional folder path settings
 	  public final static String Log4J_LOG_DIR="logs";   // IE console log folder
@@ -38,7 +40,7 @@ public class GlobalDefinition {
 	  	  
 	  //screen capture file name convercation 
 	  public final static String DESKTOP_SCREEN_RECORDER="test-result"
-	                             +File.separator+new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().getTime())+".mp4";
+	                             +File.separator+PROJECT_NAME+"_"+new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().getTime())+".mp4";
 	  //JDBC settings
 	  public static String DB_DRIVER_NAME="com.mysql.jdbc.Driver";
 	  public static String DB_URL="jdbc:mysql://HUCHAN3.asiapacific.hpqcorp.net:3306/qtpresult";
