@@ -14,10 +14,13 @@
    <properties> 
        <org.selenium-version>2.41.0</org.selenium-version>
        
-       <testng.testsuite.dir>${project.basedir}/test-suite</testng.testsuite.dir>
-       <testng.output.dir>test-output</testng.output.dir>
-       <dailyreport.dir>test-result</dailyreport.dir>
        <log4j.dir>logs</log4j.dir>
+       <selenium.driver.dir>selenium-driver</selenium.driver.dir>
+       <project.test.resource.dir>test-resources</project.test.resource.dir>
+       <dailyreport.dir>test-result</dailyreport.dir>
+       <testng.testsuite.dir>test-suite</testng.testsuite.dir>
+       <testng.output.dir>test-output</testng.output.dir>     
+      
        
          
        <xmlSuiteFile>${testng.testsuite.dir}/testng_template.xml</xmlSuiteFile>
@@ -38,11 +41,28 @@
   <dependencies>
 	    <!-- selenium jar file -->
 	  	<dependency>
-	  		<groupId>org.seleniumhq.selenium</groupId>
-	  		<artifactId>selenium-server</artifactId>
-	  		<version>${org.selenium-version}</version>        
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>${org.selenium-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.opera</groupId>
+                    <artifactId>operadriver</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-   	
+        <dependency>
+            <groupId>com.opera</groupId>
+            <artifactId>operadriver</artifactId>
+            <version>1.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-remote-driver</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
 	  	<!-- log4j -->
 	  	<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
@@ -113,25 +133,53 @@
   
   <build>
     <resources>
+       <!-- default resource folder -->
+       <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+        <!-- the optional resource folder in the testing -->
         <resource>
            <directory>${project.basedir}</directory>
            <includes>
-              <include>test-resources/**/*.*</include>
-              <include>selenium-driver/**/*.*</include>
-              <include>test-suite/**/*.*</include>
+              <include>${project.test.resource.dir}/**/*.*</include>
+              <include>${selenium.driver.dir}/**/*.*</include>
+              <include>${testng.testsuite.dir}/**/*.*</include>
               <!-- <include>test-result/**/*.log</include> -->
            </includes>
         </resource>
     </resources>
-   <!--  <pluginManagement> -->
+   <!--  kill the IEDriver.exe and chromedriver.exe background  to prevent the below clean errors-->
       
     <!-- clean the environment -->
     
 	 <plugins>
-	 <!--    <plugin>
+	    <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>
+                <execution>
+		            <phase>pre-integration-test</phase>
+		            <configuration>
+		                <target>
+		                    <exec executable="cmd"
+		                          dir="."
+		                          spawn="true">
+		                        <arg value="/c"/>
+		                        <arg value="taskkill.exe /im chromedriver.exe"/>
+		                    </exec>
+		                    <exec executable="cmd"
+		                          dir="."
+		                          spawn="true">
+		                        <arg value="/c"/>
+		                        <arg value="taskkill.exe /im IEDriverServer.exe"/>
+		                    </exec>
+		                </target>
+		            </configuration>
+		            <goals>
+		                <goal>run</goal>
+		            </goals>
+                </execution>
                 <execution>
                     <id>createThriftDir</id>
                     <phase>process-resources</phase>
@@ -139,8 +187,6 @@
                         <tasks>
                             <delete dir="${dailyreport.dir}"/>
                             <mkdir dir="${dailyreport.dir}"/>
-                            <delete dir="${testng.testsuite.dir}"/>
-                            <mkdir dir="${testng.testsuite.dir}"/>
                             <delete dir="${testng.output.dir}" />
                             <mkdir dir="${testng.output.dir}" />
                             <delete dir="${log4j.dir}" />
@@ -152,7 +198,7 @@
                     </goals>
                 </execution>
             </executions>
-        </plugin> -->
+        </plugin>
          
 	    <plugin>
 	        <groupId>org.apache.maven.plugins</groupId>
@@ -190,6 +236,43 @@
                     <target>${jdk.version}</target>
               </configuration>             
 	      </plugin>
+	 <!--  copy the resource folder to the target folder -->
+	      <plugin>
+             <artifactId>maven-antrun-plugin</artifactId>
+             <executions>               
+             </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-resources-plugin</artifactId>
+	        <version>2.6</version>
+	        <executions>
+	          <execution>
+	            <id>copy-resources</id>
+	            <!-- here the phase you need -->
+	            <phase>validate</phase>
+	            <goals>
+	              <goal>copy-resources</goal>
+	            </goals>
+	            <configuration>
+	              <outputDirectory>${basedir}/target</outputDirectory>
+	              <overwrite>false</overwrite>
+	              <resources>          
+	                <resource>
+	                   <directory>${project.basedir}</directory>
+			           <includes>
+			              <include>${project.test.resource.dir}/**/*.*</include>
+			              <include>${selenium.driver.dir}/**/*.*</include>
+			              <include>${testng.testsuite.dir}/**/*.*</include>
+			              <include>${dailyreport.dir}/**/*.*</include>
+			              <!-- <include>test-result/**/*.log</include> -->
+			           </includes>
+	                </resource>
+	              </resources>              
+	            </configuration>            
+	          </execution>
+	        </executions>
+          </plugin>
 	      <!-- build a execuable jar file to run the whole test suite -->	      
 	      <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -269,9 +352,43 @@
 		           </suiteXmlFiles>
 		        </configuration>
            </plugin> 
-                
+   
 	  </plugins>
+	  
 	<!-- </pluginManagement>  -->
+	<pluginManagement>
+		<plugins>
+			<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<lifecycleMappingMetadata>
+						<pluginExecutions>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>
+										org.apache.maven.plugins
+									</groupId>
+									<artifactId>
+										maven-antrun-plugin
+									</artifactId>
+									<versionRange>[1.3,)</versionRange>
+									<goals>
+										<goal>run</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore></ignore>
+								</action>
+							</pluginExecution>
+						</pluginExecutions>
+					</lifecycleMappingMetadata>
+				</configuration>
+			</plugin>
+		</plugins>
+	</pluginManagement>
   </build>
   <!--  this is the one-jar file used to build a execuable jar file -->
   <pluginRepositories>
