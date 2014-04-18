@@ -246,6 +246,7 @@ public class SeleniumCore {
 	    public static void seleniumManager(WebDriver driver){
 	    	try
 			{
+	    		driver.manage().deleteAllCookies();
 				//page load time
 				driver.manage().timeouts().pageLoadTimeout(GlobalDefinition.PAGE_LOADING_TIME, TimeUnit.SECONDS);
 				//the web element to find time we need to wait 
