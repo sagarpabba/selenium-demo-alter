@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--this is a selenium TestNg File template,you just copy this template file in your own Testng XML file  -->
+<suite name="Selenium_GUI_Automation_Suite"
+           preserve-order="true"  
+           skipfailedinvocationcounts="trie" 
+           configfailurepolicy="continue" 
+           thread-count="2" 
+           parallel="false"
+           usedefaultlisteners="false" >
+           <listeners>
+              <listener class-name="com.selenium.listeners.SuiteExceptionHandler" />
+             <!--listener class-name="com.selenium.listeners.RecoveryScenario" /> -->
+           </listeners>
+           <!--Supported Browser name list:
+              Chrome :chrome
+              Internet Explorer: ie
+              Firefox:firefox
+              Safari:safari
+              Opera:opera
+           
+           -->
+           <parameter name="browsername" value="ie"></parameter>  
+           <!--<parameter name="proxy" value="web-proxy.atlanta.hp.com:8088"></parameter>  -->
+           <test name="Test">
+                    <classes>
+                      <!-- Put the test you want to run via TestNg ,The test class stored in this location :com.selenium.tests-->
+					      <class name="com.selenium.tests.GoogleSearchActionTest"/>
+					      
+					      
+					      
+					      <class name="com.selenium.tests.EmailSenterTest"/> 
+                    </classes>
+            </test> <!-- Test -->
+                  
+</suite> <!-- Suite -->
