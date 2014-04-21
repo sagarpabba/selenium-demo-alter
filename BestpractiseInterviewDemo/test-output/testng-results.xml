@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="24" started-at="2014-04-21T06:49:06Z" finished-at="2014-04-21T06:49:06Z">
+  <suite name="Default suite" duration-ms="27" started-at="2014-04-21T08:53:50Z" finished-at="2014-04-21T08:53:50Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="24" started-at="2014-04-21T06:49:06Z" finished-at="2014-04-21T06:49:06Z">
-      <class name="com.mystring.MyStringBufferTest">
-        <test-method status="PASS" signature="f()[pri:0, instance:com.mystring.MyStringBufferTest@ef57f8]" name="f" duration-ms="9" started-at="2014-04-21T14:49:06Z" finished-at="2014-04-21T14:49:06Z">
+    <test name="Default test" duration-ms="27" started-at="2014-04-21T08:53:50Z" finished-at="2014-04-21T08:53:50Z">
+      <class name="com.basic.MyAddTest">
+        <test-method status="PASS" signature="add()[pri:0, instance:com.basic.MyAddTest@1c5d0e0]" name="add" duration-ms="10" started-at="2014-04-21T16:53:50Z" finished-at="2014-04-21T16:53:50Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- f -->
-      </class> <!-- com.mystring.MyStringBufferTest -->
+        </test-method> <!-- add -->
+      </class> <!-- com.basic.MyAddTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
