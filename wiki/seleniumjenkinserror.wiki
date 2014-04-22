@@ -3,9 +3,11 @@
 = Introduction =
 
 when integrating selenium with Jenkins ,you will met some errors ,that caused as this reason :
+{{{
 GUI Testing in Windows
 Most Windows services -- including those run with the option "Allow service to interact with desktop" in Windows XP and Vista -- do not have access to many of the computer's resources, including the console display.  This may cause Automated GUI Tests to fail if you are running Apache Tomcat as a Windows Service and are doing any GUI testing. This is true at least for AWT and Abbot frameworks.  A typical error might look similar to this:
 http://wiki.hudson-ci.org/display/HUDSON/Tomcat 
+}}}
 
 error from the jenkins console:
 Call to IWebBrowser2::Navigate2 (Link to this error someone had met:https://code.google.com/p/selenium/issues/detail?id=4279 )
