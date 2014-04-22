@@ -1,6 +1,6 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+= Problems Occurred Jenkins=
 
 when integrating selenium with Jenkins ,you will met some errors ,that caused as this reason :
 {{{
@@ -28,7 +28,7 @@ Capabilities [{platform=WINDOWS, javascriptEnabled=true, elementScrollBehavior=0
 }}}
 
 
-= Details =
+= Best Prepare Solution=
 
 how to solve:
   * Solution 1:Install Jenkins via command line ,no need to intall the web container again (http://wiki.hudson-ci.org/display/HUDSON/Tomcat) 
