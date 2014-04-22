@@ -40,4 +40,4 @@ how to solve:
   # http://forgetfulprogrammer.wordpress.com/2011/09/21/netbeans-gui-tests-on-jenkins-windows/
   # http://wiki.hudson-ci.org/display/HUDSON/Tomcat
  
-==Here i used the solution 2 to run the jenkins in a configured web container==
+==Here I used the solution 2 to run the jenkins in a configured web container==
