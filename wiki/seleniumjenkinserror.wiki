@@ -39,3 +39,5 @@ how to solve:
   * Solution 2:Not intall Tomcat or other contaner as windows service ,run it from the command line and scheduled a  task to run the tomcat container when the host is logged on .
   # http://forgetfulprogrammer.wordpress.com/2011/09/21/netbeans-gui-tests-on-jenkins-windows/
   # http://wiki.hudson-ci.org/display/HUDSON/Tomcat
+ 
+==Here i used the solution 2 to run the jenkins in a configured web container==
