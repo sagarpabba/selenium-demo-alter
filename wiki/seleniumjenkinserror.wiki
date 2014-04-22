@@ -30,7 +30,7 @@ Capabilities [{platform=WINDOWS, javascriptEnabled=true, elementScrollBehavior=0
 
 how to solve:
   * Solution 1:Install Jenkins via command line ,no need to intall the web container again (http://wiki.hudson-ci.org/display/HUDSON/Tomcat) 
-    *Command line: java -jar Jenkins.war ,then access it from this URL:http://localhost:8080 ,also you can find the extracted jenkins app from here maybe:C:\Users\youuser\AppData\Local\Temp\jetty-0.0.0.0-8080-jenkins.war--any-\webapp
+    *Command line: java -jar Jenkins.war ,then access it from this URL:http://localhost:8080 ,also you can find the extracted jenkins app from here maybe:C:\Users\youuser\AppData\Local\Temp\jetty-0.0.0.0-8080-jenkins.war--any-\webapp*
   * Solution 2:Not intall Tomcat or other contaner as windows service ,run it from the command line and scheduled a  task to run the tomcat container when the host is logged on .http://forgetfulprogrammer.wordpress.com/2011/09/21/netbeans-gui-tests-on-jenkins-windows/
 http://wiki.hudson-ci.org/display/HUDSON/Tomcat
   * Automatic links to other wiki pages
