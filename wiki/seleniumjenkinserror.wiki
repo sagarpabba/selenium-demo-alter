@@ -8,7 +8,7 @@ Most Windows services -- including those run with the option "Allow service to i
 http://wiki.hudson-ci.org/display/HUDSON/Tomcat 
 
 error from the jenkins console:
-Call to IWebBrowser2::Navigate2 
+Call to IWebBrowser2::Navigate2 (Link to this error someone had met:https://code.google.com/p/selenium/issues/detail?id=4279 )
 {{{
 INFO:2014-04-21 05:50:44 AM:Retrying request
 INFO:2014-04-21 05:50:44 AM:Selenium Server Capabilities actually is :
